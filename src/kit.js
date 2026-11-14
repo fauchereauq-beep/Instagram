@@ -1,24 +1,33 @@
-// Boîte à outils BD : personnages vectoriels, bulles, cadre de planche.
+// Boîte à outils BD : personnages vectoriels, décor du Salève, bulles, cadre de planche.
+// Palette, polices de titre et logo repris de quentinfauchereau.com.
 const A = require('./avatar.config.js');
 
-const INK = '#1B1B1F';
 const C = {
-  ink: INK,
-  cream: '#FFF4DC',
-  mustard: '#F5B82E',
-  coral: '#EF5B4C',
-  teal: '#16A39B',
-  navy: '#232A4D',
-  sky: '#CFE3FF',
-  pink: '#F79AB5',
-  pinkDark: '#D9668D',
+  nuit: '#1E1B3A',
+  creme: '#FFF6EA',
+  sable: '#F6E3C8',
+  grisNuit: '#5B5675',
+  flamme: '#FF5A1F',
+  flammeTexte: '#C2410C',
+  soleil: '#FFC233',
+  jungle: '#1F7A5C',
+  // teintes dérivées de la palette, pour le paysage et le singe
+  jungleFonce: '#175E47',
+  jungleClair: '#8CC2A6',
+  lac: '#BFC8EE',
+  lointain: '#A9A5D4',
+  fourrure: '#6C6690',
+  museau: '#F6E3C8',
 };
+const INK = C.nuit;
+const FLOOR_Y = 1196;
 
 let uid = 0;
 const S = `stroke="${INK}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"`;
 
 // ---------- briques communes ----------
-function eye(cx, cy, { rx = 22, ry = 26, px = 0, py = 0, lid = 0, pr = 9 } = {}) {
+function eye(cx, cy, { rx = 22, ry = 26, px = 0, py = 0, lid = 0, pr = 9, closed = false } = {}) {
+  if (closed) return `<path d="M ${cx - rx} ${cy - 2} Q ${cx} ${cy + 16} ${cx + rx} ${cy - 2}" fill="none" ${S}/>`;
   const id = `c${uid++}`;
   const top = cy - ry + lid * 2 * ry;
   return `
@@ -55,19 +64,25 @@ function limb(d, color, width = 46) {
 }
 const hand = (cx, cy, r = 27) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${A.skin}" ${S}/>`;
 
-// ---------- l'avatar ----------
+function shade(hex, amt) {
+  const n = parseInt(hex.slice(1), 16);
+  const f = (v) => Math.max(0, Math.min(255, v + amt));
+  return '#' + [n >> 16, (n >> 8) & 255, n & 255].map((v) => f(v).toString(16).padStart(2, '0')).join('');
+}
+
+// ---------- Quentin ----------
 function hairPath() {
   const h = {
+    pics: `M 141 204 C 130 170, 132 132, 146 104 L 128 90 L 154 84 L 146 54 L 176 64 L 182 30 L 206 50 L 224 14 L 242 46 L 264 16 L 276 50 L 302 30 L 306 64 L 334 54 L 328 84 L 352 90 L 334 104
+           C 348 132, 350 170, 339 204 C 337 176, 330 152, 318 138 C 310 120, 298 110, 286 106 C 270 110, 252 120, 240 132 C 228 120, 210 110, 194 106 C 182 110, 170 120, 162 138 C 150 152, 143 176, 141 204 Z`,
     bataille: `M 141 196 C 118 132, 150 66, 214 60 C 222 34, 262 36, 266 58 C 290 40, 318 58, 310 80 C 352 104, 356 150, 338 196
                C 334 160, 318 136, 296 128 C 270 150, 222 150, 198 124 C 170 132, 150 156, 141 196 Z`,
     court: `M 141 190 C 126 120, 170 70, 240 70 C 310 70, 354 120, 339 190 C 332 150, 310 126, 240 124 C 170 126, 148 150, 141 190 Z`,
     boucles: `M 141 200 C 108 190, 108 150, 132 138 C 116 108, 146 78, 174 88 C 180 54, 226 46, 244 70 C 266 44, 312 58, 312 90
               C 344 82, 370 116, 350 140 C 372 156, 366 194, 339 200 C 336 166, 316 140, 290 134 C 262 152, 218 152, 192 132 C 166 140, 148 164, 141 200 Z`,
-    pics: `M 141 204 C 130 170, 132 132, 146 104 L 128 90 L 154 84 L 146 54 L 176 64 L 182 30 L 206 50 L 224 14 L 242 46 L 264 16 L 276 50 L 302 30 L 306 64 L 334 54 L 328 84 L 352 90 L 334 104
-           C 348 132, 350 170, 339 204 C 337 176, 330 152, 318 138 C 310 120, 298 110, 286 106 C 270 110, 252 120, 240 132 C 228 120, 210 110, 194 106 C 182 110, 170 120, 162 138 C 150 152, 143 176, 141 204 Z`,
     rase: `M 146 170 C 150 104, 196 78, 240 78 C 284 78, 330 104, 334 170 C 320 130, 290 112, 240 112 C 190 112, 160 130, 146 170 Z`,
   };
-  return h[A.hairStyle] || h.bataille;
+  return h[A.hairStyle] || h.pics;
 }
 
 function quentinArms(arms) {
@@ -85,10 +100,12 @@ function quentinArms(arms) {
         hand(208, 448, 22) + hand(272, 448, 22);
     case 'think':
       return limb('M 366 470 Q 420 400 316 322', col) + hand(300, 302, 27);
+    case 'heart': // main posée sur la poitrine : il respire
+      return limb('M 366 470 Q 392 416 296 410', col) + hand(274, 408, 27);
     case 'pencil':
     case 'scratch':
       return limb('M 366 446 Q 428 410 420 330', col) +
-        `<g transform="rotate(${arms === 'scratch' ? -28 : 16} 420 300)"><rect x="412" y="190" width="16" height="110" fill="${C.mustard}" ${S} stroke-width="5"/>
+        `<g transform="rotate(${arms === 'scratch' ? -28 : 16} 420 300)"><rect x="412" y="190" width="16" height="110" fill="${C.soleil}" ${S} stroke-width="5"/>
          <path d="M 412 190 L 420 166 L 428 190 Z" fill="#F6C9A0" ${S} stroke-width="5"/></g>` + hand(420, 304, 28);
     case 'shrug':
       return limb('M 118 446 Q 58 432 50 372', col) + limb('M 362 446 Q 422 432 430 372', col) + hand(48, 350) + hand(432, 350);
@@ -97,11 +114,12 @@ function quentinArms(arms) {
   }
 }
 
-// Avatar en buste. viewBox 480 x 520.
+// Quentin en buste. viewBox 480 x 520.
 function quentin({ x = 0, y = 0, w = 520, flip = false, eyes = {}, brows = [0, 0], browY = 0, mouth: m = 'smile', arms = 'down', sweat = false } = {}) {
   const el = eyes.l || eyes, er = eyes.r || eyes;
+  const V = 'M 160 68 Q 240 40 320 68 L 324 100 Q 240 76 156 100 Z';
   return `<svg style="position:absolute;left:${x}px;top:${y}px;${flip ? 'transform:scaleX(-1);' : ''}" width="${w}" viewBox="0 0 480 520" overflow="visible">
-    <ellipse cx="240" cy="322" rx="96" ry="40" fill="${shade(A.hoodie, -28)}" ${S}/>
+    <ellipse cx="240" cy="322" rx="96" ry="40" fill="${shade(A.hoodie, -40)}" ${S}/>
     <rect x="212" y="270" width="56" height="70" fill="${A.skin}" ${S}/>
     <path d="M 108 524 C 108 404, 150 334, 210 322 L 240 356 L 270 322 C 330 334, 372 404, 372 524 Z" fill="${A.hoodie}" ${S}/>
     <path d="M 226 352 L 222 414 M 254 352 L 258 414" fill="none" ${S} stroke-width="5"/>
@@ -112,8 +130,8 @@ function quentin({ x = 0, y = 0, w = 520, flip = false, eyes = {}, brows = [0, 0
     <path d="${hairPath()}" fill="${A.hair}" ${S}/>
     ${A.shades ? `<defs><linearGradient id="lens${uid}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#FFE14D"/><stop offset=".5" stop-color="#7BE38B"/><stop offset="1" stop-color="#FF7AB8"/></linearGradient></defs>
       <g transform="rotate(-4 240 80)">
-      <path d="M 160 68 Q 240 40 320 68 L 324 100 Q 240 76 156 100 Z" fill="url(#lens${uid++})" stroke="${INK}" stroke-width="16" stroke-linejoin="round"/>
-      <path d="M 160 68 Q 240 40 320 68 L 324 100 Q 240 76 156 100 Z" fill="none" stroke="#E5322D" stroke-width="7" stroke-linejoin="round"/>
+      <path d="${V}" fill="url(#lens${uid++})" stroke="${INK}" stroke-width="16" stroke-linejoin="round"/>
+      <path d="${V}" fill="none" stroke="#E5322D" stroke-width="7" stroke-linejoin="round"/>
       <path d="M 188 68 q 22 -8 46 -9" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".85"/></g>` : ''}
     ${eye(204, 200, el)}${eye(276, 200, er)}
     ${A.glasses ? `<g fill="none" ${S} stroke-width="6"><circle cx="204" cy="200" r="34"/><circle cx="276" cy="200" r="34"/><path d="M 238 198 h 4 M 170 196 L 146 190 M 310 196 L 334 190"/></g>` : ''}
@@ -125,52 +143,98 @@ function quentin({ x = 0, y = 0, w = 520, flip = false, eyes = {}, brows = [0, 0
   </svg>`;
 }
 
-// ---------- le cerveau ----------
-function brainArms(arms) {
-  const L = (d) => `<path d="${d}" fill="none" ${S} stroke-width="8"/>`;
-  const H = (cx, cy) => `<circle cx="${cx}" cy="${cy}" r="15" fill="#fff" ${S} stroke-width="6"/>`;
+// ---------- le Chimpanzé ----------
+function chimpArms(arms) {
+  const F = C.fourrure;
+  const L = (d) => limb(d, F, 20);
+  const H = (cx, cy) => `<circle cx="${cx}" cy="${cy}" r="16" fill="${C.museau}" ${S} stroke-width="6"/>`;
+  const hipL = L('M 126 250 Q 76 274 120 298') + H(124, 298);
+  const hipR = L('M 234 250 Q 284 274 240 298') + H(236, 298);
   switch (arms) {
     case 'finger':
-      return L('M 60 196 Q 26 216 66 232') + H(68, 232) + L('M 304 170 Q 348 150 338 96') + L('M 338 86 L 338 50') + H(338, 88);
+      return hipL + L('M 236 250 Q 318 250 334 172') + limb('M 334 156 L 334 122', C.museau, 9) + H(334, 160);
     case 'up':
-      return L('M 58 150 Q 16 112 26 62') + H(26, 50) + L('M 304 150 Q 346 112 336 62') + H(336, 50);
+      return L('M 124 250 Q 40 250 30 152') + H(28, 138) + L('M 236 250 Q 320 250 330 152') + H(332, 138);
+    case 'head': // mains sur la tête : panique
+      return L('M 124 252 Q 34 232 66 96') + H(72, 82) + L('M 236 252 Q 326 232 294 96') + H(288, 82);
     case 'rub':
-      return L('M 66 204 Q 88 256 164 242') + L('M 296 204 Q 274 256 198 242') + H(168, 240) + H(194, 240);
+      return L('M 126 250 Q 112 304 164 296') + L('M 234 250 Q 248 304 196 296') + H(168, 294) + H(192, 294);
     case 'point':
-      return L('M 60 184 L -8 168') + H(-14, 166) + L('M 300 196 Q 336 216 294 232') + H(292, 232);
+      return L('M 126 250 L 34 236') + H(20, 234) + hipR;
     case 'shrug':
-      return L('M 58 176 Q 16 176 8 136') + H(6, 124) + L('M 304 176 Q 346 176 354 136') + H(356, 124);
-    default: // hips
-      return L('M 60 196 Q 26 216 66 232') + H(68, 232) + L('M 300 196 Q 336 216 294 232') + H(292, 232);
+      return L('M 124 250 Q 60 264 44 222') + H(40, 208) + L('M 236 250 Q 300 264 316 222') + H(320, 208);
+    case 'calm': // mains posées sur les genoux
+      return L('M 126 250 Q 96 290 132 322') + H(136, 324) + L('M 234 250 Q 264 290 228 322') + H(224, 324);
+    default:
+      return hipL + hipR;
   }
 }
 
-// Le cerveau. viewBox -30 0 420 380.
-function brain({ x = 0, y = 0, w = 420, flip = false, eyes = {}, brows = [0, 0], browY = 0, mouth: m = 'smirk', arms = 'hips', sweat = false } = {}) {
+// Le Chimpanzé, en pied. viewBox -30 0 420 380, pieds à y = 352.
+function chimp({ x = 0, y = 0, w = 440, flip = false, eyes = {}, brows = [0, 0], browY = 0, mouth: m = 'smirk', arms = 'hips', sweat = false, extra = '' } = {}) {
   const el = eyes.l || eyes, er = eyes.r || eyes;
+  const F = C.fourrure, M = C.museau;
   return `<svg style="position:absolute;left:${x}px;top:${y}px;${flip ? 'transform:scaleX(-1);' : ''}" width="${w}" viewBox="-30 0 420 380" overflow="visible">
-    <path d="M 150 240 L 140 326 M 210 240 L 220 326" fill="none" ${S} stroke-width="8"/>
-    <ellipse cx="128" cy="332" rx="26" ry="13" fill="#fff" ${S} stroke-width="6"/><ellipse cx="232" cy="332" rx="26" ry="13" fill="#fff" ${S} stroke-width="6"/>
-    <path d="M 80 222 C 40 216, 30 166, 62 146 C 46 106, 86 70, 122 86 C 136 50, 196 40, 216 72 C 250 50, 306 76, 298 118
-             C 336 130, 340 186, 306 206 C 300 240, 250 250, 230 232 C 206 256, 150 256, 136 232 C 116 246, 86 240, 80 222 Z" fill="${C.pink}" ${S}/>
-    <g fill="none" stroke="${C.pinkDark}" stroke-width="6" stroke-linecap="round">
-      <path d="M 180 62 C 168 84, 190 100, 180 122"/>
-      <path d="M 96 110 q 22 -8 30 12"/><path d="M 236 92 q 24 -10 36 10"/>
-      <path d="M 70 190 q 14 16 2 30"/><path d="M 296 160 q 16 10 6 30"/>
-      <path d="M 134 112 q 14 6 12 20"/><path d="M 258 214 q 16 -4 22 -18"/>
-    </g>
-    ${eye(146, 170, el)}${eye(214, 170, er)}
-    ${brow(146, 132 + browY, brows[0], 40)}${brow(214, 132 + browY, brows[1], 40)}
-    ${mouth(m, 180, 218)}
-    ${sweat ? `<path d="M 300 60 q 14 22 0 30 q -14 -8 0 -30 Z" fill="#8FD3FF" ${S} stroke-width="5"/>` : ''}
-    ${brainArms(arms)}
+    ${limb('M 152 300 L 138 340', F, 22)}${limb('M 208 300 L 222 340', F, 22)}
+    <ellipse cx="124" cy="352" rx="30" ry="14" fill="${M}" ${S} stroke-width="6"/><ellipse cx="236" cy="352" rx="30" ry="14" fill="${M}" ${S} stroke-width="6"/>
+    <ellipse cx="180" cy="266" rx="64" ry="58" fill="${F}" ${S}/>
+    <ellipse cx="180" cy="278" rx="36" ry="34" fill="${M}"/>
+    <circle cx="62" cy="128" r="36" fill="${F}" ${S}/><circle cx="62" cy="128" r="17" fill="${shade(C.museau, -34)}"/>
+    <circle cx="298" cy="128" r="36" fill="${F}" ${S}/><circle cx="298" cy="128" r="17" fill="${shade(C.museau, -34)}"/>
+    <path d="M 156 34 L 166 6 L 180 26 L 194 2 L 204 34 Z" fill="${F}" ${S}/>
+    <ellipse cx="180" cy="128" rx="114" ry="104" fill="${F}" ${S}/>
+    <path d="M 180 80 C 152 50, 96 68, 98 122 C 99 146, 114 160, 128 166 C 106 186, 114 224, 180 224 C 246 224, 254 186, 232 166 C 246 160, 261 146, 262 122 C 264 68, 208 50, 180 80 Z" fill="${M}" ${S} stroke-width="5"/>
+    ${eye(146, 126, { rx: 20, ry: 24, ...el })}${eye(214, 126, { rx: 20, ry: 24, ...er })}
+    ${brow(146, 88 + browY, brows[0], 40)}${brow(214, 88 + browY, brows[1], 40)}
+    <circle cx="171" cy="170" r="4.5" fill="${INK}"/><circle cx="189" cy="170" r="4.5" fill="${INK}"/>
+    ${mouth(m, 180, 198)}
+    ${sweat ? `<path d="M 296 30 q 14 22 0 30 q -14 -8 0 -30 Z" fill="#8FD3FF" ${S} stroke-width="5"/>` : ''}
+    ${chimpArms(arms)}
+    ${extra}
+  </svg>`;
+}
+
+// ---------- le décor : le Salève, vue sur Genève et le lac ----------
+// Toujours le même paysage ; seuls le ciel et la brume changent selon l'ambiance de la planche.
+function sapin(x, y, h, fill = C.jungle) {
+  const w = h * 0.5;
+  return `<path d="M ${x} ${y - h} L ${x + w * 0.34} ${y - h * 0.62} L ${x + w * 0.2} ${y - h * 0.62} L ${x + w * 0.44} ${y - h * 0.3} L ${x + w * 0.28} ${y - h * 0.3} L ${x + w * 0.5} ${y} L ${x - w * 0.5} ${y} L ${x - w * 0.28} ${y - h * 0.3} L ${x - w * 0.44} ${y - h * 0.3} L ${x - w * 0.2} ${y - h * 0.62} L ${x - w * 0.34} ${y - h * 0.62} Z" fill="${fill}" stroke="${INK}" stroke-width="5" stroke-linejoin="round"/>`;
+}
+
+function saleve({ sky = [C.creme, '#FFE7B0'], sun = true, mist = 0.75, dim = 0 } = {}) {
+  const id = `sky${uid++}`;
+  const trees = [[40, 150], [118, 118], [196, 136], [300, 104], [392, 126], [520, 100], [618, 122], [706, 104], [800, 132], [890, 112], [972, 146], [1052, 124]];
+  return `<svg class="abs" style="left:0;top:0" width="1080" height="1350" viewBox="0 0 1080 1350">
+    <defs><linearGradient id="${id}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${sky[0]}"/><stop offset="1" stop-color="${sky[1]}"/></linearGradient></defs>
+    <rect width="1080" height="800" fill="url(#${id})"/>
+    ${sun ? `<circle cx="850" cy="560" r="170" fill="${C.soleil}" opacity=".22"/><circle cx="850" cy="560" r="96" fill="${C.soleil}" stroke="${INK}" stroke-width="6"/>` : ''}
+    <path d="M 0 700 C 120 660, 220 690, 330 668 C 430 648, 520 690, 640 664 C 760 640, 860 684, 960 660 C 1010 650, 1050 664, 1080 656 L 1080 780 L 0 780 Z" fill="${C.lointain}" stroke="${INK}" stroke-width="5"/>
+    <rect x="0" y="752" width="1080" height="130" fill="${C.lac}" stroke="${INK}" stroke-width="5"/>
+    <g fill="${C.grisNuit}"><rect x="372" y="734" width="22" height="20"/><rect x="398" y="726" width="16" height="28"/><rect x="418" y="738" width="30" height="16"/><rect x="452" y="722" width="14" height="32"/><rect x="470" y="736" width="34" height="18"/><rect x="508" y="730" width="18" height="24"/><rect x="530" y="740" width="26" height="14"/></g>
+    <path d="M 600 754 C 598 724, 602 700, 610 682 C 616 700, 618 724, 616 754 Z" fill="#fff" stroke="${INK}" stroke-width="4" stroke-linejoin="round"/>
+    <g stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".8"><path d="M 120 800 h 70 M 300 824 h 110 M 690 806 h 90 M 880 830 h 60 M 520 846 h 50"/></g>
+    <path d="M 0 880 C 180 850, 360 872, 540 858 C 720 846, 900 868, 1080 850 L 1080 1000 L 0 1000 Z" fill="${C.jungleClair}" stroke="${INK}" stroke-width="5"/>
+    ${mist ? `<g fill="#fff" opacity="${mist}"><ellipse cx="230" cy="900" rx="330" ry="26"/><ellipse cx="820" cy="876" rx="300" ry="22"/><ellipse cx="560" cy="938" rx="240" ry="18"/></g>` : ''}
+    ${trees.map(([x, h]) => sapin(x, 1010, h)).join('')}
+    <rect x="-10" y="1000" width="1100" height="360" fill="${C.jungle}" stroke="${INK}" stroke-width="5"/>
+    ${dim ? `<rect width="1080" height="1350" fill="${C.nuit}" opacity="${dim}"/>` : ''}
+  </svg>`;
+}
+
+// Premier plan : l'herbe du sentier et le rocher du Chimpanzé. Les bustes passent derrière.
+function ground() {
+  return `<svg class="abs" style="left:0;top:0" width="1080" height="1350" viewBox="0 0 1080 1350">
+    <path d="M 540 1230 L 588 1166 L 690 1146 L 880 1140 L 1000 1152 L 1090 1140 L 1090 1290 L 540 1290 Z" fill="${C.sable}" ${S}/>
+    <path d="M 610 1182 L 760 1172 M 820 1188 L 1010 1178 M 660 1212 L 900 1204" fill="none" stroke="${shade(C.sable, -50)}" stroke-width="6" stroke-linecap="round"/>
+    <path d="M -10 1204 C 140 1184, 300 1206, 470 1194 C 640 1214, 800 1226, 1090 1220 L 1090 1360 L -10 1360 Z" fill="${C.jungleFonce}" ${S}/>
+    <path d="M 60 1196 l 10 -26 l 8 24 l 12 -30 l 6 32 M 330 1198 l 8 -24 l 10 24 l 10 -28 l 6 30 M 470 1194 l 10 -22 l 8 24" fill="none" ${S} stroke-width="5"/>
   </svg>`;
 }
 
 // ---------- bulles et cartouches ----------
-// tail: { at: 0..1 (position horizontale), dir: -1 | 0 | 1 (inclinaison), side: 'bottom' | 'top' }
 const typo = (t) => t.replace(/'/g, '’');
 
+// tail: { at: 0..1 (position horizontale), dir: -1 | 0 | 1 (inclinaison), side: 'bottom' | 'top' } ou null
 function bubble({ x, y, w, h, text, tail = { at: 0.3, dir: -1 }, size = 46, bg = '#fff', color = INK, shout = false, rot = 0 }) {
   text = typo(text);
   const tip = !tail ? 0 : tail.dir < 0 ? 8 : tail.dir > 0 ? 62 : 35;
@@ -180,26 +244,8 @@ function bubble({ x, y, w, h, text, tail = { at: 0.3, dir: -1 }, size = 46, bg =
   return `<div class="bubble${shout ? ' shout' : ''}" style="left:${x}px;top:${y}px;width:${w}px;${h ? `height:${h}px;` : ''}font-size:${size}px;background:${bg};color:${color};transform:rotate(${rot}deg)"><span>${text}</span>${tailSvg}</div>`;
 }
 
-function caption({ x, y, w, text, size = 40, bg = C.mustard, color = INK, rot = -1.5 }) {
-  text = typo(text);
-  return `<div class="caption" style="left:${x}px;top:${y}px;${w ? `width:${w}px;` : ''}font-size:${size}px;background:${bg};color:${color};transform:rotate(${rot}deg)">${text}</div>`;
-}
-
-// Lignes de vitesse rayonnantes (panique, impact).
-function burst({ cx, cy, r1 = 180, r2 = 520, n = 28, color = INK, width = 7 }) {
-  let d = '';
-  for (let i = 0; i < n; i++) {
-    const a = (i / n) * Math.PI * 2 + (i % 2) * 0.05;
-    const s = r1 + (i % 3) * 26;
-    d += `M ${(cx + Math.cos(a) * s).toFixed(1)} ${(cy + Math.sin(a) * s).toFixed(1)} L ${(cx + Math.cos(a) * r2).toFixed(1)} ${(cy + Math.sin(a) * r2).toFixed(1)} `;
-  }
-  return `<svg style="position:absolute;left:0;top:0" width="1080" height="1350"><path d="${d}" stroke="${color}" stroke-width="${width}" stroke-linecap="round" fill="none"/></svg>`;
-}
-
-// Bande de sol : les bustes passent derrière, le cerveau se tient dessus.
-const FLOOR_Y = 1196;
-function floor(color = INK) {
-  return `<div class="abs" style="left:0;right:0;top:${FLOOR_Y}px;bottom:0;background:${color};border-top:8px solid ${INK}"></div>`;
+function caption({ x, y, w, text, size = 40, bg = C.soleil, color = INK, rot = -1.5 }) {
+  return `<div class="caption" style="left:${x}px;top:${y}px;${w ? `width:${w}px;` : ''}font-size:${size}px;background:${bg};color:${color};transform:rotate(${rot}deg)">${typo(text)}</div>`;
 }
 
 // Relie deux bulles du même personnage.
@@ -207,47 +253,53 @@ function link({ x, y, h, bg = '#fff' }) {
   return `<div class="abs" style="left:${x}px;top:${y}px;width:46px;height:${h}px;background:${bg};border-left:7px solid ${INK};border-right:7px solid ${INK};z-index:2"></div>`;
 }
 
-function shade(hex, amt) {
-  const n = parseInt(hex.slice(1), 16);
-  const f = (v) => Math.max(0, Math.min(255, v + amt));
-  return '#' + [n >> 16, (n >> 8) & 255, n & 255].map((v) => f(v).toString(16).padStart(2, '0')).join('');
+// Lignes rayonnantes (panique, impact).
+function burst({ cx, cy, r1 = 180, r2 = 520, n = 28, color = INK, width = 7 }) {
+  let d = '';
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2 + (i % 2) * 0.05;
+    const s = r1 + (i % 3) * 26;
+    d += `M ${(cx + Math.cos(a) * s).toFixed(1)} ${(cy + Math.sin(a) * s).toFixed(1)} L ${(cx + Math.cos(a) * r2).toFixed(1)} ${(cy + Math.sin(a) * r2).toFixed(1)} `;
+  }
+  return `<svg class="abs" style="left:0;top:0" width="1080" height="1350"><path d="${d}" stroke="${color}" stroke-width="${width}" stroke-linecap="round" fill="none"/></svg>`;
+}
+
+// Le logo du site (pastille soleil, Q, étincelle flamme).
+function logo(size = 64) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 64 64"><circle cx="29" cy="35" r="26" fill="${C.soleil}"/><circle cx="29" cy="35" r="12" fill="none" stroke="${C.nuit}" stroke-width="6"/><path d="M35 41 L44 50" stroke="${C.nuit}" stroke-width="6" stroke-linecap="round"/><path d="M51 2 L54.2 10.3 L62.5 13.5 L54.2 16.7 L51 25 L47.8 16.7 L39.5 13.5 L47.8 10.3 Z" fill="${C.flamme}"/></svg>`;
 }
 
 // ---------- la planche ----------
-function slide({ bg = C.cream, bgCss = '', n, total, series = 'MOI VS MON CERVEAU', ep = 'ÉP. 1', content, dark = false, cta = 'LA SUITE →' }) {
+function slide({ bg = C.creme, bgCss = '', n, total, series = 'Mon chimpanzé et moi', content, cta = 'La suite →' }) {
   return `<div class="page" style="background:${bg};${bgCss}">
-    <div class="dots${dark ? ' dark' : ''}"></div>
     <div class="panel">
       ${content}
-      <div class="tag">${series} <span>· ${ep}</span></div>
-      <div class="num">${n}/${total}</div>
+      <div class="tag">${logo(58)}<span>${series}</span></div>
+      ${n ? `<div class="num">${n}/${total}</div>` : ''}
       <div class="foot"><span>${A.handle}</span>${cta ? `<span class="swipe">${cta}</span>` : ''}</div>
     </div>
   </div>`;
 }
 
 const CSS = (fontDir) => `
-@font-face{font-family:Bangers;src:url('${fontDir}/bangers-latin-400-normal.woff2')}
+@font-face{font-family:Poppins;font-weight:700;src:url('${fontDir}/poppins-700.woff2')}
+@font-face{font-family:Inter;font-weight:600;src:url('${fontDir}/inter-600.woff2')}
 @font-face{font-family:Comic;font-weight:700;src:url('${fontDir}/comic-neue-latin-700-normal.woff2')}
 @font-face{font-family:Hand;src:url('${fontDir}/patrick-hand-latin-400-normal.woff2')}
 *{box-sizing:border-box;margin:0;padding:0}
 body{width:1080px;height:1350px;overflow:hidden}
 .page{position:relative;width:1080px;height:1350px;overflow:hidden;font-family:Comic;font-weight:700;color:${INK}}
-.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(0,0,0,.13) 2.6px,transparent 3.2px);background-size:20px 20px}
-.dots.dark{background-image:radial-gradient(rgba(255,255,255,.09) 2.6px,transparent 3.2px)}
 .panel{position:absolute;inset:0;overflow:hidden}
-.tag{position:absolute;left:44px;top:44px;background:${INK};color:#fff;font-family:Bangers;font-size:38px;letter-spacing:2px;padding:8px 22px 6px;transform:rotate(-1.5deg)}
-.tag span{color:${C.mustard}}
-.num{position:absolute;right:44px;top:44px;background:#fff;border:6px solid ${INK};font-family:Comic;font-weight:700;font-size:34px;padding:4px 16px 2px;box-shadow:5px 5px 0 ${INK}}
-.foot{position:absolute;left:44px;right:44px;bottom:44px;display:flex;justify-content:space-between;align-items:center;font-family:Bangers;font-size:38px;letter-spacing:2px;color:#fff;z-index:5}
-.foot .swipe{background:${C.mustard};color:${INK};padding:8px 20px 5px}
-.bubble{display:flex;align-items:center;justify-content:center;position:absolute;border:7px solid ${INK};border-radius:44px;padding:24px 30px 22px;text-align:center;line-height:1.12;text-transform:uppercase;box-shadow:8px 8px 0 rgba(0,0,0,.22)}
-.bubble.shout{font-family:Bangers;font-weight:400;letter-spacing:3px;line-height:1.02}
-.bubble b,.caption b{color:${C.coral}}
-.caption{position:absolute;border:7px solid ${INK};padding:14px 24px 12px;text-transform:uppercase;line-height:1.12;box-shadow:8px 8px 0 ${INK};text-align:center}
-.title{position:absolute;font-family:Bangers;font-weight:400;line-height:.9;letter-spacing:4px;color:#fff;-webkit-text-stroke:5px ${INK};paint-order:stroke fill;text-shadow:9px 9px 0 ${INK}}
 .abs{position:absolute}
-.ground{position:absolute;left:0;right:0;bottom:0;border-top:8px solid ${INK}}
+.tag{position:absolute;left:40px;top:40px;display:flex;align-items:center;gap:12px;background:${C.creme};border:6px solid ${INK};border-radius:999px;padding:6px 26px 6px 10px;font-family:Poppins;font-weight:700;font-size:28px;box-shadow:5px 5px 0 ${INK};z-index:5}
+.num{position:absolute;right:40px;top:50px;background:${C.creme};border:6px solid ${INK};border-radius:999px;font-family:Poppins;font-weight:700;font-size:28px;padding:8px 20px;box-shadow:5px 5px 0 ${INK};z-index:5}
+.foot{position:absolute;left:44px;right:44px;bottom:40px;display:flex;justify-content:space-between;align-items:center;font-family:Poppins;font-weight:700;font-size:32px;color:${C.creme};z-index:5}
+.foot .swipe{background:${C.soleil};color:${INK};padding:10px 24px;border-radius:999px;border:5px solid ${INK}}
+.bubble{display:flex;align-items:center;justify-content:center;position:absolute;border:7px solid ${INK};border-radius:44px;padding:24px 30px 22px;text-align:center;line-height:1.12;text-transform:uppercase;box-shadow:8px 8px 0 rgba(30,27,58,.25)}
+.bubble.shout{font-family:Poppins;font-weight:700;line-height:1.02}
+.bubble b,.caption b{color:${C.flamme}}
+.caption{position:absolute;border:7px solid ${INK};border-radius:18px;padding:14px 26px 12px;font-family:Poppins;font-weight:700;line-height:1.14;box-shadow:8px 8px 0 ${INK};text-align:center}
+.title{position:absolute;font-family:Poppins;font-weight:700;line-height:.98;letter-spacing:-2px;color:${INK}}
 `;
 
-module.exports = { C, INK, S, quentin, brain, bubble, caption, burst, floor, link, slide, CSS, shade, FLOOR_Y };
+module.exports = { C, INK, S, FLOOR_Y, quentin, chimp, saleve, ground, bubble, caption, burst, link, logo, slide, CSS, shade };

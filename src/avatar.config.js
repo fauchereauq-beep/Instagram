@@ -8,5 +8,5 @@ module.exports = {
   beardColor: '#4A372C',
   shades: true, // lunettes de sport remontées sur la tête
   glasses: false,
-  hoodie: '#16A39B',
+  hoodie: '#FF5A1F', // « flamme », la couleur d'accent du site
 };
