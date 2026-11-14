@@ -27,5 +27,12 @@ Chaque référence a été vérifiée avant publication (auteur, revue ou ouvrag
 ## 08 — L'énigme du Salève : demain
 - Sirois, F. & Pychyl, T. (2013). Procrastination and the priority of short-term mood regulation: Consequences for future self. *Social and Personality Psychology Compass*, 7(2), 115–127.
 
+## 11 à 15 — Série « Dossier impossible »
+- **Samuel L. Jackson** : né le 21 décembre 1948 ; cure en 1991, *Jungle Fever* tourné juste après ; *Pulp Fiction* en 1994, à 45 ans (Encyclopedia.com, entretiens). Le rôle crédité « Hold-Up Man » (*Un prince à New York*, 1988) vient de sa filmographie et n'a pas été revérifié en ligne.
+- **Vera Wang** : cinquième aux championnats des États-Unis 1968, non qualifiée pour les Jeux ; Vogue de 1971 à 1987 ; dessine sa robe en 1989, boutique en 1990 (*Encyclopædia Britannica*).
+- **Ferdinand Cheval** : commence en 1879 à 43 ans, 33 ans de construction, Palais idéal classé monument historique en 1969 (site officiel du Palais idéal). « Tout le village rigole » résume sa réputation locale, rapportée par plusieurs récits.
+- **J. K. Rowling** : douze refus d'éditeurs, publication par Bloomsbury en juin 1997, premier tirage de 500 exemplaires ; l'éditeur Barry Cunningham lui a conseillé de garder un travail.
+- **Grandma Moses** (1860–1961) : se met à la peinture vers 76–78 ans selon les sources, quand l'arthrite l'empêche de broder ; première exposition personnelle à New York en 1940 (*Britannica*, *Smithsonian Magazine*).
+
 ## Construction des carrousels
 - Eyal, N. (2014). *Hooked: How to Build Habit-Forming Products*. Modèle déclencheur → action → récompense variable → investissement, transposé ici au carrousel.
