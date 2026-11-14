@@ -304,7 +304,7 @@ function logo(size = 64) {
 
 // ---------- la planche ----------
 // Le dessin (content) reçoit le filtre du style ; l'habillage (logo, numéro, pied) reste net.
-function slide({ bg = C.creme, bgCss = '', n, total, series = 'Mon chimpanzé et moi', content, cta = 'La suite →' }) {
+function slide({ bg = C.creme, bgCss = '', n, total, series = 'Mon chimpanzé et moi', content, cta = 'La suite →', source = '' }) {
   const tex = (f, o, mode) => `<svg class="abs" style="left:0;top:0;mix-blend-mode:${mode};opacity:${o}" width="1080" height="1350"><filter id="t${uid}"><feTurbulence type="fractalNoise" baseFrequency="${f}" numOctaves="3" seed="${uid}"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1080" height="1350" filter="url(#t${uid++})"/></svg>`;
   return `<div class="page st-${ST.key}" style="background:${bg};${bgCss}">
     <svg width="0" height="0" style="position:absolute"><filter id="sketch" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="8" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
@@ -314,6 +314,7 @@ function slide({ bg = C.creme, bgCss = '', n, total, series = 'Mon chimpanzé et
       ${ST.shadow ? '<div class="abs halftone"></div>' : ''}
       <div class="tag">${logo(58)}<span>${series}</span></div>
       ${n ? `<div class="num">${n}/${total}</div>` : ''}
+      ${source ? `<div class="src">Source : ${source}</div>` : ''}
       <div class="foot"><span>${A.handle}</span>${cta ? `<span class="swipe">${cta}</span>` : ''}</div>
     </div>
   </div>`;
@@ -333,6 +334,9 @@ body{width:1080px;height:1350px;overflow:hidden}
 .num{position:absolute;right:40px;top:50px;background:${C.creme};border:6px solid ${C.nuit};border-radius:999px;font-family:Poppins;font-weight:700;font-size:28px;padding:8px 20px;box-shadow:5px 5px 0 ${C.nuit};z-index:5}
 .foot{position:absolute;left:44px;right:44px;bottom:40px;display:flex;justify-content:space-between;align-items:center;font-family:Poppins;font-weight:700;font-size:32px;color:${C.creme};z-index:5}
 .foot .swipe{background:${C.soleil};color:${C.nuit};padding:10px 24px;border-radius:999px;border:5px solid ${C.nuit}}
+.src{position:absolute;left:44px;right:44px;bottom:112px;font-family:Inter;font-weight:600;font-size:22px;line-height:1.2;color:${C.creme};z-index:5}
+.sources{position:absolute;background:${C.creme};border:4px solid ${C.nuit};border-radius:12px;padding:14px 20px;font-family:Inter;font-weight:600;font-size:21px;line-height:1.32;color:${C.nuit}}
+.sources b{font-family:Poppins;font-weight:700;color:${C.flammeTexte}}
 .bubble{display:flex;align-items:center;justify-content:center;position:absolute;border-radius:44px;padding:24px 30px 22px;text-align:center;line-height:1.12;text-transform:uppercase;box-shadow:8px 8px 0 rgba(30,27,58,.25)}
 .bubble.shout{font-family:Poppins;font-weight:700;line-height:1.02}
 .bubble b,.caption b{color:${C.flamme}}
@@ -355,4 +359,6 @@ body{width:1080px;height:1350px;overflow:hidden}
 .st-carnet .tag,.st-carnet .num{box-shadow:none;border-width:4px}
 `;
 
-module.exports = { C, STYLES, useStyle, FLOOR_Y, quentin, chimp, saleve, ground, bubble, caption, burst, link, logo, slide, CSS, shade };
+const sources = ({ x, y, w, items }) => `<div class="sources" style="left:${x}px;top:${y}px;width:${w}px"><b>Sources</b><br>${items.join('<br>')}</div>`;
+
+module.exports = { sources, C, STYLES, useStyle, FLOOR_Y, quentin, chimp, saleve, ground, bubble, caption, burst, link, logo, slide, CSS, shade };
