@@ -1,5 +1,5 @@
 // Le sage et le singe — Épictète. On ose : séparer le fait de ce qu'on se raconte.
-const { C, useStyle, quentin, chimp, saleve, ground, guichet, bubble, caption, slide, sources } = require("../src/kit.js");
+const { C, useStyle, quentin, chimp, saleve, ground, guichet, bubble, caption, slide, sources } = require("../../src/kit.js");
 useStyle("roman");
 const T = 8, nb = "&nbsp;";
 const Q = { x: -50, y: 600, w: 600 }, K = { x: 590, y: 780, w: 440 };

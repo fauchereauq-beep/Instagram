@@ -1,5 +1,5 @@
 // Planches de comparaison : la même scène dans les quatre styles de dessin.
-const { C, STYLES, useStyle, quentin, chimp, saleve, ground, bubble, caption, slide } = require('../src/kit.js');
+const { C, STYLES, useStyle, quentin, chimp, saleve, ground, bubble, caption, slide } = require('../../src/kit.js');
 const nb = '&nbsp;';
 
 const NOTES = {
