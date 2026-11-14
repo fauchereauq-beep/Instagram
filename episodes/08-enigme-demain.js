@@ -41,7 +41,7 @@ module.exports = {
     slide({ n: 3, total: T, series, cta: 'Dernier indice →', content: `
       ${saleve()}
       ${bubble({ x: 560, y: 180, w: 460, size: 46, tail: { at: 0.7, dir: 1 }, text: `Ma motivation${nb}?` })}
-      ${bubble({ x: 40, y: 366, w: 540, size: 44, tail: { at: 0.32, dir: -1 }, text: `Tu me donnes rendez-vous <b>chaque soir</b>. Je ne viens jamais.` })}
+      ${bubble({ x: 40, y: 316, w: 540, size: 44, tail: { at: 0.32, dir: -1 }, text: `Tu me donnes rendez-vous <b>chaque soir</b>. Je ne viens jamais.` })}
       ${caption({ x: 560, y: 620, w: 470, size: 28, bg: C.soleil, rot: 1.5, text: `Ta réponse en commentaire, avant la suite${nb}!` })}
       ${quentin({ ...Q, eyes: { px: 8, py: 0 }, brows: [-6, 6], browY: -4, mouth: 'default', arms: 'think' })}
       ${ground()}
