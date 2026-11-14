@@ -334,7 +334,7 @@ body{width:1080px;height:1350px;overflow:hidden}
 .num{position:absolute;right:40px;top:50px;background:${C.creme};border:6px solid ${C.nuit};border-radius:999px;font-family:Poppins;font-weight:700;font-size:28px;padding:8px 20px;box-shadow:5px 5px 0 ${C.nuit};z-index:5}
 .foot{position:absolute;left:44px;right:44px;bottom:40px;display:flex;justify-content:space-between;align-items:center;font-family:Poppins;font-weight:700;font-size:32px;color:${C.creme};z-index:5}
 .foot .swipe{background:${C.soleil};color:${C.nuit};padding:10px 24px;border-radius:999px;border:5px solid ${C.nuit}}
-.src{position:absolute;left:44px;right:44px;bottom:112px;font-family:Inter;font-weight:600;font-size:22px;line-height:1.2;color:${C.creme};z-index:5}
+.src{position:absolute;left:44px;right:44px;bottom:114px;font-family:Inter;font-weight:600;font-size:21px;white-space:nowrap;line-height:1.2;color:${C.creme};z-index:5}
 .sources{position:absolute;background:${C.creme};border:4px solid ${C.nuit};border-radius:12px;padding:14px 20px;font-family:Inter;font-weight:600;font-size:21px;line-height:1.32;color:${C.nuit}}
 .sources b{font-family:Poppins;font-weight:700;color:${C.flammeTexte}}
 .bubble{display:flex;align-items:center;justify-content:center;position:absolute;border-radius:44px;padding:24px 30px 22px;text-align:center;line-height:1.12;text-transform:uppercase;box-shadow:8px 8px 0 rgba(30,27,58,.25)}
@@ -359,6 +359,18 @@ body{width:1080px;height:1350px;overflow:hidden}
 .st-carnet .tag,.st-carnet .num{box-shadow:none;border-width:4px}
 `;
 
+// Le guichet du Chimpanzé, posé sur son rocher : un bureau et sa pancarte.
+function guichet(sign, size = 38) {
+  const P = `stroke="${C.nuit}" stroke-width="5" stroke-linejoin="round"`;
+  return `<svg class="abs" style="left:0;top:0" width="1080" height="1350" viewBox="0 0 1080 1350">
+    <rect x="572" y="1036" width="476" height="150" fill="#C99A62" ${P}/>
+    <path d="M 572 1036 h 476 v 150 h -160 Z" fill="${C.nuit}" opacity=".14"/>
+    <rect x="556" y="1010" width="508" height="36" rx="6" fill="#E0B57E" ${P}/>
+    <rect x="596" y="1070" width="428" height="76" rx="8" fill="${C.creme}" ${P}/>
+    <text x="810" y="${1108 + size * 0.36}" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="${size}" fill="${C.nuit}">${sign}</text>
+  </svg>`;
+}
+
 const sources = ({ x, y, w, items }) => `<div class="sources" style="left:${x}px;top:${y}px;width:${w}px"><b>Sources</b><br>${items.join('<br>')}</div>`;
 
-module.exports = { sources, C, STYLES, useStyle, FLOOR_Y, quentin, chimp, saleve, ground, bubble, caption, burst, link, logo, slide, CSS, shade };
+module.exports = { guichet, sources, C, STYLES, useStyle, FLOOR_Y, quentin, chimp, saleve, ground, bubble, caption, burst, link, logo, slide, CSS, shade };
