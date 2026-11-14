@@ -3,7 +3,7 @@
 const { C, useStyle, quentin, chimp, saleve, ground, bubble, caption, slide } = require('../src/kit.js');
 useStyle('roman');
 
-const TOTAL = 7;
+const TOTAL = 8;
 const nb = '&nbsp;';
 const Q = { x: -50, y: 600, w: 600 };
 const K = { x: 590, y: 780, w: 440 };
@@ -87,17 +87,20 @@ module.exports = {
         ${guichet('AUTORISATIONS')}`,
     }),
 
-    // 5 — Bascule : il s'arrête, respire, revient au corps
+    // 5 — Bascule : l'exercice. Le soleil grandit, on inspire ; il rétrécit, on expire. (Animée par anim.js.)
     slide({
       n: 5, total: TOTAL,
       content: `
         ${saleve({ sky: ['#FFF6EA', '#FFD98A'], mist: 0.9 })}
-        <div class="title" style="left:48px;top:160px;width:700px;font-size:68px">Alors j’ai arrêté de faire la queue.</div>
-        ${caption({ x: 48, y: 420, size: 34, bg: C.creme, rot: 0, text: `J'ai respiré. Senti mes pieds. Regardé le lac.` })}
+        <div class="abs breath-halo" style="left:750px;top:460px;width:200px;height:200px;border-radius:50%;background:${C.soleil};opacity:.4;border:6px dashed ${C.nuit};transform:scale(1.7)"></div>
+        <div class="abs" style="left:750px;top:460px;width:200px;height:200px;border-radius:50%;background:${C.soleil};border:6px solid ${C.nuit};display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Poppins;font-weight:700;line-height:1.05">
+          <span class="breath-word" style="font-size:30px">RESPIRE</span><span class="breath-count" style="font-size:34px">4 · 6</span></div>
+        <div class="title" style="left:48px;top:150px;width:700px;font-size:66px">Alors j’ai arrêté de faire la queue.</div>
+        ${caption({ x: 48, y: 330, w: 560, size: 31, bg: C.creme, rot: 0, text: `Respire avec le soleil. Il grandit${nb}: inspire, 4${nb}secondes. Il rétrécit${nb}: expire, 6${nb}secondes.` })}
         ${quentin({ ...Q, eyes: { closed: true }, brows: [-4, 4], browY: -4, mouth: 'default', arms: 'heart' })}
         ${ground()}
-        ${chimp({ ...K, eyes: { px: -8, py: 0 }, brows: [-8, 8], browY: -4, mouth: 'small', arms: 'calm' })}
-        ${guichet('…PAUSE ?')}`,
+        ${chimp({ ...K, eyes: { closed: true }, brows: [-6, 6], browY: -2, mouth: 'smile', arms: 'calm' })}
+        ${guichet('…PAUSE')}`,
     }),
 
     // 6 — Le message
@@ -111,13 +114,27 @@ module.exports = {
         ${outil}
         ${ground()}
         ${chimp({ ...K, eyes: { px: -8, py: -2 }, brows: [-12, 12], browY: -8, mouth: 'open', arms: 'head' })}
-        ${guichet('AUTORISATIONS')}
-        ${caption({ x: 36, y: 1076, w: 490, size: 33, bg: C.soleil, rot: -1.5, text: `Personne ne viendra te donner la permission.` })}`,
+        ${guichet('AUTORISATIONS')}`,
     }),
 
-    // 7 — Appel final
+    // 7 — La morale
     slide({
-      n: 7, total: TOTAL, cta: 'Envoie-le à un ami ↗',
+      n: 7, total: TOTAL,
+      content: `
+        ${saleve()}
+        ${caption({ x: 48, y: 150, size: 34, bg: C.flamme, color: '#fff', rot: -2, text: `Morale de l'histoire` })}
+        <div class="title" style="left:48px;top:250px;width:940px;font-size:70px">La permission que tu attends, tu es le seul à pouvoir <span style="color:${C.flamme}">la signer.</span></div>
+        ${bubble({ x: 600, y: 590, w: 430, size: 42, tail: { at: 0.66, dir: 1 }, text: `Je peux garder le tampon${nb}?` })}
+        ${quentin({ ...Q, eyes: { px: 8, py: 0, laugh: true }, brows: [-6, 6], browY: -6, mouth: 'smile', arms: 'fist' })}
+        ${outil}
+        ${ground()}
+        ${chimp({ ...K, eyes: { px: -8, py: -2 }, brows: [-10, 10], browY: -6, mouth: 'small', arms: 'rub' })}
+        ${guichet('AUTORISATIONS')}`,
+    }),
+
+    // 8 — Appel final
+    slide({
+      n: 8, total: TOTAL, cta: 'Envoie-le à un ami ↗',
       content: `
         ${saleve({ sky: ['#FFF6EA', '#FFD98A'] })}
         <div class="title" style="left:48px;top:150px;width:900px;font-size:84px">Viens prendre l’air avec moi.</div>

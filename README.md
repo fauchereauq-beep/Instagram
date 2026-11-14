@@ -15,3 +15,4 @@ Régénérer les planches (Node et Playwright requis) :
 
     node build.js          # tous les épisodes
     node build.js 01       # un seul
+    node anim.js 01 5      # anime la planche de respiration (MP4, 20 s)
