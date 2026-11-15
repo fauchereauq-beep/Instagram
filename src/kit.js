@@ -16,6 +16,7 @@ const STYLES = {
   cartoon: { key: 'cartoon', name: 'Cartoon rond', lw: 7, eye: 'big', ink: C.nuit },
   claire: { key: 'claire', name: 'Ligne claire', lw: 4, eye: 'dot', ink: C.nuit },
   roman: { key: 'roman', name: 'Roman graphique', lw: 5, eye: 'almond', ink: C.nuit, shadow: true },
+  pop: { key: 'pop', name: 'Pop franco-belge', lw: 8, eye: 'big', ink: '#14121F', pop: true, eyeScale: 1.18 },
   carnet: { key: 'carnet', name: 'Carnet de rando', lw: 4.5, eye: 'almond', ink: '#2E2A52', sketch: true },
 };
 let ST = STYLES.cartoon;
@@ -53,6 +54,7 @@ function eye(cx, cy, { px = 0, py = 0, lid = 0, pr, closed = false, laugh = fals
       ${laugh ? `<path d="M ${cx + side * (w + 5)} ${cy - 4} l ${side * 11} -7 M ${cx + side * (w + 6)} ${cy + 3} l ${side * 12} 3" fill="none" ${S(0.6)}/>` : ''}`;
   }
   // 'big'
+  scale *= ST.eyeScale || 1;
   const rx = 17 * scale, ry = 20 * scale, id = `c${uid++}`;
   const top = cy - ry + lid * 2 * ry;
   return `<clipPath id="${id}"><rect x="${cx - rx - 8}" y="${top}" width="${2 * rx + 16}" height="${2 * ry + 16}"/></clipPath>
@@ -98,8 +100,9 @@ function qMouth(type) {
   }
 }
 
+let TOP = A.top;
 function quentinArms(arms) {
-  const col = A.top;
+  const col = TOP;
   switch (arms) {
     case 'fist':
       return limb('M 386 470 Q 446 430 434 340', col) + hand(434, 314, 31) + `<path d="M 418 308 h 30 M 420 320 h 28" fill="none" ${S(0.6)}/>`;
@@ -127,8 +130,9 @@ function quentinArms(arms) {
 
 // Quentin en buste. viewBox 480 x 540.
 // eyes : { px, py, lid, closed, laugh } ; brows : [gauche, droite] en degrés ; mouth : voir qMouth ; arms : voir quentinArms.
-function quentin({ x = 0, y = 0, w = 520, flip = false, eyes = {}, brows = [0, 0], browY = 0, mouth: m = 'smile', arms = 'down', sweat = false } = {}) {
+function quentin({ x = 0, y = 0, w = 520, flip = false, eyes = {}, brows = [0, 0], browY = 0, mouth: m = 'smile', arms = 'down', sweat = false, outfit = 'rando' } = {}) {
   const el = eyes.l || eyes, er = eyes.r || eyes;
+  TOP = outfit === 'chemise' ? A.shirt : A.top;
   const hc = `hc${uid++}`, lg = `lens${uid++}`;
   const bw = ST.eye === 'dot' ? 8 : 10;
   const brow = (cx, a) => `<line x1="${cx - 27}" y1="${172 + browY}" x2="${cx + 27}" y2="${172 + browY}" stroke="${A.hair}" stroke-width="${bw}" stroke-linecap="round" transform="rotate(${a} ${cx} ${172 + browY})"/>`;
@@ -137,11 +141,14 @@ function quentin({ x = 0, y = 0, w = 520, flip = false, eyes = {}, brows = [0, 0
       <linearGradient id="${lg}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#FFE14D"/><stop offset=".5" stop-color="#7BE38B"/><stop offset="1" stop-color="#FF7AB8"/></linearGradient></defs>
     <path d="M 204 296 L 200 362 L 280 362 L 276 296 Z" fill="${A.skin}" ${S()}/>
     ${SH('M 204 306 Q 240 340 276 306 L 278 336 Q 240 356 202 336 Z', 0.24)}
-    <path d="M 82 546 C 82 430, 122 372, 198 352 Q 240 384 282 352 C 358 372, 398 430, 398 546 Z" fill="${A.top}" ${S()}/>
+    <path d="M 82 546 C 82 430, 122 372, 198 352 Q 240 384 282 352 C 358 372, 398 430, 398 546 Z" fill="${TOP}" ${S()}/>
     ${SH('M 300 358 C 358 376, 398 430, 398 546 L 330 546 C 336 470, 326 410, 300 358 Z', 0.2)}
     <path d="M 198 352 Q 240 392 282 352" fill="none" ${S()}/>
-    <path d="M 158 376 L 182 362 L 190 546 L 164 546 Z" fill="${A.vest}" ${S()}/><path d="M 322 376 L 298 362 L 290 546 L 316 546 Z" fill="${A.vest}" ${S()}/>
-    <path d="M 190 462 L 290 462" fill="none" ${S()}/><rect x="226" y="450" width="28" height="24" rx="5" fill="${C.soleil}" ${S(0.8)}/>
+    ${outfit === 'chemise' ? `<path d="M 198 352 Q 240 392 282 352 L 268 546 L 212 546 Z" fill="${A.tee}" ${S()}/>
+      <path d="M 198 352 L 176 372 L 214 436 L 212 546 M 282 352 L 304 372 L 266 436 L 268 546" fill="none" ${S()}/>
+      <path d="M 120 430 v 110 M 140 410 v 130 M 340 410 v 130 M 360 430 v 110" stroke="${shade(A.shirt, -30)}" stroke-width="4" stroke-linecap="round"/>` :
+    `<path d="M 158 376 L 182 362 L 190 546 L 164 546 Z" fill="${A.vest}" ${S()}/><path d="M 322 376 L 298 362 L 290 546 L 316 546 Z" fill="${A.vest}" ${S()}/>
+    <path d="M 190 462 L 290 462" fill="none" ${S()}/><rect x="226" y="450" width="28" height="24" rx="5" fill="${C.soleil}" ${S(0.8)}/>`}
     <ellipse cx="147" cy="210" rx="17" ry="27" fill="${A.skin}" ${S()}/><ellipse cx="333" cy="210" rx="17" ry="27" fill="${A.skin}" ${S()}/>
     <path d="M 143 200 q 9 8 4 22 M 337 200 q -9 8 -4 22" fill="none" ${S(0.6)}/>
     <path d="${HEAD}" fill="${A.skin}" ${S()}/>
@@ -155,7 +162,9 @@ function quentin({ x = 0, y = 0, w = 520, flip = false, eyes = {}, brows = [0, 0
       <path d="M 188 66 q 22 -8 46 -9" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".85"/></g>` : ''}
     ${eye(204, 200, el, -1)}${eye(276, 200, er, 1)}
     ${brow(204, brows[0])}${brow(276, brows[1])}
-    <path d="M 231 222 C 228 232, 222 237, 222 243 Q 224 253 240 252 Q 256 253 258 243" fill="none" ${S(0.85)}/>
+    ${ST.pop ? `<ellipse cx="183" cy="236" rx="15" ry="9" fill="#F4917F" opacity=".55"/><ellipse cx="297" cy="236" rx="15" ry="9" fill="#F4917F" opacity=".55"/>
+      <ellipse cx="240" cy="234" rx="25" ry="20" fill="${shade(A.skin, -16)}" ${S(0.8)}/><ellipse cx="232" cy="227" rx="7" ry="5" fill="#fff" opacity=".6"/>` :
+    `<path d="M 231 222 C 228 232, 222 237, 222 243 Q 224 253 240 252 Q 256 253 258 243" fill="none" ${S(0.85)}/>`}
     ${ST.shadow ? `<path d="M 240 252 Q 256 253 258 242 C 256 232, 250 220, 248 206 Z" fill="${C.nuit}" opacity=".14"/>` : ''}
     ${qMouth(m)}
     ${sweat ? `<path d="M 356 124 q 14 22 0 30 q -14 -8 0 -30 Z" fill="#8FD3FF" ${S(0.7)}/>` : ''}
@@ -357,6 +366,10 @@ body{width:1080px;height:1350px;overflow:hidden}
 .st-carnet .bubble{font-family:Hand;font-weight:400;text-transform:none;font-size:1.22em;line-height:1.05;box-shadow:none;border-radius:60px 48px 64px 44px;background:${C.creme} !important}
 .st-carnet .caption{box-shadow:none;border-radius:6px}
 .st-carnet .tag,.st-carnet .num{box-shadow:none;border-width:4px}
+/* Pop franco-belge : traits noirs épais, bulles rondes, ombres franches */
+.st-pop .bubble{border-radius:50px;box-shadow:9px 9px 0 #14121F;font-size:1.04em}
+.st-pop .caption{border-radius:10px;box-shadow:9px 9px 0 #14121F}
+.st-pop .title{color:#14121F}
 `;
 
 // Le guichet du Chimpanzé, posé sur son rocher : un bureau et sa pancarte.
@@ -371,6 +384,17 @@ function guichet(sign, size = 38) {
   </svg>`;
 }
 
+// Onomatopée franco-belge : grosses lettres inclinées, contour noir, ombre décalée.
+function ono(text, { x, y, size = 110, rot = -8, fill = C.soleil }) {
+  return `<div class="abs" style="left:${x}px;top:${y}px;transform:rotate(${rot}deg);font-family:Poppins;font-weight:700;font-size:${size}px;line-height:1;letter-spacing:2px;font-style:italic;color:${fill};-webkit-text-stroke:${Math.round(size / 11)}px #14121F;paint-order:stroke fill;text-shadow:${Math.round(size / 16)}px ${Math.round(size / 16)}px 0 #14121F;z-index:4">${text}</div>`;
+}
+// Fond uni avec trame pop (points), et rayons optionnels.
+function popBg(color, { rays = false, cx = 540, cy = 700 } = {}) {
+  return `<div class="abs" style="inset:0;background:${color}"></div>
+    ${rays ? `<div class="abs" style="inset:0;background:repeating-conic-gradient(from 0deg at ${cx}px ${cy}px, rgba(255,255,255,.16) 0 7deg, transparent 7deg 14deg)"></div>` : ''}
+    <div class="abs" style="inset:0;background-image:radial-gradient(rgba(20,18,31,.13) 2.6px,transparent 3.2px);background-size:18px 18px"></div>`;
+}
+
 const sources = ({ x, y, w, items }) => `<div class="sources" style="left:${x}px;top:${y}px;width:${w}px"><b>Sources</b><br>${items.join('<br>')}</div>`;
 
-module.exports = { guichet, sources, C, STYLES, useStyle, FLOOR_Y, quentin, chimp, saleve, ground, bubble, caption, burst, link, logo, slide, CSS, shade };
+module.exports = { ono, popBg, guichet, sources, C, STYLES, useStyle, FLOOR_Y, quentin, chimp, saleve, ground, bubble, caption, burst, link, logo, slide, CSS, shade };

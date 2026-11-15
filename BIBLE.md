@@ -32,6 +32,17 @@ On commence par **Crash-test** et **Ils ont osé**, en séries. Les deux autres 
 
 En plus : **les fables** (ex. *Le Meunier, son fils et l'âne*, La Fontaine : quoi que tu fasses, on te critiquera).
 
+## Catalogue des formats (7 planches chacun, style pop franco-belge)
+
+| Format | Planches | Statut |
+|---|---|---|
+| **Crash-test** | Couverture-aveu · Brutus argumente · Brutus en mode survie · le fond du trou · la bascule (un vrai événement) · le radar du corps · le défi | n°1 « La balade fantôme » fait (épisode 31) |
+| **Ils ont osé** | « C'est impossible » · « Assieds-toi » · trois flashbacks commentés par Brutus comme au cinéma · la révélation · la morale | à refaire en pop à partir de la série « Dossier impossible » |
+| **Le radar du corps** | Brutus panique · rayon X du corps · ce qui se passe vraiment · l'exercice en 3 étapes · Brutus redescend · la planche-fiche à enregistrer | après validation des deux premiers |
+| **Appel à un ami** | Dispute sur un concept · l'invité surgit du quotidien · l'image simple · ce qui est prouvé / ce qui est vécu · la morale | idem ; citations réelles uniquement |
+| **Les fables du Salève** | Une fable classique rejouée par Quentin et Brutus, avec la morale | ponctuel |
+| **L'énigme du Salève** | Énigme · indices trompeurs · réponse · morale ; reprise en story avec l'autocollant quiz | ponctuel |
+
 ## Codes visuels récurrents
 
 | Thème | Image |

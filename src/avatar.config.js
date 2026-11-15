@@ -8,5 +8,7 @@ module.exports = {
   iris: '#7A4A2A',
   top: '#FF5A1F', // maillot « flamme », la couleur d'accent du site
   vest: '#1E1B3A', // bretelles du sac de trail
+  shirt: '#9CC3E6', // chemise en velours bleu ciel (photo)
+  tee: '#FFFFFF',
   shades: true, // lunettes de sport rouges remontées sur la tête
 };
