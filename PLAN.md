@@ -1,5 +1,7 @@
 # Plan de publication — saison 1
 
+> **Calendrier suspendu le 15 novembre** : refonte en cours selon `BIBLE.md`, un carrousel à la fois.
+
 Un seul sujet : **oser créer ce qui t'anime.**
 Trois formats, des jours fixes, un calendrier daté. Tout ce qui est listé ici est prêt, sauf mention contraire.
 
