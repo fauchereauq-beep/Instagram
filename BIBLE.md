@@ -17,6 +17,12 @@ Critère de validation : quand Quentin le relit, il rit et il apprend un truc, e
 **Les invités** (Einstein, Gandhi, Sénèque…) surgissent dans le quotidien de Quentin et interagissent physiquement avec lui et avec Brutus.
 Règle non négociable : un invité ne dit que ce qu'il a réellement dit ou défendu. Sinon c'est présenté comme une blague évidente, jamais comme une citation.
 
+## Priorité de Quentin (15 novembre)
+
+On commence par **Crash-test** et **Ils ont osé**, en séries. Les deux autres formats viennent après.
+
+**Ton** : la répartie courte de Baffie, le malaise qui dure de Damiens, les gags visuels et les onomatopées de la BD franco-belge (Titeuf, Gaston). On s'inspire du genre, jamais des personnages ni des dessins existants.
+
 ## Les quatre formats
 
 1. **Appel à un ami** (concepts et citations) : Quentin et Brutus se disputent sur un concept, un invité apparaît, casse le mythe avec une image simple et repart.

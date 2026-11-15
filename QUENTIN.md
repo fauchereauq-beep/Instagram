@@ -12,3 +12,12 @@ Notes données par Quentin pour nourrir les carrousels. À compléter au fil des
 - **Sa phrase** : « Je ne suis pas fait pour le cadre, mais pour créer ce qui m'anime. »
 - **Balades** : deux faites à ce jour ; retours : soulagé, détendu, clarté, sourire, étonné par les exercices de magnétisme.
 - **Humour** : autodérision, absurde administratif (le guichet). Pas de blague à référence obscure.
+
+## Réponses du 15 novembre
+
+- **Énergie, vécu** : la chaleur dans les mains ; des informations absurdes pour lui qui parlent à la personne en face ; le corps qui dit « stop », « pas ici », « va-t'en ».
+- **Loi d'attraction, ses mots** : la vibration du corps, une attitude et une demande, pour avoir et recevoir. « Si on est mal, on attire du mal. » (Formulation à retravailler ensemble, voir l'échange du 15 novembre.)
+- **Dernière victoire de Brutus** : il lui a fait repousser le lancement des balades nature, « parce qu'il y a encore plein d'inconnu, d'incertitude ».
+- **La balade déclic** : 1 h 30, à la Maison du Salève. Pour ceux qui ont un projet en tête mais sont bloqués, ou déjà en route mais dans le brouillard, qui doutent. Déroulé : repérer le blocage principal, l'analyser avec le corps, scènes d'impro (« je suis l'âme », « je suis le chimpanzé »), soin de magnétisme en lien avec la nature, point sur le système nerveux, défi final.
+- **Formats préférés** : les séries ; « Ils ont osé » ; ses propres histoires racontées avec autodérision (Crash-test).
+- **Humour** : Titeuf, Gaston Lagaffe, la répartie de François Damiens et de Laurent Baffie. Visuel souhaité : BD franco-belge avec un côté pop.
