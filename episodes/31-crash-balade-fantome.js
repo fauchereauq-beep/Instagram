@@ -1,6 +1,6 @@
 // Crash-test n°1 — « La balade fantôme ». Vraie histoire : Brutus a fait repousser le lancement des balades plus de six mois.
 // Style pop franco-belge. Scénario validé par Quentin le 15 novembre.
-const { C, useStyle, quentin, chimp, saleve, ground, bubble, caption, link, slide, ono, popBg } = require('../src/kit.js');
+const { C, useStyle, quentin, chimp, saleve, ground, bubble, caption, link, slide, ono, popBg, cases } = require('../src/kit.js');
 useStyle('pop');
 
 const T = 7, nb = '&nbsp;', series = 'Crash-test · n°1';
@@ -76,6 +76,27 @@ const agenda = svg(`
     <text x="656" y="380" font-family="Poppins" font-weight="700" font-size="28" fill="${C.grisNuit}">→ après l’été</text>
     <text x="656" y="430" font-family="Poppins" font-weight="700" font-size="28" fill="${C.grisNuit}">→ quand ce sera clair</text>
   </g>`);
+const fenetre = svg(`
+  <defs><linearGradient id="ciel" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#BFE3FF"/><stop offset="1" stop-color="#FFE7B0"/></linearGradient>
+    <clipPath id="vitre"><rect x="400" y="560" width="240" height="230"/></clipPath></defs>
+  <rect x="400" y="560" width="240" height="230" fill="url(#ciel)"/>
+  <g clip-path="url(#vitre)">
+    <path d="M 400 720 L 470 640 L 520 690 L 580 620 L 640 700 L 640 790 L 400 790 Z" fill="${C.lointain}" ${P(4)}/>
+    <rect x="400" y="740" width="240" height="50" fill="${C.lac}"/><path d="M 560 740 c -2 -20 0 -34 4 -44 c 4 10 6 24 4 44 Z" fill="#fff" ${P(2)}/>
+  </g>
+  <rect x="400" y="560" width="240" height="230" fill="none" ${P(12)}/><path d="M 520 560 V 790 M 400 675 H 640" ${P(7)}/>
+  <path d="M 380 548 Q 400 680 384 806 L 352 806 Q 368 680 350 548 Z" fill="${C.soleil}" ${P(6)}/>
+  <path d="M 660 548 Q 640 680 656 806 L 688 806 Q 672 680 690 548 Z" fill="${C.soleil}" ${P(6)}/>`);
+const horloge = svg(`
+  <circle cx="770" cy="640" r="54" fill="#fff" ${P(8)}/>
+  <path d="M 770 640 V 604 M 770 640 L 796 652" ${P(7)}/><circle cx="770" cy="640" r="6" fill="#14121F"/>
+  <path d="M 832 612 q 14 -8 22 4 M 838 640 q 16 -2 20 12" fill="none" ${P(4)}/>`);
+const lampe = svg(`
+  <circle cx="1000" cy="610" r="120" fill="${C.soleil}" opacity=".25"/>
+  <path d="M 1000 650 V 1100" ${P(10)}/><path d="M 1000 650 V 1100" stroke="#C9A36A" stroke-width="4"/>
+  <path d="M 936 560 L 1064 560 L 1090 660 L 910 660 Z" fill="${C.soleil}" ${P(7)}/>`);
+const salon = (perso) => `${mur}${fenetre}${horloge}${lampe}${dossier}${perso}${assise}`;
+
 const plaid = (top = 980) => svg(`
   <defs><pattern id="tartan" width="60" height="60" patternUnits="userSpaceOnUse"><rect width="60" height="60" fill="#D9473A"/><rect x="22" width="16" height="60" fill="#14121F" opacity=".22"/><rect y="22" width="60" height="16" fill="#14121F" opacity=".22"/><rect x="28" width="4" height="60" fill="#FFC233" opacity=".7"/><rect y="28" width="60" height="4" fill="#FFC233" opacity=".7"/></pattern></defs>
   <path d="M 630 ${top + 20} Q 812 ${top - 30} 1000 ${top + 20} L 1030 1200 L 600 1200 Z" fill="url(#tartan)" ${P(7)}/>`);
@@ -157,17 +178,21 @@ module.exports = {
       ${carte}
       ${ono('WIIIOU&nbsp;!', { x: 380, y: 690, size: 76, rot: -10, fill: '#E5322D' })}` }),
 
-    // 4 — Le fond du trou (le canapé)
+    // 4 — Le fond du trou, en deux cases : gros plan sur l'agenda, puis plan large du salon.
     slide({ n: 4, total: T, series, cta: 'BZZZ →', content: `
-      ${mur}${agenda}
-      ${caption({ x: 48, y: 150, w: 520, size: 32, bg: C.soleil, rot: -2, text: `Résultat${nb}: j'ai repoussé. Plus de six mois.` })}
-      ${dossier}
-      ${quentin({ x: -40, y: 650, w: 600, outfit: 'chemise', eyes: { px: 0, py: 2, lid: 0.45 }, brows: [0, 0], mouth: 'flat' })}
-      ${chimp({ x: 610, y: 760, w: 400, eyes: { px: -4, py: 0, lid: 0.4 }, brows: [-6, 6], mouth: 'smile', arms: 'calm' })}
-      ${plaid(980)}${chips(860, 930)}
-      ${assise}
-      ${bubble({ x: 590, y: 540, w: 420, size: 44, tail: { at: 0.55, dir: 0 }, text: `On est bien, là.` })}
-      ${bubble({ x: 60, y: 520, w: 190, size: 52, tail: { at: 0.6, dir: 1 }, text: `…` })}` }),
+      ${popBg(C.creme)}
+      <div class="abs" style="left:0;right:0;top:1250px;bottom:0;background:${C.nuit}"></div>
+      ${cases([
+        { x: 40, y: 130, w: 1000, h: 420, scene: mur + agenda, cx: 210, cy: 110, k: 1.15 },
+        { x: 40, y: 590, w: 1000, h: 630, cx: 0, cy: 540, k: 0.926, scene: salon(`
+          ${quentin({ x: -40, y: 650, w: 600, outfit: 'chemise', eyes: { px: 0, py: 2, lid: 0.45 }, brows: [0, 0], mouth: 'flat' })}
+          ${chimp({ x: 610, y: 760, w: 400, eyes: { px: -4, py: 0, lid: 0.4 }, brows: [-6, 6], mouth: 'smile', arms: 'calm' })}
+          ${plaid(980)}${chips(860, 930)}
+          ${svg(chip(560, 1120, 20) + chip(620, 1140, -30) + chip(470, 1150, 10))}`) },
+      ])}
+      ${caption({ x: 70, y: 170, w: 400, size: 34, bg: C.soleil, rot: -2, text: `Résultat${nb}: j'ai repoussé. Plus de six mois.` })}
+      ${bubble({ x: 610, y: 610, w: 400, size: 44, tail: { at: 0.55, dir: 0 }, text: `On est bien, là.` })}
+      ${bubble({ x: 80, y: 600, w: 170, size: 52, tail: { at: 0.6, dir: 1 }, text: `…` })}` }),
 
     // 5 — La bascule : le message
     slide({ n: 5, total: T, series, cta: 'Ce qui se passe dans le corps →', content: `

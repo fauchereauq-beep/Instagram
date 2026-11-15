@@ -16,7 +16,7 @@ const STYLES = {
   cartoon: { key: 'cartoon', name: 'Cartoon rond', lw: 7, eye: 'big', ink: C.nuit },
   claire: { key: 'claire', name: 'Ligne claire', lw: 4, eye: 'dot', ink: C.nuit },
   roman: { key: 'roman', name: 'Roman graphique', lw: 5, eye: 'almond', ink: C.nuit, shadow: true },
-  pop: { key: 'pop', name: 'Pop franco-belge', lw: 8, eye: 'big', ink: '#14121F', pop: true, eyeScale: 1.18 },
+  pop: { key: 'pop', name: 'Pop franco-belge', lw: 8, eye: 'big', ink: '#14121F', pop: true, eyeScale: 1.18, shadow: true, shade: '#5A2416' },
   carnet: { key: 'carnet', name: 'Carnet de rando', lw: 4.5, eye: 'almond', ink: '#2E2A52', sketch: true },
 };
 let ST = STYLES.cartoon;
@@ -24,7 +24,7 @@ const useStyle = (k) => { ST = STYLES[k] || STYLES.cartoon; return ST; };
 
 let uid = 0;
 const S = (k = 1) => `stroke="${ST.ink}" stroke-width="${+(ST.lw * k).toFixed(1)}" stroke-linecap="round" stroke-linejoin="round"`;
-const SH = (d, o = 0.17) => (ST.shadow ? `<path d="${d}" fill="${C.nuit}" opacity="${o}"/>` : '');
+const SH = (d, o = 0.17) => (ST.shadow ? `<path d="${d}" fill="${ST.shade || C.nuit}" opacity="${o}"/>` : '');
 
 function shade(hex, amt) {
   const n = parseInt(hex.slice(1), 16);
@@ -154,7 +154,10 @@ function quentin({ x = 0, y = 0, w = 520, flip = false, eyes = {}, brows = [0, 0
     <path d="${HEAD}" fill="${A.skin}" ${S()}/>
     <g clip-path="url(#${hc})">${SH('M 292 80 C 304 150, 300 230, 268 326 L 340 326 L 340 80 Z')}</g>
     <path d="${BEARD}" fill="${A.beard}" ${S()}/>
+    ${ST.pop ? `<path d="M 168 268 C 196 306, 284 306, 312 268" fill="none" stroke="${shade(A.beard, -24)}" stroke-width="12" stroke-linecap="round" opacity=".55"/>
+      <path d="M 160 214 l 4 9 M 172 236 l 5 8 M 186 254 l 5 7 M 320 214 l -4 9 M 308 236 l -5 8 M 294 254 l -5 7 M 220 292 l 2 8 M 260 292 l -2 8" stroke="${shade(A.beard, 34)}" stroke-width="3" stroke-linecap="round"/>` : ''}
     <path d="${HAIR}" fill="${A.hair}" ${S()}/>
+    ${ST.pop ? `<path d="M 182 74 l 12 34 M 222 40 l 6 44 M 262 44 l -4 40 M 300 64 l -12 34 M 166 130 l 8 22 M 318 128 l -8 24" stroke="${shade(A.hair, 46)}" stroke-width="5" stroke-linecap="round"/>` : ''}
     <path d="M 214 66 l 6 30 M 250 62 l -2 34 M 286 76 l -10 26" fill="none" stroke="#8C8690" stroke-width="3.5" stroke-linecap="round" opacity=".8"/>
     ${A.shades ? `<g transform="rotate(-4 240 80)">
       <path d="${VISOR}" fill="url(#${lg})" stroke="${ST.ink}" stroke-width="${ST.lw * 2 + 3}" stroke-linejoin="round"/>
@@ -162,7 +165,8 @@ function quentin({ x = 0, y = 0, w = 520, flip = false, eyes = {}, brows = [0, 0
       <path d="M 188 66 q 22 -8 46 -9" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".85"/></g>` : ''}
     ${eye(204, 200, el, -1)}${eye(276, 200, er, 1)}
     ${brow(204, brows[0])}${brow(276, brows[1])}
-    ${ST.pop ? `<ellipse cx="183" cy="236" rx="15" ry="9" fill="#F4917F" opacity=".55"/><ellipse cx="297" cy="236" rx="15" ry="9" fill="#F4917F" opacity=".55"/>
+    ${ST.pop ? `<path d="M 166 196 l -13 -5 M 166 206 l -13 4 M 314 196 l 13 -5 M 314 206 l 13 4" fill="none" ${S(0.45)}/>
+      <ellipse cx="183" cy="236" rx="15" ry="9" fill="#F4917F" opacity=".55"/><ellipse cx="297" cy="236" rx="15" ry="9" fill="#F4917F" opacity=".55"/>
       <ellipse cx="240" cy="234" rx="25" ry="20" fill="${shade(A.skin, -16)}" ${S(0.8)}/><ellipse cx="232" cy="227" rx="7" ry="5" fill="#fff" opacity=".6"/>` :
     `<path d="M 231 222 C 228 232, 222 237, 222 243 Q 224 253 240 252 Q 256 253 258 243" fill="none" ${S(0.85)}/>`}
     ${ST.shadow ? `<path d="M 240 252 Q 256 253 258 242 C 256 232, 250 220, 248 206 Z" fill="${C.nuit}" opacity=".14"/>` : ''}
@@ -395,6 +399,13 @@ function popBg(color, { rays = false, cx = 540, cy = 700 } = {}) {
     <div class="abs" style="inset:0;background-image:radial-gradient(rgba(20,18,31,.13) 2.6px,transparent 3.2px);background-size:18px 18px"></div>`;
 }
 
+function cases(list, ink = '#14121F') {
+  return list.map(({ x, y, w, h, scene, cx = 0, cy = 0, k = 1 }) => `
+    <div class="abs" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;overflow:hidden;border:8px solid ${ink};border-radius:8px;box-shadow:9px 9px 0 ${ink};background:#fff">
+      <div class="abs" style="left:0;top:0;width:1080px;height:1350px;transform-origin:0 0;transform:scale(${k}) translate(${-cx}px, ${-cy}px)">${scene}</div>
+    </div>`).join('');
+}
+
 const sources = ({ x, y, w, items }) => `<div class="sources" style="left:${x}px;top:${y}px;width:${w}px"><b>Sources</b><br>${items.join('<br>')}</div>`;
 
-module.exports = { ono, popBg, guichet, sources, C, STYLES, useStyle, FLOOR_Y, quentin, chimp, saleve, ground, bubble, caption, burst, link, logo, slide, CSS, shade };
+module.exports = { cases, ono, popBg, guichet, sources, C, STYLES, useStyle, FLOOR_Y, quentin, chimp, saleve, ground, bubble, caption, burst, link, logo, slide, CSS, shade };
