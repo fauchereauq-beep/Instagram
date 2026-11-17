@@ -1,6 +1,6 @@
 {
   "fuseau": "Europe/Zurich",
-  "branche_images": "ccr-c6f67d97-foe9ay",
+  "branche_images": "main",
   "publications": [
     { "date": "2026-11-19", "heure": "18:45", "carrousel": "41-crash-balade-fantome", "valide": false, "statut": "à valider" },
     { "date": "2026-11-22", "heure": "18:45", "carrousel": "45-fable-meunier", "valide": false, "statut": "à valider" },
