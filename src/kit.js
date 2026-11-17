@@ -347,7 +347,7 @@ body{width:1080px;height:1350px;overflow:hidden}
 .num{position:absolute;right:40px;top:50px;background:${C.creme};border:6px solid ${C.nuit};border-radius:999px;font-family:Poppins;font-weight:700;font-size:28px;padding:8px 20px;box-shadow:5px 5px 0 ${C.nuit};z-index:5}
 .foot{position:absolute;left:44px;right:44px;bottom:40px;display:flex;justify-content:space-between;align-items:center;font-family:Poppins;font-weight:700;font-size:32px;color:${C.creme};z-index:5}
 .foot .swipe{background:${C.soleil};color:${C.nuit};padding:10px 24px;border-radius:999px;border:5px solid ${C.nuit}}
-.src{position:absolute;left:44px;right:44px;bottom:114px;font-family:Inter;font-weight:600;font-size:21px;white-space:nowrap;line-height:1.2;color:${C.creme};z-index:5}
+.src{position:absolute;left:36px;right:auto;max-width:1008px;bottom:108px;background:rgba(20,18,31,.88);border-radius:10px;padding:6px 12px;font-family:Inter;font-weight:600;font-size:21px;white-space:nowrap;line-height:1.2;color:${C.creme};z-index:5}
 .sources{position:absolute;background:${C.creme};border:4px solid ${C.nuit};border-radius:12px;padding:14px 20px;font-family:Inter;font-weight:600;font-size:21px;line-height:1.32;color:${C.nuit}}
 .sources b{font-family:Poppins;font-weight:700;color:${C.flammeTexte}}
 .bubble{display:flex;align-items:center;justify-content:center;position:absolute;border-radius:44px;padding:24px 30px 22px;text-align:center;line-height:1.12;text-transform:uppercase;box-shadow:8px 8px 0 rgba(30,27,58,.25)}

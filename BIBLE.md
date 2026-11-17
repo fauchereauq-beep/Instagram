@@ -32,6 +32,10 @@ On commence par **Crash-test** et **Ils ont osé**, en séries. Les deux autres 
 
 En plus : **les fables** (ex. *Le Meunier, son fils et l'âne*, La Fontaine : quoi que tu fasses, on te critiquera).
 
+## Style retenu (16 novembre)
+
+**Style 1, gros nez franco-belge pop** : grosse tête, petit corps, nez patate, yeux collés, traits épais, onomatopées. Code dans `src/gn.js` (personnages, invités, âne, décors, accessoires) et `src/ep.js` (raccourcis d'épisode). Premiers épisodes : 41 à 45.
+
 ## Catalogue des formats (7 planches chacun, style pop franco-belge)
 
 | Format | Planches | Statut |

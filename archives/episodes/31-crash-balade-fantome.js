@@ -1,6 +1,6 @@
 // Crash-test n°1 — « La balade fantôme ». Vraie histoire : Brutus a fait repousser le lancement des balades plus de six mois.
 // Style pop franco-belge. Scénario validé par Quentin le 15 novembre.
-const { C, useStyle, quentin, chimp, saleve, ground, bubble, caption, link, slide, ono, popBg, cases } = require('../src/kit.js');
+const { C, useStyle, quentin, chimp, saleve, ground, bubble, caption, link, slide, ono, popBg, cases } = require('../../src/kit.js');
 useStyle('pop');
 
 const T = 7, nb = '&nbsp;', series = 'Crash-test · n°1';
