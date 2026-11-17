@@ -1,6 +1,6 @@
-// Ils ont osé n°1 — Le facteur Cheval. On ose : créer sans avoir le temps. Les excuses sont celles de Quentin (apéro, match, formations).
-const { C, G, nb, fl, so, big, S, tag, ep, bubble, caption, ono, sources } = require('../src/ep.js');
-const s = ep('Ils ont osé · n°1', 7);
+// Ils ont osé n°1 — Le facteur Cheval. Les excuses de départ sont celles de Quentin (apéro, match, formations).
+const { C, G, nb, fl, so, big, S, tag, bulle, tq, tb, narr, hook, fleche, actions, ep3, ono } = require('../src/v3.js');
+const s = ep3('Ils ont osé · n°1', 8);
 const I = G.I, st = G.st;
 
 const ecran = (x, y, w, h, inner) => `<div class="abs" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;border:10px solid #2B2B33;border-radius:10px;overflow:hidden;box-shadow:0 0 0 6px ${I},0 0 70px rgba(255,214,120,.4);background:#FFF6EA">${inner}</div>`;
@@ -14,71 +14,87 @@ const facteur = `<g transform="translate(250 400) rotate(-24)">
   <path d="M -70 -6 L -150 -70 M -60 14 L -150 -20" stroke="${I}" stroke-width="30" stroke-linecap="round"/><path d="M -70 -6 L -150 -70 M -60 14 L -150 -20" stroke="#2F4E8C" stroke-width="18" stroke-linecap="round"/>
   <rect x="-80" y="-34" width="150" height="70" rx="26" fill="#2F4E8C" ${st(6)}/>
   <path d="M 40 -30 L 70 -90 M 50 30 L 100 60" stroke="${I}" stroke-width="24" stroke-linecap="round"/><path d="M 40 -30 L 70 -90 M 50 30 L 100 60" stroke="#2F4E8C" stroke-width="12" stroke-linecap="round"/>
-  <circle cx="110" cy="-6" r="34" fill="#F0C6A4" ${st(6)}/><path d="M 96 -40 h 46 v -18 h -46 Z M 136 -40 l 22 6" fill="#2F4E8C" ${st(5)}/><path d="M 96 0 q 14 10 30 0" fill="none" ${st(5)}/><path d="M 90 -12 l 10 6 M 100 -18 l -2 12" ${st(4)}/>
+  <circle cx="110" cy="-6" r="34" fill="#F0C6A4" ${st(6)}/><path d="M 96 -40 h 46 v -18 h -46 Z M 136 -40 l 22 6" fill="#2F4E8C" ${st(5)}/><path d="M 96 0 q 14 10 30 0" fill="none" ${st(5)}/>
   <rect x="-30" y="26" width="64" height="48" rx="8" fill="#8A5A2B" ${st(5)}/></g>
   ${[[420, 140, -20], [520, 90, 15], [610, 170, 40], [360, 80, -50]].map(([x, y, r]) => `<g transform="translate(${x} ${y}) rotate(${r})"><rect x="-30" y="-20" width="60" height="40" fill="#fff" ${st(4)}/><path d="M -30 -20 L 0 4 L 30 -20" fill="none" ${st(3)}/></g>`).join('')}`;
 const maison = `<g transform="translate(700 300)"><rect x="0" y="0" width="200" height="170" fill="#F2D49B" ${st(6)}/><path d="M -20 0 L 100 -80 L 220 0 Z" fill="#C8692E" ${st(6)}/>
   ${[[30, 40], [120, 40]].map(([x, y]) => `<rect x="${x}" y="${y}" width="56" height="56" fill="#FFE07A" ${st(5)}/><circle cx="${x + 28}" cy="${y + 30}" r="18" fill="#F0C6A4" ${st(4)}/><ellipse cx="${x + 28}" cy="${y + 38}" rx="8" ry="7" fill="#5A1F26"/>`).join('')}
   <text x="40" y="-90" font-family="Poppins" font-weight="700" font-size="36" fill="#E5322D" stroke="${I}" stroke-width="2">HA HA&nbsp;!</text></g>`;
-const palais = `<g transform="translate(470 400)" ${st(6)}>
+const palais = (x = 470, y = 400, k = 1) => `<g transform="translate(${x} ${y}) scale(${k})" ${st(6)}>
   <rect x="-260" y="0" width="520" height="60" rx="16" fill="#D9C7A8"/><rect x="-240" y="-110" width="150" height="114" rx="24" fill="#E3D2B4"/><rect x="90" y="-130" width="160" height="134" rx="24" fill="#E3D2B4"/>
   <rect x="-90" y="-200" width="180" height="204" rx="30" fill="#D9C7A8"/><path d="M -60 4 v -60 a 30 30 0 0 1 60 0 v 60 Z M 10 4 v -60 a 30 30 0 0 1 60 0 v 60 Z" fill="#8C6B4A"/>
   <path d="M -40 -200 L 0 -290 L 40 -200 Z M -220 -110 L -190 -170 L -160 -110 Z M 150 -130 L 180 -200 L 210 -130 Z" fill="#E3D2B4"/>
   <circle cx="0" cy="-130" r="22" fill="${C.soleil}"/><path d="M -200 -60 h 40 M 120 -70 h 50 M -40 -150 h 80" stroke="#8C6B4A" stroke-width="5"/></g>`;
-const brutusCine = (o) => G.brutus({ x: 760, y: 900, s: 0.5, arms: 'hold', hold: G.P.popcorn, ...o });
-const texte = (t) => big(t, 38, 730, { w: 620, color: C.creme });
+const popcorn = [[700, 960], [740, 900], [900, 920], [960, 990], [690, 1040]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="16" fill="#FFF6D8" ${st(4)}/>`).join('');
+const BC = { x: 760, y: 900, s: 0.5 };
+const brutusCine = (o) => G.brutus({ ...BC, arms: 'hold', hold: G.P.popcorn, ...o });
+const texte = (t) => big(t, 40, 730, { w: 600, color: C.creme });
+const Q = { x: 40, y: 560 };
 
 module.exports = {
   slug: '42-ils-ont-ose-cheval',
   slides: [
-    s(1, 'Assieds-toi →', `${G.salon({ tv: true, panama: false })}
-      ${big(`«${nb}J’ai pas le temps de créer.${nb}»`, 70, 130)}
-      ${caption({ x: 48, y: 310, w: 560, size: 27, bg: C.creme, rot: -1.5, text: `— moi, entre l'apéro, le match et ma formation n°5.` })}
+    // 1 — HOOK
+    s(1, 'Qui était ce fou ? →', `${G.bgRays('#FF8A5C', '#FFA27A', 540, 900)}
+      ${hook('On le prenait<br>pour un fou.', { y: 120, size: 90 })}
+      ${hook('Aujourd’hui, on paie pour visiter son jardin.', { y: 330, size: 58, w: 900 })}
+      ${S(`<rect x="-20" y="1040" width="1120" height="320" fill="${C.jungle}" ${st(6)}/>${palais(500, 940, 1.35)}
+        ${G.brutus({ x: 760, y: 820, s: 0.6, arms: 'head', eyes: { mode: 'wide' }, mouth: 'scream', brows: 'up' })}${popcorn}`)}
+      ${fleche('« son jardin »', { x: 40, y: 560, tx: 260, ty: 760, size: 42 })}`),
+
+    // 2 — Le point de départ : mes excuses
+    s(2, 'Assieds-toi →', `${G.salon({ tv: true, panama: false })}
+      ${narr('Moi, entre l’apéro, le match et ma formation n°5 :', { size: 30, w: 760 })}
+      ${big(`«${nb}J’ai pas le temps de créer.${nb}»`, 66, 268)}
       ${S(`${G.brutus({ x: 30, y: 760, s: 0.62, arms: 'hold', hold: sablier, brows: 'sly', mouth: 'smirk', eyes: { px: 8, lid: 0.3 } })}${G.quentin({ x: 330, y: 520, arms: { l: 'hold', r: 'hip' }, brows: 'up', mouth: 'smirk', eyes: { px: 12 }, extra: verre })}`)}
       ${ono('BUUUT&nbsp;!', { x: 700, y: 470, size: 62, rot: 6, fill: '#3FA35B' })}
-      ${bubble({ x: 40, y: 600, w: 290, size: 36, tail: { at: 0.5, dir: 0 }, text: `Validé. Dossier classé.` })}`),
+      ${bulle({ x: 30, yb: 700, w: 300, who: 'b', size: 38, to: tb({ x: 30, y: 760, s: 0.62 }), text: 'Validé. Dossier classé.' })}`),
 
-    s(2, '1879 →', `${G.cinema()}
+    // 3 — Au cinéma
+    s(3, '1879 →', `${G.cinema()}
       ${ecran(170, 130, 740, 300, `<div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Poppins;font-weight:700;color:${I}"><div style="font-size:28px;color:${C.grisNuit}">Une histoire vraie</div><div style="font-size:62px">Le facteur</div></div>`)}
       ${S(`${G.quentin({ x: 40, y: 620, arms: { l: 'down', r: 'point' }, mouth: 'grin', eyes: { px: 10, py: -8 } })}${brutusCine({ x: 740, y: 820, s: 0.62, eyes: { px: -6, py: -12, lid: 0.3 }, mouth: 'flat', brows: 'flat' })}${fauteuils}`)}
-      ${bubble({ x: 40, y: 460, w: 560, size: 34, tail: { at: 0.3, dir: -1 }, text: `Assieds-toi, Brutus. L'histoire vraie d'un type qui avait <b>encore moins de temps</b> que toi.` })}
-      ${bubble({ x: 640, y: 540, w: 400, size: 36, tail: { at: 0.5, dir: 0 }, text: `Si c'est un film d'auteur, je dors.` })}`),
+      ${bulle({ x: 40, yb: 560, w: 480, to: tq({ x: 40, y: 620 }), text: 'Assieds-toi, Brutus. <b>Histoire vraie.</b>' })}
+      ${bulle({ x: 600, yb: 760, w: 430, who: 'b', size: 40, to: tb({ x: 740, y: 820, s: 0.62 }), text: 'Si c’est un film d’auteur, je dors.' })}`),
 
-    s(3, 'Et alors ? →', `${G.cinema()}
+    // 4 — 1879
+    s(4, 'Et alors ? →', `${G.cinema()}
       ${ecran(60, 130, 960, 560, sentier(`${pierre(500, 450, 1.3)}${facteur}`))}
       ${ono('BAF&nbsp;!', { x: 640, y: 220, size: 110, rot: -8, fill: C.flamme })}
-      ${texte(`${so('1879.')} Un facteur de la Drôme, 43 ans. Il fait sa tournée à pied. Un jour, il trébuche sur une pierre.`)}
+      ${texte(`${so('1879.')} Un facteur de la Drôme, 43 ans, fait sa tournée à pied. Il trébuche sur une pierre.`)}
       ${S(`${brutusCine({ eyes: { px: -6, py: -12 }, mouth: 'smirk', brows: 'sly' })}${fauteuils}`)}
-      ${bubble({ x: 680, y: 700, w: 360, size: 30, tail: { at: 0.5, dir: 0 }, text: `Moi aussi j'ai trébuché une fois. J'ai fait une sieste de trois jours.` })}`),
+      ${bulle({ x: 660, yb: 880, w: 380, who: 'b', size: 34, to: tb(BC), text: 'Moi aussi j’ai trébuché. <b>Sieste de trois jours.</b>' })}`),
 
-    s(4, 'Et après ? →', `${G.cinema()}
+    // 5 — Le village se moque
+    s(5, 'Et après ? →', `${G.cinema()}
       ${ecran(60, 130, 960, 560, sentier(`${pierre(130, 470, 0.6)}${pierre(230, 470, 0.7)}${pierre(180, 420, 0.6)}<path d="M 400 470 v -120 a 50 50 0 0 1 100 0 v 120 Z" fill="#E3D2B4" ${st(6)}/>${pierre(560, 470, 0.7)}${pierre(520, 420, 0.5)}${maison}<circle cx="110" cy="100" r="40" fill="#fff" ${st(5)}/><circle cx="94" cy="90" r="40" fill="#FFE7B0"/>`))}
-      ${texte(`Il trouve la pierre belle. Il en ramasse une à chaque tournée. Le soir, il construit. ${so('Le village se moque de lui.')}`)}
+      ${texte(`Il ramasse une pierre à chaque tournée. Le soir, il construit. ${so('Le village se moque de lui.')}`)}
       ${S(`${brutusCine({ eyes: { px: -6, py: -10 }, mouth: 'grin', brows: 'up' })}${fauteuils}`)}
-      ${bubble({ x: 690, y: 720, w: 350, size: 34, tail: { at: 0.5, dir: 0 }, text: `Enfin des gens raisonnables.` })}`),
+      ${bulle({ x: 680, yb: 880, w: 360, who: 'b', size: 36, to: tb(BC), text: 'Enfin des gens raisonnables.' })}`),
 
-    s(5, 'La morale →', `${G.cinema()}
-      ${ecran(60, 130, 960, 560, `<svg width="100%" height="100%" viewBox="0 0 940 560"><rect width="940" height="560" fill="#BFE3FF"/><circle cx="800" cy="100" r="50" fill="${C.soleil}" ${st(5)}/><rect y="440" width="940" height="120" fill="${C.jungleClair}"/>${palais}</svg>`)}
-      ${big(`${so('33 ans plus tard : son Palais idéal.')} Monument historique depuis 1969. On le visite encore.`, 38, 730, { w: 560, color: C.creme })}
-      ${S(`${G.brutus({ x: 760, y: 900, s: 0.5, arms: 'head', eyes: { mode: 'wide' }, mouth: 'scream', brows: 'up' })}${[[700, 960], [740, 900], [900, 920], [960, 990], [690, 1040]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="16" fill="#FFF6D8" ${st(4)}/>`).join('')}${fauteuils}`)}
+    // 6 — La révélation
+    s(6, 'La morale →', `${G.cinema()}
+      ${ecran(60, 130, 960, 560, `<svg width="100%" height="100%" viewBox="0 0 940 560"><rect width="940" height="560" fill="#BFE3FF"/><circle cx="800" cy="100" r="50" fill="${C.soleil}" ${st(5)}/><rect y="440" width="940" height="120" fill="${C.jungleClair}"/>${palais()}</svg>`)}
+      ${texte(`${so('33 ans plus tard : son Palais idéal.')} Monument historique depuis 1969.`)}
+      ${S(`${G.brutus({ ...BC, arms: 'head', eyes: { mode: 'wide' }, mouth: 'scream', brows: 'up' })}${popcorn}${fauteuils}`)}
       ${ono('POP&nbsp;!', { x: 470, y: 960, size: 70, rot: -10, fill: C.soleil })}
-      ${bubble({ x: 640, y: 690, w: 400, size: 36, tail: { at: 0.5, dir: 0 }, text: `33 ans${nb}? <b>Sans Netflix</b>${nb}?!` })}`, { source: 'Palais idéal du facteur Cheval, Hauterives (Drôme) : construit de 1879 à 1912.' }),
+      ${bulle({ x: 660, yb: 880, w: 380, who: 'b', size: 40, to: tb(BC), text: '33 ans ? <b>Sans Netflix ?!</b>' })}`, { source: 'Palais idéal du facteur Cheval, Hauterives (Drôme) : construit de 1879 à 1912.' }),
 
-    s(6, 'Ton défi →', `${G.saleve2({ mood: 'or' })}
+    // 7 — Morale + gag
+    s(7, 'Ton défi →', `${G.saleve2({ mood: 'or' })}
       ${tag('Morale de l’histoire')}
-      ${big(`Tu n’as pas besoin de temps libre. Tu as besoin d’${fl('une pierre par jour.')}`, 62, 230)}
-      ${S(`${G.quentin({ x: 40, y: 560, arms: { l: 'hip', r: 'point' }, brows: 'sly', mouth: 'smirk', eyes: { px: 12, lid: 0.2 } })}${G.brutus({ x: 670, y: 720, arms: 'hold', hold: telecommande, eyes: { mode: 'happy' }, brows: 'up', mouth: 'grin' })}`)}
+      ${big(`Tu n’as pas besoin de temps libre. Tu as besoin d’${fl('une pierre par jour.')}`, 60, 230)}
+      ${S(`${G.quentin({ ...Q, arms: { l: 'hip', r: 'point' }, brows: 'sly', mouth: 'smirk', eyes: { px: 12, lid: 0.2 } })}${G.brutus({ x: 670, y: 720, arms: 'hold', hold: telecommande, eyes: { mode: 'happy' }, brows: 'up', mouth: 'grin' })}`)}
       ${G.avantPlan()}
-      ${bubble({ x: 640, y: 520, w: 390, size: 38, tail: { at: 0.5, dir: 0 }, text: `J'ai trouvé une pierre${nb}!` })}
-      ${bubble({ x: 40, y: 470, w: 400, size: 36, tail: { at: 0.4, dir: -1 }, text: `C'est la télécommande, Brutus.` })}`),
+      ${bulle({ x: 620, yb: 660, w: 400, who: 'b', to: tb({ x: 670, y: 720 }), text: 'J’ai trouvé une pierre !' })}
+      ${bulle({ x: 40, yb: 548, w: 540, to: tq(Q), size: 40, text: 'C’est la télécommande, Brutus.' })}`),
 
-    s(7, 'Envoie-le à un ami débordé ↗', `${G.saleve2({ mood: 'matin' })}
+    // 8 — Action
+    s(8, 'Partage-le ↗', `${G.saleve2({ mood: 'matin' })}
       ${tag('Ton défi')}
-      ${big('Pose ta première pierre : dix minutes pour ton projet. Aujourd’hui. Avant le match.', 50, 230)}
-      ${big(fl('Puis écris PIERRE en commentaire.'), 40, 430)}
-      ${S(`${G.quentin({ x: 40, y: 540, arms: { l: 'down', r: 'raise' }, mouth: 'grin', eyes: { px: 6, py: -6 }, extra: pierre(308, 150, 0.45) })}${G.brutus({ x: 640, y: 720, arms: 'head', mouth: 'scream', eyes: { mode: 'wide' }, brows: 'up' })}`)}
-      ${G.avantPlan()}
-      ${bubble({ x: 620, y: 520, w: 410, size: 38, tail: { at: 0.4, dir: 0 }, text: `Avant le match${nb}?! Tu es un monstre.` })}
-`, { source: 'Palais idéal du facteur Cheval (Hauterives) : 1879-1912, monument historique depuis 1969.' }),
+      ${big(`Dix minutes pour ton projet. ${fl('Avant le match.')}`, 62, 222)}
+      ${actions({ y: 430, mot: 'PIERRE', pourquoi: 'quand tu as posé ta première pierre : dix minutes, aujourd’hui', envoie: 'l’ami qui n’a « jamais le temps »', enregistre: 'pour ton prochain « pas le temps »' })}
+      ${S(`${G.quentin({ x: 30, y: 930, s: 0.48, arms: { l: 'down', r: 'raise' }, mouth: 'grin', eyes: { px: 6, py: -6 } })}${G.brutus({ x: 820, y: 1000, s: 0.5, arms: 'head', mouth: 'scream', eyes: { mode: 'wide' }, brows: 'up' })}`)}
+      ${bulle({ x: 330, yb: 1110, w: 440, who: 'b', size: 34, to: tb({ x: 820, y: 1000, s: 0.5 }), text: 'Avant le match ?! <b>Monstre.</b>' })}`),
   ],
 };

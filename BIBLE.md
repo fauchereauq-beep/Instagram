@@ -36,6 +36,26 @@ En plus : **les fables** (ex. *Le Meunier, son fils et l'âne*, La Fontaine : qu
 
 **Style 1, gros nez franco-belge pop** : grosse tête, petit corps, nez patate, yeux collés, traits épais, onomatopées. Code dans `src/gn.js` (personnages, invités, âne, décors, accessoires) et `src/ep.js` (raccourcis d'épisode). Premiers épisodes : 41 à 45.
 
+## Règles v3 (17 novembre) — lisibilité et engagement
+
+Code : `src/v3.js` (`bulle`, `hook`, `fleche`, `narr`, `actions`).
+
+**Bulles**
+- Minuscules, 40 à 44 px, 10 mots maximum.
+- Une couleur par personnage : blanc = Quentin, violet clair = Brutus, bleu clair = Einstein et les invités.
+- La queue pointe sur la tête de celui qui parle.
+- Ordre de lecture : haut → bas, gauche → droite. Le narrateur (cartouche jaune) toujours en premier, en haut.
+
+**Couverture (planche 1)**
+- Le moment le plus absurde de l'histoire, sans l'expliquer.
+- Une phrase de 5 à 7 mots en blanc à contour noir, qui ouvre une question : « Ce singe m'a fait perdre 6 mois. »
+- Le bouton « suite » pose la question que le lecteur se pose : « Qui est ce singe ? »
+- Titre à y ≥ 130 pour ne pas passer sous l'ombre de l'étiquette de série.
+
+**Fin (planche 8)**
+- Une seule morale, puis un bloc d'action : **un mot à commenter** (en gros), puis à qui l'envoyer, puis pourquoi l'enregistrer.
+- La légende commence par la phrase de couverture ; le commentaire à épingler est noté dans `legende.md` (section « Commentaire à épingler », non publiée par l'agent).
+
 ## Catalogue des formats (7 planches chacun, style pop franco-belge)
 
 | Format | Planches | Statut |

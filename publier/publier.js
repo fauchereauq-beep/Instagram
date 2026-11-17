@@ -39,7 +39,7 @@ const urlImage = (slug, f) => `https://raw.githubusercontent.com/${REPO}/${cal.b
 function legende(slug) {
   const file = path.join(ROOT, 'carrousels', slug, 'legende.md');
   if (!fs.existsSync(file)) throw new Error(`Légende manquante : ${file}`);
-  const txt = fs.readFileSync(file, 'utf8').split('\n').filter((l) => !l.startsWith('# ')).join('\n').trim();
+  const txt = fs.readFileSync(file, 'utf8').split(/\n## /)[0].split('\n').filter((l) => !l.startsWith('# ')).join('\n').trim();
   if (txt.length > 2200) throw new Error(`Légende trop longue (${txt.length} caractères, maximum 2 200) : ${slug}`);
   return txt;
 }
