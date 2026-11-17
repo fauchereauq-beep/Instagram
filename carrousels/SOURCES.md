@@ -36,10 +36,10 @@ Chaque référence a été vérifiée avant publication (auteur, revue ou ouvrag
 
 ## Version 2, style gros nez (épisodes 41 à 45)
 - **41 Crash-test « La balade fantôme »** : vécu de Quentin (report des balades de plus de six mois). Le message de la planche 5 est une reformulation des retours reçus, à remplacer par une citation exacte si possible.
-- **42 Facteur Cheval** : Palais idéal, Hauterives ; construction 1879–1912, Cheval a 43 ans en 1879, classement en 1969. « Trente kilomètres par jour » : ordre de grandeur souvent cité pour sa tournée, non revérifié précisément.
+- **42 Facteur Cheval** : Palais idéal, Hauterives ; construction 1879–1912, Cheval a 43 ans en 1879, classement en 1969. « Le village se moque de lui » résume sa réputation locale rapportée par plusieurs récits.
 - **43 Soupir cyclique** : Balban, M. Y. et al. (2023). Brief structured respiration practices enhance mood and reduce physiological arousal. *Cell Reports Medicine*, 4(1), 100895. Essai randomisé, 108 participants, 5 minutes par jour.
-- **44 Einstein** : Quote Investigator, « Creativity Is Intelligence Having Fun » (2 mars 2017) ; la formule dérive de George Scialabba, « Mindplay », *Harvard Magazine*, 1984 (date 1983 selon d'autres sources). Einstein est mort en 1955. Les répliques d'Einstein dans la BD sont de la fiction humoristique, pas des citations.
-- **45 La Fontaine** : « Le Meunier, son Fils et l'Âne », *Fables*, livre III, fable 1 (1668). Les répliques des passants sont des paraphrases ; seule la morale finale est citée.
+- **44 Einstein** : les « citations » des posters (« Sois toi-même », « Bois de l'eau »…) sont des gags signés « (?) ». Quote Investigator, « Creativity Is Intelligence Having Fun » (2 mars 2017) ; la formule dérive de George Scialabba, « Mindplay », *Harvard Magazine*, 1984 (date 1983 selon d'autres sources). Einstein est mort en 1955. Les répliques d'Einstein dans la BD sont de la fiction humoristique, pas des citations.
+- **45 La Fontaine** : « Le Meunier, son Fils et l'Âne », *Fables*, livre III, fable 1 (1668). Les commentaires et leurs pseudos sont fictifs et paraphrasent la fable ; seule la morale finale est citée (vers à vérifier dans une édition des *Fables*).
 
 ## Construction des carrousels
 - Eyal, N. (2014). *Hooked: How to Build Habit-Forming Products*. Modèle déclencheur → action → récompense variable → investissement, transposé ici au carrousel.

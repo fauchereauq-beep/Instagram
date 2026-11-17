@@ -1,11 +1,11 @@
 # Ils ont osé n°1 — Le facteur Cheval
 
-« J'ai pas le temps de créer. »
+« J'ai pas le temps de créer. » Moi, entre l'apéro, le match et ma formation n°5.
 
-Un facteur de la Drôme avait encore moins de temps que toi. Trente kilomètres à pied par jour. Un jour de 1879, il trébuche sur une pierre, la trouve belle, et la ramasse. Puis une autre. Pendant 33 ans, le soir, il construit. Aujourd'hui, son Palais idéal est un monument historique.
+En 1879, un facteur de la Drôme de 43 ans, qui faisait sa tournée à pied, trébuche sur une pierre. Il la trouve belle. Il en ramasse une à chaque tournée et, le soir, il construit. Le village se moque de lui. Trente-trois ans plus tard, son Palais idéal est terminé ; il est monument historique depuis 1969.
 
-Ton défi : pose ta première pierre aujourd'hui, dix minutes pour ton projet. Puis écris PIERRE en commentaire.
+Tu n'as pas besoin de temps libre. Tu as besoin d'une pierre par jour.
 
-Envoie-le à l'ami qui « n'a jamais le temps ».
+Ton défi : dix minutes pour ton projet aujourd'hui. Avant le match. Puis écris PIERRE en commentaire.
 
-#oser #creation #facteurcheval #palaisideal #inspiration #saleve
+#oser #creation #facteurcheval #palaisideal #procrastination

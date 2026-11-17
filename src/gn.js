@@ -268,10 +268,10 @@ const P = {
   poster: (t) => `<rect x="-150" y="-190" width="300" height="290" rx="6" fill="#fff" ${st(8)}/><rect x="-130" y="-170" width="260" height="190" fill="#3E6FB5"/><circle cx="60" cy="-120" r="26" fill="${C.soleil}"/><path d="M -130 20 L -60 -60 L 0 -10 L 60 -70 L 130 0 L 130 20 Z" fill="${C.lointain}"/><text x="0" y="56" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="22" fill="${I}">${t}</text><text x="0" y="86" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="18" fill="${C.grisNuit}">— A. Einstein (?)</text>`,
   cornichons: `<rect x="-44" y="-70" width="88" height="22" rx="6" fill="#C9A36A" ${st(6)}/><rect x="-50" y="-50" width="100" height="120" rx="20" fill="#CFEFD8" ${st(6)}/>${[[-20, -10], [16, 0], [-8, 30], [22, 40]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="11" ry="26" fill="#5E8F3E" ${st(3)} transform="rotate(${x} ${x} ${y})"/>`).join('')}`,
 };
-const ecureuil = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})">
+const ecureuil = (x, y, s = 1, lunettes = false) => `<g transform="translate(${x} ${y}) scale(${s})">
   <path d="M 34 104 C -34 96, -44 4, 8 -8 C 52 -18, 66 34, 34 44 C 56 56, 58 90, 34 104 Z" fill="#C8692E" ${st(5)}/>
   <ellipse cx="64" cy="84" rx="32" ry="36" fill="#D9783A" ${st(5)}/><ellipse cx="72" cy="92" rx="15" ry="22" fill="#F6E3C8"/>
   <path d="M 62 16 l 4 -26 l 14 22 Z" fill="#D9783A" ${st(4)}/><circle cx="78" cy="38" r="27" fill="#D9783A" ${st(5)}/>
-  <circle cx="86" cy="32" r="8" fill="#fff" ${st(3)}/><circle cx="88" cy="32" r="4" fill="${I}"/><circle cx="104" cy="42" r="5" fill="${I}"/><path d="M 88 50 q 8 6 14 0" fill="none" ${st(3)}/></g>`;
+  <circle cx="86" cy="32" r="8" fill="#fff" ${st(3)}/><circle cx="88" cy="32" r="4" fill="${I}"/><circle cx="104" cy="42" r="5" fill="${I}"/><path d="M 88 50 q 8 6 14 0" fill="none" ${st(3)}/>${lunettes ? `<path d="M 66 26 h 46" ${st(4)}/><rect x="72" y="24" width="20" height="14" rx="5" fill="${I}"/><rect x="94" y="24" width="18" height="14" rx="5" fill="${I}"/><path d="M 76 28 l 6 0" stroke="#fff" stroke-width="3"/><path d="M 86 54 q 10 2 16 -6" fill="none" ${st(3)}/>` : ''}</g>`;
 
-module.exports = { I, st, limb, svgPage, place, quentin, einstein, brutus, ane, tartan, dots, band, bgRays, bgSaleve, bgRoom, bgDark, P, ecureuil, shade };
+module.exports = { ...require('./decors.js'), I, st, limb, svgPage, place, quentin, einstein, brutus, ane, tartan, dots, band, bgRays, bgSaleve, bgRoom, bgDark, P, ecureuil, shade };
