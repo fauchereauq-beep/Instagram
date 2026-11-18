@@ -15,6 +15,12 @@ Fil conducteur : oser créer ce qui t'anime. Tout est généré par code (SVG + 
 4. `bash outils/livrer.sh <slug>` puis **regarder l'aperçu** `apercus/<slug>.png` et corriger les chevauchements.
 5. Committer et pousser.
 
+## Dessin animé (Reel 1080 × 1920)
+- Moteur : `anim/moteur.js` (voix espeak-ng + MBROLA, bouche synchronisée sur l'audio, poses, sauts, caméra, bruitages synthétisés).
+- Exemple : `anim/41-balade-fantome.js` → `node anim/41-balade-fantome.js` → `videos/41-balade-fantome.mp4` (≈ 2 min de calcul pour 1 min de vidéo).
+- Prérequis : `apt-get install -y espeak-ng mbrola mbrola-fr1 mbrola-fr4`.
+- Vérifier avec une planche d'images extraites (ffmpeg `tile`), pas en regardant chaque image.
+
 ## Règles non négociables
 - Un carrousel à la fois, **validé par Quentin** avant le suivant.
 - Toute citation, date ou étude est vérifiée en ligne ; un invité ne dit que ce qu'il a réellement dit, sinon c'est un gag évident. Noter la source dans `SOURCES.md`.
