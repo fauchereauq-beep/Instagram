@@ -72,22 +72,36 @@ function elevenlabs(endpoint, args, out) {
   run('ffmpeg', ['-y', '-loglevel', 'error', '-i', tmp, '-af', 'loudnorm=I=-18:TP=-2:LRA=7', '-ac', '1', '-ar', '44100', '-c:a', 'pcm_s16le', out]);
   fs.unlinkSync(tmp);
 }
-function voixElevenLabs(who, texte) {
+function archiveVoix(arch, out) {
+  if (!arch || fs.existsSync(arch)) return;
+  fs.mkdirSync(path.dirname(arch), { recursive: true });
+  run('ffmpeg', ['-y', '-loglevel', 'error', '-i', out, '-c:a', 'libmp3lame', '-b:a', '128k', arch]);
+  fs.writeFileSync(arch.replace(/\.mp3$/, '.txt'), arch.texte || '');
+}
+function depuisArchive(arch, out) {
+  if (!arch || !fs.existsSync(arch) || fs.existsSync(out)) return;
+  run('ffmpeg', ['-y', '-loglevel', 'error', '-i', arch, '-ac', '1', '-ar', '44100', '-c:a', 'pcm_s16le', out]);
+}
+function voixElevenLabs(who, texte, arch) {
   const V = (CONF_VOIX.voix || {})[who] || {};
-  if (!V.tts) return null;
-  const out = path.join(CACHE, `el_${who}_${hash(V.tts + texte + JSON.stringify(V))}.wav`);
+  const out = path.join(CACHE, `el_${who}_${hash((V.tts || '') + texte + JSON.stringify(V))}.wav`);
+  depuisArchive(arch, out);
+  if (!fs.existsSync(out) && !V.tts) return null;
   if (!fs.existsSync(out)) {
     const body = JSON.stringify({ text: texte, model_id: CONF_VOIX.modele_tts, voice_settings: { stability: V.stabilite ?? 0.4, similarity_boost: 0.8, style: V.style ?? 0.5, use_speaker_boost: true } });
     elevenlabs(`text-to-speech/${V.tts}`, ['-H', 'Content-Type: application/json', '-d', body], out);
   }
+  archiveVoix(arch, out);
   const w = lireWav(out);
   return { file: out, dur: w.s.length / w.sr, env: enveloppe(w) };
 }
-function changeurDeVoix(who, src) {
+function changeurDeVoix(who, src, arch) {
   const V = (CONF_VOIX.voix || {})[who] || {};
-  if (!V.sts) return null;
-  const out = path.join(CACHE, `sts_${who}_${hash(V.sts + src + fs.statSync(src).mtimeMs)}.wav`);
+  const out = path.join(CACHE, `sts_${who}_${hash((V.sts || '') + src)}.wav`);
+  depuisArchive(arch, out);
+  if (!fs.existsSync(out) && !V.sts) return null;
   if (!fs.existsSync(out)) elevenlabs(`speech-to-speech/${V.sts}`, ['-F', `audio=@${src}`, '-F', `model_id=${CONF_VOIX.modele_sts}`], out);
+  archiveVoix(arch, out);
   return out;
 }
 function voixMuette(texte) {
@@ -179,11 +193,12 @@ function chrono(plan, pi, ep, num) {
       const rec = fs.existsSync(dir) && fs.readdirSync(dir).find((f) => f.startsWith(n + '.') && /\.(m4a|mp3|wav|ogg|aac|opus|webm)$/i.test(f));
       const qui = b.voice || b.who, texte = b.tts || b.say.replace(/<[^>]+>/g, '');
       let v = null;
+      const arch = path.join(dir, 'genere', `${n}.mp3`);
       if (rec) {
-        const conv = changeurDeVoix(qui, path.join(dir, rec));
+        const conv = changeurDeVoix(qui, path.join(dir, rec), arch);
         if (conv) { const w = lireWav(conv); v = { file: conv, dur: w.s.length / w.sr, env: enveloppe(w) }; } else v = voixEnregistree(qui, path.join(dir, rec));
       }
-      v = v || voixElevenLabs(qui, texte) || voixMuette(texte);
+      v = v || voixElevenLabs(qui, texte, arch) || voixMuette(texte);
       if (v.file) tl.audio.push({ file: v.file, at: st, vol: 1, bus: 'dlg' });
       tl.talks.push({ who: b.who, at: st, dur: v.dur, env: v.env, vo: !!b.vo, txt: b.cap === false ? null : (b.cap || b.say), gapEnd: st + v.dur + (b.gap ?? 0.28) + (b.wait || 0) });
       if (b.bubble) {
