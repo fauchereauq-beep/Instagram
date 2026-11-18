@@ -1,0 +1,9 @@
+{
+  "_aide": "Voix ElevenLabs par personnage. Renseigner les identifiants de voix (ElevenLabs → Voices → ID). Une réplique enregistrée dans voix/<épisode>/NN.m4a reste prioritaire : si une voix 'sts' est indiquée, elle est transformée par le changeur de voix.",
+  "modele_tts": "eleven_multilingual_v2",
+  "modele_sts": "eleven_multilingual_sts_v2",
+  "voix": {
+    "q": { "tts": "", "sts": "", "stabilite": 0.35, "style": 0.55 },
+    "b": { "tts": "", "sts": "", "stabilite": 0.25, "style": 0.8 }
+  }
+}
