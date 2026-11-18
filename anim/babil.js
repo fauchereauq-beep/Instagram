@@ -107,30 +107,50 @@ function ecrireWav(file, f32) {
   fs.writeFileSync(file, b);
 }
 
-// Musique de fond : cordes pincées (Karplus-Strong), grille C G Am F, assez basse pour laisser parler.
-function musique(dur, { bpm = 112, muets = [] } = {}) {
+// Musique de fond en cordes pincées (Karplus-Strong), un style par séquence de l'histoire.
+const STYLES = {
+  rebond: { bpm: 112, grille: ['C', 'G', 'Am', 'F'], arp: [0, 2, 1, 3, 0, 2, 1, 2], oct: 2, g: 0.15, basse: 0.26 },
+  montage: { bpm: 140, grille: ['C', 'F', 'G', 'C'], arp: [0, 1, 2, 3, 2, 1, 2, 3], oct: 2, g: 0.13, basse: 0.22 },
+  tension: { bpm: 84, grille: ['Am', 'Am', 'E', 'Am'], arp: [null, 3, null, null, null, 3, null, 2], oct: 2, g: 0.07, basse: 0.3, pulse: true },
+  paresse: { bpm: 70, grille: ['F', 'C', 'F', 'G'], arp: [0, null, 2, null, 1, null, 3, null], oct: 1, g: 0.12, basse: 0.18 },
+  doux: { bpm: 66, grille: ['Am', 'F', 'C', 'G'], arp: [3, null, null, 2, null, null, 1, null], oct: 2, g: 0.09, basse: 0.08 },
+  victoire: { bpm: 132, grille: ['C', 'F', 'G', 'C'], arp: [0, 1, 2, 3, 3, 2, 1, 2], oct: 2, g: 0.15, basse: 0.26 },
+};
+const ACC = { C: [130.81, 164.81, 196.0, 261.63], G: [98.0, 123.47, 146.83, 196.0], Am: [110.0, 130.81, 164.81, 220.0], F: [87.31, 110.0, 130.81, 174.61], E: [82.41, 103.83, 123.47, 164.81] };
+
+function musique(dur, { segments = [{ a: 0, b: dur, style: 'rebond' }], muets = [] } = {}) {
   const out = new Float32Array(Math.ceil(dur * SR));
-  const notes = { C: [130.81, 164.81, 196.0, 261.63], G: [98.0, 123.47, 146.83, 196.0], Am: [110.0, 130.81, 164.81, 220.0], F: [87.31, 110.0, 130.81, 174.61] };
-  const grille = ['C', 'G', 'Am', 'F'], croche = 60 / bpm / 2, motif = [0, 2, 1, 3, 0, 2, 1, 2];
-  const pince = (freq, t0, gain, len = 1.2) => {
-    const Np = Math.max(2, Math.round(SR / freq)), buf = Float32Array.from({ length: Np }, () => Math.random() * 2 - 1);
-    const s0 = Math.round(t0 * SR);
-    for (let k = 0; k < len * SR && s0 + k < out.length; k++) { const i = k % Np; const v = buf[i]; buf[i] = 0.5 * (v + buf[(i + 1) % Np]) * 0.997; out[s0 + k] += v * gain; }
-  };
-  for (let n = 0, t = 0; t < dur; n++, t = n * croche) {
-    const ch = notes[grille[Math.floor(n / 8) % 4]];
-    pince(ch[motif[n % 8]] * 2, t, 0.16);
-    if (n % 8 === 0) pince(ch[0] / 2, t, 0.3, 1.8);
-    if (n % 4 === 2) pince(ch[0], t, 0.1, 0.4);
+  for (const seg of segments) {
+    const S = STYLES[seg.style];
+    if (!S) continue;
+    const buf = new Float32Array(Math.ceil((seg.b - seg.a + 2) * SR));
+    const pince = (freq, t0, gain, len = 1.2, damp = 0.996) => {
+      const Np = Math.max(2, Math.round(SR / freq)), w = Float32Array.from({ length: Np }, () => Math.random() * 2 - 1);
+      const s0 = Math.round(t0 * SR);
+      for (let k = 0; k < len * SR && s0 + k < buf.length; k++) { const i = k % Np, v = w[i]; w[i] = 0.5 * (v + w[(i + 1) % Np]) * damp; buf[s0 + k] += v * gain; }
+    };
+    const croche = 60 / S.bpm / 2;
+    for (let n = 0, t = 0; t < seg.b - seg.a; n++, t = n * croche) {
+      const ch = ACC[S.grille[Math.floor(n / 8) % S.grille.length]];
+      const note = S.arp[n % 8];
+      if (note !== null) pince(ch[note] * S.oct, t, S.g, 0.9, 0.994);
+      if (n % 8 === 0) pince(ch[0] / 2, t, S.basse, 1.6);
+      if (S.pulse && n % 2 === 0) pince(ch[0] / 2, t, S.basse * 0.5, 0.25, 0.99);
+    }
+    const s0 = Math.round(seg.a * SR), L = Math.round((seg.b - seg.a) * SR), F = Math.round(0.12 * SR);
+    for (let k = 0; k < L + F && s0 + k < out.length; k++) {
+      const env = Math.min(1, k / F, (L + F - k) / F);
+      out[s0 + k] += buf[k] * env;
+    }
   }
   for (let k = 0; k < out.length; k++) {
     const t = k / SR;
     let g = 1;
-    for (const [a, b] of muets) { if (t > a - 0.3 && t < b + 0.3) g = Math.min(g, Math.max(0, Math.max((a - t) / 0.3, (t - b) / 0.3))); }
+    for (const [a, b] of muets) { if (t > a - 0.1 && t < b + 0.2) g = Math.min(g, Math.max(0, Math.max((a - t) / 0.1, (t - b) / 0.2))); }
     out[k] *= g;
   }
   let pk = 0; for (const x of out) pk = Math.max(pk, Math.abs(x));
-  for (let k = 0; k < out.length; k++) out[k] = (out[k] / (pk || 1)) * 0.7;
+  for (let k = 0; k < out.length; k++) out[k] = (out[k] / (pk || 1)) * 0.6;
   return out;
 }
 

@@ -34,6 +34,7 @@ module.exports = animer({
   plans: [
     // 1 — Accroche : le doigt au-dessus du bouton… et Brutus qui plonge.
     {
+      musique: 'tension',
       top: hk('Moi, à 1 clic de lancer mon projet :'),
       bg: bureauFond,
       chars: {
@@ -43,14 +44,15 @@ module.exports = animer({
       front: bureauDevant,
       els: { ouvert: { html: ordiOuvert(), z: 0, always: true }, ferme: { html: ordiFerme, z: 0 } },
       beats: [
-        { cam: { s: 1.18, cx: 640, cy: 760, d: 0.9 }, wait: 0.9 },
+        { cam: { s: 1.18, cx: 640, cy: 760, d: 0.75 }, wait: 0.75 },
         { act: { b: 'entre' }, sfx: 'whoosh', wait: 0.32 },
-        { hide: 'ouvert', show: 'ferme', sfx: 'crash', act: { b: 'ecrase', q: 'saut', x: 'secousse' }, pose: { q: 'choc' }, cam: { s: 1, cx: 540, cy: 675, d: 0.12 }, who: 'b', say: 'NON !', gap: 0.45 },
+        { hide: 'ouvert', show: 'ferme', sfx: 'crash', act: { b: 'ecrase', q: 'saut', x: 'secousse' }, pose: { q: 'choc' }, cam: { s: 1, cx: 540, cy: 675, d: 0.12 }, who: 'b', say: 'NON !', jeu: 'Cri de panique, comme si tu sauvais quelqu’un d’un camion.', gap: 0.45 },
       ],
       tail: 0.2,
     },
     // 2 — Le conflit et la réplique culte.
     {
+      musique: 'tension',
       top: hk('Brutus, mon chimpanzé intérieur.', 54),
       bg: bureauFond,
       chars: {
@@ -60,14 +62,16 @@ module.exports = animer({
       front: bureauDevant,
       els: { ferme: { html: ordiFerme, z: 0, always: true } },
       beats: [
-        { cam: { s: 1.15, cx: 640, cy: 700, d: 0.01 }, who: 'b', say: 'Et si c’est nul ?', gap: 0.35 },
-        { who: 'q', say: 'Et si c’est bien ?', gap: 0.4 },
-        { pre: 0.2, pose: { b: 'camera' }, cam: { s: 1.55, cx: 880, cy: 600, d: 0.18 }, sfx: 'dramatique', who: 'b', say: 'On prend pas ce risque.', gap: 0.7 },
+        { cam: { s: 1.15, cx: 640, cy: 700, d: 0.01 }, who: 'b', say: 'Et si c’est nul ?', jeu: 'Faussement inquiet, en traînant sur « nul ».', gap: 0.35 },
+        { who: 'q', say: 'Et si c’est bien ?', jeu: 'Naïf, plein d’espoir.', gap: 0.4 },
+        { pose: { b: 'camera' }, cam: { s: 1.55, cx: 880, cy: 600, d: 0.18 }, blanc: 2.4, wait: 0.45 },
+        { sfx: 'dramatique', who: 'b', say: 'On prend pas ce risque.', jeu: 'Lent, sec, face caméra. Chaque mot détaché.', gap: 0.7 },
       ],
       tail: 0.1,
     },
     // 3 — L'escalade : trois excuses, trois cartons.
     {
+      musique: 'montage',
       top: hk('Ses arguments :'),
       bg: G.bgRays('#7B5EA7', '#8C70BA', 540, 900),
       drift: 0,
@@ -81,14 +85,15 @@ module.exports = animer({
         c3: { html: carte('Mercure est rétrograde.', -2), o: [540, 260] },
       },
       beats: [
-        { show: 'c1', sfx: 'tic', cam: { s: 1.06, d: 0.1 }, who: 'b', say: 'Il faut un meilleur logo.', cap: false, gap: 0.3 },
-        { hide: 'c1', show: 'c2', sfx: 'tic', cam: { s: 1, d: 0.1 }, pose: { q: 'convaincu' }, who: 'b', say: 'Attends lundi.', cap: false, gap: 0.3 },
-        { hide: 'c2', show: 'c3', sfx: 'tic', cam: { s: 1.1, d: 0.1 }, act: { q: 'ecrase' }, who: 'b', say: 'Mercure est rétrograde.', cap: false, gap: 0.45 },
+        { show: 'c1', sfx: 'tic', cam: { s: 1.06, d: 0.1 }, who: 'b', say: 'Il faut un meilleur logo.', jeu: 'Expert autoproclamé, très sûr de lui.', cap: false, gap: 0.3 },
+        { hide: 'c1', show: 'c2', sfx: 'tic', cam: { s: 1, d: 0.1 }, pose: { q: 'convaincu' }, who: 'b', say: 'Attends lundi.', jeu: 'Évident, condescendant.', cap: false, gap: 0.3 },
+        { hide: 'c2', show: 'c3', sfx: 'tic', cam: { s: 1.1, d: 0.1 }, act: { q: 'ecrase' }, who: 'b', say: 'Mercure est rétrograde.', jeu: 'Mystique, à voix basse.', cap: false, gap: 0.45 },
       ],
       tail: 0.1,
     },
     // 4a — Ellipse.
     {
+      musique: 'silence',
       top: '',
       bg: G.bgRays(C.soleil, '#FFD45E', 540, 675) + `<div class="abs" style="left:0;right:0;top:470px;text-align:center;font-family:Poppins;font-weight:700;font-size:120px;line-height:1;color:#fff;-webkit-text-stroke:16px ${I};paint-order:stroke fill;text-shadow:10px 10px 0 ${I}">6 MOIS<br>PLUS TARD</div>`,
       drift: 0.06,
@@ -97,6 +102,7 @@ module.exports = animer({
     },
     // 4b — Le canapé.
     {
+      musique: 'paresse',
       top: hk('Jour 183.'),
       bg: G.salon({ etagere: false, panama: false }) + canape.dos,
       chars: {
@@ -106,13 +112,14 @@ module.exports = animer({
       front: canape.assise,
       els: { t1: { html: S(G.toile(40, 560, 150)), o: [40, 560], anim: 'pousse', d: 1.8 }, t2: { html: S(G.toile(1040, 820, 120, -1, 1)), o: [1040, 820], anim: 'pousse', d: 1.8 } },
       beats: [
-        { show: ['t1', 't2'], wait: 0.3 },
-        { sfx: [['crunch', 0.1]], who: 'b', say: 'On est bien, là.', gap: 0.6 },
+        { show: ['t1', 't2'], wait: 0.15 },
+        { sfx: [['crunch', 0.1]], who: 'b', say: 'On est bien, là.', jeu: 'Bouche pleine, ultra détendu, avec un soupir.', gap: 0.6 },
       ],
       tail: 0,
     },
     // 5 — Le retournement : « mais c'est moi ça ».
     {
+      musique: 'silence',
       top: hk('Et puis, un matin…'),
       bg: G.salon({ etagere: false, panama: false }) + canape.dos,
       chars: {
@@ -123,16 +130,16 @@ module.exports = animer({
       els: { notif: { html: notif, o: [540, 280], anim: 'glisse', z: 4 } },
       beats: [
         { wait: 0.25 },
-        { show: 'notif', sfx: 'buzz', act: { q: 'tremble' }, wait: 1.0 },
-        { pose: { q: 'choc' }, act: { q: 'saut' }, sfx: 'boing', wait: 0.45 },
-        { pose: { b: 'gloups' }, sfx: 'gloups', cam: { s: 1.35, cx: 760, cy: 900, d: 0.2 }, who: 'b', say: 'Ah. Lui, il a osé.', gap: 0.3 },
-        { pose: { q: 'colere' }, cam: { s: 1, cx: 540, cy: 675, d: 0.15 }, act: { x: 'secousse' }, wait: 0.55 },
+        { show: 'notif', sfx: 'buzz', act: { q: 'tremble' }, wait: 0.85 },
+        { pose: { q: 'choc' }, act: { q: 'saut' }, sfx: 'boing', wait: 0.3 },
+        { pose: { b: 'gloups' }, sfx: 'gloups', cam: { s: 1.35, cx: 760, cy: 900, d: 0.2 }, who: 'b', say: 'Ah. Lui, il a osé.', jeu: 'Gêné, petite voix, puis un peu vexé.', gap: 0.3 },
+        { pose: { q: 'colere' }, cam: { s: 1, cx: 540, cy: 675, d: 0.15 }, act: { x: 'secousse' }, wait: 0.4 },
       ],
       tail: 0,
     },
     // 6 — Le fond (musique coupée) : il tient Brutus dans ses mains.
     {
-      musique: false,
+      musique: 'doux',
       top: hk('Ce que j’ai compris :'),
       bg: G.bgDark(C.nuit, 'rgba(255,194,51,.22)'),
       drift: 0.08,
@@ -141,15 +148,16 @@ module.exports = animer({
         m: { kind: 'b', o: { x: 389, y: 674, s: 0.45, plaid: true, arms: 'down', mouth: 'wobble', eyes: { mode: 'wide' }, brows: 'up', sweat: true }, poses: { calme: { mouth: 'smile', eyes: { mode: 'closed' }, brows: 'normal', sweat: false } }, z: 3 },
       },
       beats: [
-        { sfx: 'accord', act: { m: 'tremble' }, cam: { s: 1.22, cx: 470, cy: 640, d: 1.2 }, wait: 0.5 },
-        { act: { m: 'tremble' }, who: 'q', say: 'Il ne veut pas que j’échoue.', gap: 0.35 },
-        { act: { m: 'tremble' }, who: 'q', say: 'Il veut juste que rien ne change.', gap: 0.3 },
-        { sfx: 'souffle', pose: { m: 'calme' }, wait: 1.2 },
+        { sfx: 'accord', act: { m: 'tremble' }, cam: { s: 1.22, cx: 470, cy: 640, d: 1.2 }, wait: 0.3 },
+        { act: { m: 'tremble' }, who: 'q', say: 'Il ne veut pas que j’échoue.', jeu: 'Doux et posé, comme un secret.', gap: 0.35 },
+        { act: { m: 'tremble' }, who: 'q', say: 'Il veut juste que rien ne change.', jeu: 'Tendre, avec un demi-sourire.', gap: 0.3 },
+        { sfx: 'souffle', pose: { m: 'calme' }, wait: 0.9 },
       ],
       tail: 0,
     },
     // 7 — Victoire… et rechute (la fin renvoie au début : la vidéo boucle).
     {
+      musique: 'victoire',
       top: hk('Commente LANCÉ si tu cliques aujourd’hui ↓', 52),
       bg: bureauFond,
       chars: {
@@ -160,9 +168,9 @@ module.exports = animer({
       els: { ouvert: { html: ordiOuvert(), z: 0, always: true }, publie: { html: ordiOuvert('PUBLIÉ ✓', C.jungle), z: 0 }, confettis: { html: confettis, o: [540, 300] } },
       beats: [
         { wait: 0.35 },
-        { hide: 'ouvert', show: ['publie', 'confettis'], sfx: 'victoire', pose: { q: 'joie' }, act: { q: 'saut' }, wait: 1.0 },
-        { pose: { b: 'doute', q: 'fige' }, cam: { s: 1.5, cx: 970, cy: 740, d: 0.2 }, who: 'b', say: 'Attends… et si c’est nul ?', gap: 0.15 },
-        { sfx: 'dramatique', top: hk('Épisode 2 : Brutus lit les commentaires.', 50), wait: 0.9 },
+        { hide: 'ouvert', show: ['publie', 'confettis'], sfx: 'victoire', pose: { q: 'joie' }, act: { q: 'saut' }, wait: 0.8 },
+        { pose: { b: 'doute', q: 'fige' }, cam: { s: 1.5, cx: 970, cy: 740, d: 0.2 }, blanc: 3, who: 'b', say: 'Attends… et si c’est nul ?', jeu: 'Comme au début, mais chuchoté, angoissé.', gap: 0.15 },
+        { sfx: 'dramatique', top: hk('Épisode 2 : Brutus lit les commentaires.', 50), wait: 0.8 },
       ],
       tail: 0,
     },

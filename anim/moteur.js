@@ -46,6 +46,27 @@ function voix(who, texte) {
   const w = lireWav(out);
   return { file: out, dur: w.s.length / w.sr, env: enveloppe(w) };
 }
+// Traitement d'une réplique enregistrée : silence retiré, nettoyage, compression douce, niveau constant.
+// Brutus : voix montée dans les aigus sans accélérer (rubberband), timbre « dessin animé ».
+const TRAITEMENT = {
+  q: 'rubberband=pitch=1.06',
+  b: 'rubberband=pitch=1.42:formant=shifted:tempo=1.04',
+  e: 'rubberband=pitch=0.86',
+};
+function voixEnregistree(who, src) {
+  const out = path.join(CACHE, `r_${who}_${hash(src + fs.statSync(src).mtimeMs)}.wav`);
+  if (!fs.existsSync(out)) {
+    const af = ['silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.05', 'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.08', 'areverse',
+      'highpass=f=90', TRAITEMENT[who] || 'anull', 'acompressor=threshold=-20dB:ratio=3:attack=8:release=120', 'loudnorm=I=-18:TP=-2:LRA=7'].join(',');
+    run('ffmpeg', ['-y', '-loglevel', 'error', '-i', src, '-af', af, '-ac', '1', '-ar', '44100', '-c:a', 'pcm_s16le', out]);
+  }
+  const w = lireWav(out);
+  return { file: out, dur: w.s.length / w.sr, env: enveloppe(w) };
+}
+function voixMuette(texte) {
+  const dur = 0.2 + texte.split(/\s+/).length * 0.26;
+  return { file: null, dur, env: [] };
+}
 function voixRobot(who, texte) {
   const out = path.join(CACHE, `v_${who}_${hash(who + texte)}.wav`);
   if (!fs.existsSync(out)) {
@@ -61,8 +82,8 @@ function voixRobot(who, texte) {
 // ---------- bruitages (synthétisés) ----------
 const SFX = {
   crunch: 'anoisesrc=d=0.35:c=brown:a=0.8,highpass=f=400,afade=t=out:st=0.04:d=0.3',
-  buzz: "aevalsrc='0.35*sin(2*PI*170*t)*(0.5+0.5*sgn(sin(2*PI*7*t)))':d=1.1",
-  sirene: "aevalsrc='0.22*sin(2*PI*t*(720+260*sin(2*PI*1.6*t)))':d=1.8",
+  buzz: "aevalsrc='0.3*sin(2*PI*190*t)*(0.5+0.5*sin(2*PI*9*t))*lt(mod(t,0.45),0.3)':d=0.9,lowpass=f=1500",
+  sirene: "aevalsrc='0.14*sin(2*PI*t*(620+160*sin(2*PI*1.6*t)))':d=1.4,lowpass=f=2000",
   pop: "aevalsrc='0.45*sin(2*PI*t*(380+1700*t))*exp(-14*t)':d=0.25",
   boing: "aevalsrc='0.4*sin(2*PI*t*(180+260*sin(2*PI*7*t)))*exp(-4*t)':d=0.7",
   whoosh: 'anoisesrc=d=0.5:c=pink:a=0.5,bandpass=f=1400,afade=t=in:d=0.2,afade=t=out:st=0.22:d=0.28',
@@ -70,7 +91,7 @@ const SFX = {
   accord: "aevalsrc='0.12*(sin(2*PI*220*t)+sin(2*PI*277.2*t)+sin(2*PI*329.6*t)+sin(2*PI*440*t))*exp(-0.9*t)':d=3",
   ding: "aevalsrc='0.3*(sin(2*PI*1318*t)+0.5*sin(2*PI*2637*t))*exp(-5*t)':d=0.8",
   tic: "aevalsrc='0.4*sin(2*PI*1800*t)*exp(-60*t)':d=0.08",
-  crash: "aevalsrc='0.9*sin(2*PI*55*t)*exp(-9*t)+0.5*(random(0)*2-1)*exp(-14*t)':d=0.6",
+  crash: "aevalsrc='0.6*sin(2*PI*70*t)*exp(-10*t)+0.18*(random(0)*2-1)*exp(-20*t)':d=0.5,lowpass=f=2500",
   dramatique: "aevalsrc='0.32*(sin(2*PI*t*if(lt(t,0.2),196,if(lt(t,0.4),185,147)))+0.5*sin(4*PI*t*if(lt(t,0.2),196,if(lt(t,0.4),185,147))))*if(lt(t,0.4),1,exp(-1.2*(t-0.4)))':d=1.8",
   tictac: "aevalsrc='0.5*(sin(2*PI*2200*t)*exp(-80*mod(t,0.5)))*lt(mod(t,0.5),0.05)':d=1",
   victoire: "aevalsrc='0.22*(sin(2*PI*t*if(lt(t,0.12),523,if(lt(t,0.24),659,if(lt(t,0.36),784,1047))))+0.4*sin(4*PI*t*if(lt(t,0.12),523,if(lt(t,0.24),659,if(lt(t,0.36),784,1047)))))*if(lt(t,0.36),1,exp(-2.5*(t-0.36)))':d=1.4",
@@ -110,9 +131,9 @@ function planHTML(plan, idx) {
 }
 
 // Chronologie : chaque « temps » (beat) peut parler, changer de pose, montrer un élément, bouger la caméra, jouer un bruitage.
-function chrono(plan, pi) {
+function chrono(plan, pi, ep, num) {
   let t = plan.start || 0;
-  const tl = { poses: [], shows: [], hides: [], acts: [], cams: [], audio: [], talks: [], tops: [] };
+  const tl = { poses: [], shows: [], hides: [], acts: [], cams: [], audio: [], talks: [], tops: [], blancs: [] };
   for (const [bi, b] of (plan.beats || []).entries()) {
     if (b.pre) t += b.pre;
     const st = t;
@@ -122,11 +143,16 @@ function chrono(plan, pi) {
     for (const id of [].concat(b.hide || [])) tl.hides.push({ id, at: st });
     for (const [who, a] of Object.entries(b.act || {})) tl.acts.push({ who, at: st, a });
     if (b.cam) tl.cams.push({ at: st, ...b.cam });
-    for (const s of [].concat(b.sfx || [])) { const [nom, dt = 0] = [].concat(s); tl.audio.push({ file: sfx(nom), at: st + dt, vol: 0.8 }); }
+    for (const s of [].concat(b.sfx || [])) { const [nom, dt = 0] = [].concat(s); tl.audio.push({ file: sfx(nom), at: st + dt, vol: 0.7, bus: 'sfx' }); }
+    if (b.blanc) tl.blancs.push([st, st + b.blanc]);
     if (b.top !== undefined) tl.tops.push({ at: st, html: b.top });
     if (b.say) {
-      const v = voix(b.voice || b.who, b.tts || b.say.replace(/<[^>]+>/g, ''));
-      tl.audio.push({ file: v.file, at: st, vol: 1 });
+      const n = String(++num.n).padStart(2, '0');
+      const dir = path.join(ROOT, 'voix', ep.slug);
+      const rec = fs.existsSync(dir) && fs.readdirSync(dir).find((f) => f.startsWith(n + '.') && /\.(m4a|mp3|wav|ogg|aac|opus|webm)$/i.test(f));
+      const qui = b.voice || b.who, texte = b.tts || b.say.replace(/<[^>]+>/g, '');
+      const v = rec ? voixEnregistree(qui, path.join(dir, rec)) : ep.voixManquantes === 'babil' ? voix(qui, texte) : voixMuette(texte);
+      if (v.file) tl.audio.push({ file: v.file, at: st, vol: 1, bus: 'dlg' });
       tl.talks.push({ who: b.who, at: st, dur: v.dur, env: v.env, vo: !!b.vo, txt: b.cap === false ? null : (b.cap || b.say), gapEnd: st + v.dur + (b.gap ?? 0.28) + (b.wait || 0) });
       if (b.bubble) {
         const id = `bl${bi}`;
@@ -169,7 +195,7 @@ function etat(plan, tl, idx, tau) {
     let v = 'idle', y = 0, x = 0, r = 0, sx = 1, sy = 1 + 0.008 * Math.sin(tau * 2.4 + cid.length);
     if (talk) {
       const f = Math.floor((tau - talk.at) * FPS);
-      v = talk.env[f] ? 'talk' : 'idle';
+      v = talk.env.length ? (talk.env[f] ? 'talk' : 'idle') : 'idle';
       y = -5 * Math.abs(Math.sin(tau * 9)); r = 1.2 * Math.sin(tau * 5);
     } else {
       const ph = (tau + (cid === 'b' ? 1.3 : 0)) % 3.4;
@@ -223,7 +249,9 @@ async function animer(ep) {
   const frames = path.join(CACHE, `frames_${ep.slug}`);
   fs.rmSync(frames, { recursive: true, force: true }); fs.mkdirSync(frames, { recursive: true });
   const plans = ep.plans.map((p) => ({ els: {}, ...p }));
-  const tls = plans.map((p, i) => chrono(p, i));
+  const num = { n: 0 };
+  const tls = plans.map((p, i) => chrono(p, i, ep, num));
+  if (process.argv.includes('--script')) return scriptVoix(ep, plans);
   const fontDir = 'file://' + path.join(ROOT, 'fonts');
   const html = `<!doctype html><meta charset="utf-8"><style>${K.CSS(fontDir)}
     body{width:${W}px;height:${H}px;background:${K.C.nuit};overflow:hidden}
@@ -273,23 +301,49 @@ async function animer(ep) {
   }
   await browser.close();
   if (ep.musique !== false) {
-    const muets = []; let o2 = 0;
-    plans.forEach((p, i) => { const d = Math.round(tls[i].dur * FPS) / FPS; if (p.musique === false) muets.push([o2, o2 + d]); o2 += d; });
+    const segments = [], muets = []; let o2 = 0;
+    plans.forEach((p, i) => {
+      const d = Math.round(tls[i].dur * FPS) / FPS;
+      if (p.musique !== false && p.musique !== 'silence') segments.push({ a: o2, b: o2 + d, style: p.musique || 'rebond' });
+      tls[i].blancs.forEach(([x, y]) => muets.push([o2 + x, o2 + y]));
+      o2 += d;
+    });
     const mf = path.join(CACHE, `${ep.slug}_musique.wav`);
-    ecrireWav(mf, musique(offset, { muets }));
-    audio.push({ file: mf, at: 0, vol: 0.32 });
+    ecrireWav(mf, musique(offset, { segments, muets }));
+    audio.push({ file: mf, at: 0, vol: 1, bus: 'mus' });
   }
-  // mixage audio
   const mix = path.join(CACHE, `${ep.slug}_mix.wav`);
   const args = ['-y', '-loglevel', 'error'];
   audio.forEach((a) => args.push('-i', a.file));
-  const f = audio.map((a, i) => `[${i}]volume=${a.vol},adelay=${Math.round(a.at * 1000)}|${Math.round(a.at * 1000)}[a${i}]`).join(';') +
-    `;${audio.map((_, i) => `[a${i}]`).join('')}amix=inputs=${audio.length}:normalize=0:dropout_transition=0,apad,atrim=0:${offset.toFixed(2)},alimiter=limit=0.8:level=false,volume=0.9[out]`;
+  const parts = audio.map((a, i) => `[${i}]volume=${a.vol},adelay=${Math.round(a.at * 1000)}|${Math.round(a.at * 1000)},apad=whole_dur=${offset.toFixed(2)}[a${i}]`);
+  const bus = (nom) => { const ids = audio.map((a, i) => (a.bus === nom ? `[a${i}]` : '')).join(''); const n = (ids.match(/\[/g) || []).length; return n ? `${ids}amix=inputs=${n}:normalize=0:dropout_transition=0` : `anullsrc=r=44100:cl=mono,atrim=0:${offset.toFixed(2)}`; };
+  const f = parts.join(';') +
+    `;${bus('dlg')}[dlg0];[dlg0]asplit=2[dlg][sc]` +
+    `;${bus('sfx')},lowpass=f=6000,volume=0.55[sfx]` +
+    `;${bus('mus')},volume=0.55[mus0];[mus0][sc]sidechaincompress=threshold=0.015:ratio=8:attack=20:release=400[mus]` +
+    `;[dlg][sfx][mus]amix=inputs=3:normalize=0,atrim=0:${offset.toFixed(2)},loudnorm=I=-16:TP=-1.5:LRA=11[out]`;
   run('ffmpeg', [...args, '-filter_complex', f, '-map', '[out]', '-ar', '44100', mix]);
   run('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(frames, '%05d.jpg'), '-i', mix,
     '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '21', '-preset', 'medium', '-c:a', 'aac', '-b:a', '160k', '-shortest', '-movflags', '+faststart', out]);
   console.log(`${path.relative(ROOT, out)} · ${offset.toFixed(1)} s · ${n} images · ${audio.length} pistes audio`);
   return { out, frames, dur: offset };
+}
+
+// Fiche d'enregistrement : une ligne par réplique, numérotée comme les fichiers attendus.
+function scriptVoix(ep, plans) {
+  let n = 0;
+  const NOMS = { q: 'Quentin', b: 'Brutus', e: 'Invité' };
+  const lignes = [];
+  plans.forEach((p) => (p.beats || []).forEach((b) => { if (b.say) lignes.push(`| **${String(++n).padStart(2, '0')}** | ${NOMS[b.voice || b.who] || b.who} | ${b.say.replace(/<[^>]+>/g, '')} | ${b.jeu || ''} |`); }));
+  const dir = path.join(ROOT, 'voix', ep.slug);
+  fs.mkdirSync(dir, { recursive: true });
+  const md = `# Répliques à enregistrer — ${ep.serie}\n\n` +
+    `Un fichier par réplique, nommé par son numéro : \`01.m4a\`, \`02.m4a\`… (mémo vocal du téléphone, m4a, mp3 ou wav).\n` +
+    `Pièce calme, téléphone à 20 cm, une seconde de silence avant de parler. **Joue trop** : à l'écran, ça paraîtra juste.\n` +
+    `Brutus : fais-le avec ta voix normale, en moqueur ; je la monte dans les aigus.\n\n| N° | Qui | Réplique | Comment la jouer |\n|---|---|---|---|\n${lignes.join('\n')}\n`;
+  fs.writeFileSync(path.join(dir, 'SCRIPT.md'), md);
+  console.log(path.relative(ROOT, path.join(dir, 'SCRIPT.md')));
+  return { script: true };
 }
 
 module.exports = { animer, K };

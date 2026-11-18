@@ -1,5 +1,5 @@
 // Dessin animé — Crash-test n°1 « La balade fantôme » (Reel 1080 x 1920, ~1 min).
-const { animer, K } = require('./moteur.js');
+const { animer, K } = require('../../anim/moteur.js');
 const { C, G, S, bulle, tq, tb, fleche, ono, narr, actions } = K;
 const I = G.I, st = G.st;
 

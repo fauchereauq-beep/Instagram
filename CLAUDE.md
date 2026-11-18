@@ -17,8 +17,9 @@ Fil conducteur : oser créer ce qui t'anime. Tout est généré par code (SVG + 
 
 ## Dessin animé (Reel 1080 × 1920)
 - Moteur : `anim/moteur.js` (voix espeak-ng + MBROLA, bouche synchronisée sur l'audio, poses, sauts, caméra, bruitages synthétisés).
-- Modèle à suivre : `anim/ep01-le-bouton.js` (méthode en 7 temps, 25-30 s, voir `BIBLE.md`) → `videos/ep01-le-bouton.mp4`. Voix en babil (`anim/babil.js`), légendes mot à mot, musique coupée sur le moment profond.
-- Prérequis : `apt-get install -y espeak-ng mbrola mbrola-fr1 mbrola-fr4`.
+- Modèle à suivre : `anim/ep01-le-bouton.js` (méthode en 7 temps, 25-30 s, voir `BIBLE.md`) → `videos/ep01-le-bouton.mp4`. Légendes mot à mot, musique par séquence (`musique: 'tension' | 'montage' | 'paresse' | 'doux' | 'victoire' | 'silence'`), blancs comiques (`blanc`).
+- **Voix : uniquement de vraies voix.** Quentin enregistre `voix/<épisode>/01.m4a`, `02.m4a`… d'après `voix/<épisode>/SCRIPT.md` (généré par `node anim/<épisode>.js --script`). Le moteur nettoie, égalise, et monte Brutus dans les aigus (rubberband). Les voix de synthèse (robot, babil) ont été rejetées par Quentin : ne pas les réutiliser.
+- Mixage : musique atténuée sous les voix, volume final normalisé à −16 LUFS.
 - Vérifier avec une planche d'images extraites (ffmpeg `tile`), pas en regardant chaque image.
 
 ## Règles non négociables
