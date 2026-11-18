@@ -17,7 +17,7 @@ Fil conducteur : oser créer ce qui t'anime. Tout est généré par code (SVG + 
 
 ## Dessin animé (Reel 1080 × 1920)
 - Moteur : `anim/moteur.js` (voix espeak-ng + MBROLA, bouche synchronisée sur l'audio, poses, sauts, caméra, bruitages synthétisés).
-- Exemple : `anim/41-balade-fantome.js` → `node anim/41-balade-fantome.js` → `videos/41-balade-fantome.mp4` (≈ 2 min de calcul pour 1 min de vidéo).
+- Modèle à suivre : `anim/ep01-le-bouton.js` (méthode en 7 temps, 25-30 s, voir `BIBLE.md`) → `videos/ep01-le-bouton.mp4`. Voix en babil (`anim/babil.js`), légendes mot à mot, musique coupée sur le moment profond.
 - Prérequis : `apt-get install -y espeak-ng mbrola mbrola-fr1 mbrola-fr4`.
 - Vérifier avec une planche d'images extraites (ffmpeg `tile`), pas en regardant chaque image.
 

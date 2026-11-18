@@ -39,7 +39,14 @@ function enveloppe({ sr, s }) {
   const max = Math.max(...rms) || 1;
   return rms.map((r, i) => r / max > 0.22 && (i % 5 !== 4)); // une petite fermeture régulière, comme un vrai battement de bouche
 }
+const { babil, musique, ecrireWav } = require('./babil.js');
 function voix(who, texte) {
+  const out = path.join(CACHE, `b_${who}_${hash(who + texte)}.wav`);
+  if (!fs.existsSync(out)) ecrireWav(out, babil(texte, who));
+  const w = lireWav(out);
+  return { file: out, dur: w.s.length / w.sr, env: enveloppe(w) };
+}
+function voixRobot(who, texte) {
   const out = path.join(CACHE, `v_${who}_${hash(who + texte)}.wav`);
   if (!fs.existsSync(out)) {
     const tmp = out + '.raw.wav', V = VOIX[who] || VOIX.q;
@@ -63,6 +70,11 @@ const SFX = {
   accord: "aevalsrc='0.12*(sin(2*PI*220*t)+sin(2*PI*277.2*t)+sin(2*PI*329.6*t)+sin(2*PI*440*t))*exp(-0.9*t)':d=3",
   ding: "aevalsrc='0.3*(sin(2*PI*1318*t)+0.5*sin(2*PI*2637*t))*exp(-5*t)':d=0.8",
   tic: "aevalsrc='0.4*sin(2*PI*1800*t)*exp(-60*t)':d=0.08",
+  crash: "aevalsrc='0.9*sin(2*PI*55*t)*exp(-9*t)+0.5*(random(0)*2-1)*exp(-14*t)':d=0.6",
+  dramatique: "aevalsrc='0.32*(sin(2*PI*t*if(lt(t,0.2),196,if(lt(t,0.4),185,147)))+0.5*sin(4*PI*t*if(lt(t,0.2),196,if(lt(t,0.4),185,147))))*if(lt(t,0.4),1,exp(-1.2*(t-0.4)))':d=1.8",
+  tictac: "aevalsrc='0.5*(sin(2*PI*2200*t)*exp(-80*mod(t,0.5)))*lt(mod(t,0.5),0.05)':d=1",
+  victoire: "aevalsrc='0.22*(sin(2*PI*t*if(lt(t,0.12),523,if(lt(t,0.24),659,if(lt(t,0.36),784,1047))))+0.4*sin(4*PI*t*if(lt(t,0.12),523,if(lt(t,0.24),659,if(lt(t,0.36),784,1047)))))*if(lt(t,0.36),1,exp(-2.5*(t-0.36)))':d=1.4",
+  gloups: "aevalsrc='0.4*sin(2*PI*t*(500-380*t/0.4))*exp(-3*t)':d=0.4",
 };
 function sfx(nom) {
   const out = path.join(CACHE, `s_${nom}.wav`);
@@ -92,7 +104,7 @@ function planHTML(plan, idx) {
     }
     L.push(`<div class="C" id="c${idx}_${cid}" style="position:absolute;inset:0;transform-origin:${origin};z-index:${c.z || 1}">${vs.map(([v, o]) => `<div class="V" id="c${idx}_${cid}_${v}" style="display:none;position:absolute;inset:0">${K.S(DESS[c.kind](o))}</div>`).join('')}</div>`);
   }
-  const els = Object.entries(plan.els || {}).map(([eid, e]) => `<div class="E" id="e${idx}_${eid}" style="position:absolute;inset:0;opacity:0;transform-origin:${(e.o || [540, 675]).join('px ')}px;z-index:${e.z || 3}">${e.html}</div>`);
+  const els = Object.entries(plan.els || {}).map(([eid, e]) => `<div class="E" id="e${idx}_${eid}" style="position:absolute;inset:0;opacity:0;transform-origin:${(e.o || [540, 675]).join('px ')}px;z-index:${e.z ?? 3}">${e.html}</div>`);
   return `<div class="P" id="p${idx}" style="display:none;position:absolute;inset:0"><div id="cam${idx}" style="position:absolute;inset:0;transform-origin:0 0">
     ${plan.bg || ''}${L.join('')}<div style="position:absolute;inset:0;z-index:2">${plan.front || ''}</div>${els.join('')}</div></div>`;
 }
@@ -115,9 +127,8 @@ function chrono(plan, pi) {
     if (b.say) {
       const v = voix(b.voice || b.who, b.tts || b.say.replace(/<[^>]+>/g, ''));
       tl.audio.push({ file: v.file, at: st, vol: 1 });
-      tl.talks.push({ who: b.who, at: st, dur: v.dur, env: v.env, vo: !!b.vo });
-      if (b.vo) tl.tops.push({ at: st, html: `<div class="vo">${b.say}</div>` });
-      else if (b.bubble) {
+      tl.talks.push({ who: b.who, at: st, dur: v.dur, env: v.env, vo: !!b.vo, txt: b.cap === false ? null : (b.cap || b.say), gapEnd: st + v.dur + (b.gap ?? 0.28) + (b.wait || 0) });
+      if (b.bubble) {
         const id = `bl${bi}`;
         plan.els[id] = { html: K.bulle({ ...b.bubble, who: b.voice || b.who, text: b.say }), o: [b.bubble.x + b.bubble.w / 2, b.bubble.yb], z: 5, anim: 'pop', who: b.who };
         // une seule bulle par personnage : la précédente disparaît
@@ -129,6 +140,7 @@ function chrono(plan, pi) {
     }
     if (b.wait) t += b.wait;
   }
+  for (const [eid, e] of Object.entries(plan.els || {})) if (e.always) tl.shows.unshift({ id: eid, at: -10 });
   tl.dur = t + (plan.tail ?? 0.5);
   return tl;
 }
@@ -179,7 +191,6 @@ function etat(plan, tl, idx, tau) {
     const sh = tl.shows.filter((x) => x.id === eid && x.at <= tau).pop();
     const hd = tl.hides.filter((x) => x.id === eid && x.at <= tau).pop();
     let o = 0, tr = '';
-    if (e.always) o = 1;
     if (sh && !(hd && hd.at >= sh.at)) {
       const u = tau - sh.at;
       o = 1;
@@ -193,6 +204,15 @@ function etat(plan, tl, idx, tau) {
     }
     st.els[eid] = { o: +o.toFixed(3), t: tr };
   }
+  // légende active
+  const tk = tl.talks.filter((x) => x.txt && tau >= x.at && tau < Math.max(x.gapEnd, x.at + x.dur + 0.5)).pop();
+  if (tk) {
+    const mots = tk.txt.split(' '), lens = mots.map((m) => m.length + 1), tot = lens.reduce((a, b) => a + b, 0);
+    const prog = clamp((tau - tk.at) / Math.max(0.2, tk.dur * 0.92), 0, 1) * tot;
+    let acc = 0, html = '';
+    mots.forEach((m, i) => { const vis = acc <= prog + 0.01; const cur = vis && acc + lens[i] > prog && prog < tot; acc += lens[i]; html += `<span class="${vis ? (cur ? 'w c' : 'w') : 'w h'}">${m}</span> `; });
+    st.cap = `<div class="cap ${tk.who}">${html}</div>`;
+  } else st.cap = '';
   const top = tl.tops.filter((x) => x.at <= tau).pop();
   st.top = top ? top.html : (plan.top || '');
   return st;
@@ -213,9 +233,12 @@ async function animer(ep) {
     .vo,.hk{font-family:Poppins;font-weight:700;color:#fff;line-height:1.05;letter-spacing:-1px}
     .vo{font-size:52px;color:${K.C.soleil}}.hk{font-size:66px}
     #scene{position:absolute;left:0;top:${SY}px;width:${W}px;height:1350px;overflow:hidden}
+    #cap{position:absolute;left:30px;width:1020px;top:${SY + 1000}px;height:330px;display:flex;align-items:center;justify-content:center;text-align:center;z-index:20}
+    .cap{font-family:Poppins;font-weight:700;font-size:70px;line-height:1.08;letter-spacing:-1px;color:#fff;-webkit-text-stroke:14px ${K.C.nuit};paint-order:stroke fill;text-shadow:7px 7px 0 ${K.C.nuit}}
+    .cap.b{color:#D7C8FF}.cap .c{color:${K.C.soleil}}.cap .h{visibility:hidden}
     #bas{position:absolute;left:0;top:${SY + 1350}px;width:${W}px;height:${H - SY - 1350}px;display:flex;align-items:flex-start;justify-content:center;padding-top:26px;font-family:Poppins;font-weight:700;font-size:34px;color:${K.C.creme}}
     </style><body><div id="top"><div id="tag">${K.logo(44)}<span>${ep.serie}</span></div><div id="toptxt"></div></div>
-    <div id="scene">${plans.map((p, i) => planHTML(p, i)).join('')}</div><div id="bas">${ep.bas || '@quentinfauchereau'}</div></body>`;
+    <div id="scene">${plans.map((p, i) => planHTML(p, i)).join('')}</div><div id="cap"></div><div id="bas">${ep.bas || '@quentinfauchereau'}</div></body>`;
   const tmp = path.join(CACHE, `${ep.slug}.html`);
   fs.writeFileSync(tmp, html);
   const browser = await chromium.launch();
@@ -232,6 +255,7 @@ async function animer(ep) {
         if (window.__vis[cid + pi] !== c.v) { if (window.__vis[cid + pi]) document.getElementById(window.__vis[cid + pi]).style.display = 'none'; document.getElementById(c.v).style.display = 'block'; window.__vis[cid + pi] = c.v; }
       }
       for (const [eid, e] of Object.entries(st.els)) { const el = document.getElementById(`e${pi}_${eid}`); el.style.opacity = e.o; el.style.transform = e.t; }
+      if (window.__cap !== st.cap) { document.getElementById('cap').innerHTML = st.cap; window.__cap = st.cap; }
       if (window.__top !== st.top) { document.getElementById('toptxt').innerHTML = st.top; window.__top = st.top; }
     };
   });
@@ -248,12 +272,19 @@ async function animer(ep) {
     offset += nf / FPS;
   }
   await browser.close();
+  if (ep.musique !== false) {
+    const muets = []; let o2 = 0;
+    plans.forEach((p, i) => { const d = Math.round(tls[i].dur * FPS) / FPS; if (p.musique === false) muets.push([o2, o2 + d]); o2 += d; });
+    const mf = path.join(CACHE, `${ep.slug}_musique.wav`);
+    ecrireWav(mf, musique(offset, { muets }));
+    audio.push({ file: mf, at: 0, vol: 0.32 });
+  }
   // mixage audio
   const mix = path.join(CACHE, `${ep.slug}_mix.wav`);
   const args = ['-y', '-loglevel', 'error'];
   audio.forEach((a) => args.push('-i', a.file));
   const f = audio.map((a, i) => `[${i}]volume=${a.vol},adelay=${Math.round(a.at * 1000)}|${Math.round(a.at * 1000)}[a${i}]`).join(';') +
-    `;${audio.map((_, i) => `[a${i}]`).join('')}amix=inputs=${audio.length}:normalize=0:dropout_transition=0,apad,atrim=0:${offset.toFixed(2)},alimiter=limit=0.8,volume=0.9[out]`;
+    `;${audio.map((_, i) => `[a${i}]`).join('')}amix=inputs=${audio.length}:normalize=0:dropout_transition=0,apad,atrim=0:${offset.toFixed(2)},alimiter=limit=0.8:level=false,volume=0.9[out]`;
   run('ffmpeg', [...args, '-filter_complex', f, '-map', '[out]', '-ar', '44100', mix]);
   run('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(frames, '%05d.jpg'), '-i', mix,
     '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '21', '-preset', 'medium', '-c:a', 'aac', '-b:a', '160k', '-shortest', '-movflags', '+faststart', out]);
