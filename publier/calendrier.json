@@ -2,10 +2,26 @@
   "fuseau": "Europe/Zurich",
   "branche_images": "main",
   "publications": [
-    { "date": "2026-11-19", "heure": "18:45", "carrousel": "41-crash-balade-fantome", "valide": false, "statut": "à valider" },
-    { "date": "2026-11-22", "heure": "18:45", "carrousel": "45-fable-meunier", "valide": false, "statut": "à valider" },
-    { "date": "2026-11-24", "heure": "18:45", "carrousel": "43-radar-soupir", "valide": false, "statut": "à valider" },
-    { "date": "2026-11-26", "heure": "18:45", "carrousel": "42-ils-ont-ose-cheval", "valide": false, "statut": "à valider" },
-    { "date": "2026-11-29", "heure": "18:45", "carrousel": "44-appel-einstein", "valide": false, "statut": "à valider" }
+    {
+      "date": "2026-11-23",
+      "heure": "18:45",
+      "carrousel": "41-crash-balade-fantome",
+      "valide": false,
+      "statut": "à programmer dans l'app (musique)"
+    },
+    {
+      "date": "2026-11-26",
+      "heure": "18:45",
+      "carrousel": "45-fable-meunier",
+      "valide": false,
+      "statut": "à programmer dans l'app (musique)"
+    },
+    {
+      "date": "2026-11-29",
+      "heure": "18:45",
+      "carrousel": "43-radar-soupir",
+      "valide": false,
+      "statut": "à programmer dans l'app (musique)"
+    }
   ]
 }

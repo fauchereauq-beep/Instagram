@@ -10,7 +10,7 @@ const rayonX = (cx = 224, cy = 1000, k = 1) => `<g transform="translate(${cx} ${
   <path d="M 12 -40 c -14 -20 -40 -6 -26 14 l 26 24 l 26 -24 c 14 -20 -12 -34 -26 -14 Z" fill="#E5322D" ${st(4)}/>
   <path d="M -24 60 c 20 -30 50 -10 30 10 c -20 20 -50 0 -30 -10 c 30 -20 60 10 40 20" fill="none" stroke="#C9A36A" stroke-width="9" stroke-linecap="round"/></g>`;
 const pause = (x, y, r = 90) => `<g transform="translate(${x} ${y})"><circle r="${r * 1.7}" fill="#E5322D" opacity=".18"/><circle r="${r}" fill="#E5322D" ${st(8)}/><rect x="${-r * 0.42}" y="${-r * 0.48}" width="${r * 0.28}" height="${r * 0.96}" rx="6" fill="#fff"/><rect x="${r * 0.14}" y="${-r * 0.48}" width="${r * 0.28}" height="${r * 0.96}" rx="6" fill="#fff"/></g>`;
-const bouclier = `<path d="M -80 -90 H 80 V 10 Q 80 80 0 110 Q -80 80 -80 10 Z" fill="#9C98AE" ${st(7)}/><text y="0" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="26" fill="${I}">ANTI</text><text y="32" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="26" fill="${I}">MAIL</text>`;
+const bouclier = `<path d="M -80 -90 H 80 V 10 Q 80 80 0 110 Q -80 80 -80 10 Z" fill="#9C98AE" ${st(7)}/><path d="M 0 -60 V 80 M -50 0 H 50" stroke="${I}" stroke-width="8" opacity=".35"/>`;
 const envoyer = `<rect x="-100" y="-130" width="200" height="70" rx="16" fill="#E5322D" ${st(5)}/><text y="-84" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="30" fill="#fff">ENVOYER</text><path d="M -110 -160 h 220 M -110 -40 h 160" stroke="#C9C3D6" stroke-width="10" stroke-linecap="round"/>`;
 const etape = (n, t, y) => `<div class="abs" style="left:48px;top:${y}px;width:984px;display:flex;gap:26px;align-items:center;background:#fff;border:7px solid ${I};border-radius:26px;box-shadow:9px 9px 0 ${I};padding:22px 28px;font-family:Poppins;font-weight:700;font-size:44px;line-height:1.1;color:${I}">
   <span style="flex:none;width:90px;height:90px;border-radius:50%;background:${C.soleil};border:6px solid ${I};display:flex;align-items:center;justify-content:center;font-size:48px">${n}</span><span>${t}</span></div>`;
@@ -56,7 +56,8 @@ module.exports = {
         <div>${so('●')} Cœur qui s’emballe</div><div>${so('●')} Souffle court et haut</div><div>${so('●')} Ventre noué</div></div>
       ${narr('C’est ton système nerveux en mode alarme. Pas un défaut.', { x: 540, y: 740, w: 460, size: 26, bg: C.creme, rot: 1 })}
       ${S(`${G.quentin({ x: 60, y: 570, arms: 'down', brows: 'sad', mouth: 'flat', eyes: { lid: 0.2 } })}${rayonX()}${G.brutus({ x: 800, y: 900, s: 0.46, arms: 'hold', hold: bouclier, casque: true, mouth: 'flat', brows: 'angry', eyes: { px: -6 } })}`)}
-      ${ono('BOUM BOUM', { x: 290, y: 840, size: 50, rot: -8, fill: '#E5322D' })}`),
+      ${ono('BOUM BOUM', { x: 290, y: 840, size: 50, rot: -8, fill: '#E5322D' })}
+      ${bulle({ x: 400, yb: 1150, w: 400, who: 'b', size: 32, to: tb({ x: 800, y: 900, s: 0.46 }), text: 'Un mail. <b>Le prédateur n°1 de la savane.</b>' })}`),
 
     // 5 — La fiche (à enregistrer)
     s(5, 'On essaie ? →', `<div class="abs" style="inset:0;background:${C.creme}"></div>${G.dots(0.1)}

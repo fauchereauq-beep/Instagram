@@ -2,16 +2,27 @@
 
 On a fini par porter l'âne. À cause des commentaires.
 
-En 1668, La Fontaine avait déjà tout prévu. Tu marches : nigaud. Tu montes sur l'âne : ingrat. Tu fais monter l'autre : pauvre enfant. Vous montez à deux : signalé. Vous portez l'âne : tout le monde rit. Et il y a toujours un coach pour te vendre un programme à 997 €.
+Tu marches à pied : « Nigaud. »
+Tu montes sur l'âne : « Ingrat. »
+Tu fais monter l'autre : « Pauvre enfant. »
+Vous montez à deux : « Signalé. »
+Vous portez l'âne : tout le monde rit.
+Et il y a toujours un coach pour te vendre un programme à 997 €.
 
-« Les gens en parleront, n'en doutez nullement. » Alors crée pour toi.
+La Fontaine l'avait écrit en 1668 : « Les gens en parleront, n'en doutez nullement. »
 
-👉 Commente MONTRÉ quand tu as montré une création sans demander l'avis de personne.
-📩 Envoie-le à l'ami qui attend que tout le monde soit d'accord.
+Donc la question n'est pas « qu'est-ce qu'ils vont dire ? ». Ils vont dire quelque chose, c'est garanti. La question, c'est : est-ce que toi, tu es fier de ce que tu fais ?
 
-Source : Jean de La Fontaine, Fables, livre III, 1.
+👉 Commente MONTRÉ quand tu as montré une de tes créations sans demander l'avis de personne.
+📩 Envoie-le à l'ami qui attend que tout le monde soit d'accord pour se lancer.
+🔖 Enregistre-le pour le prochain commentaire de tata Monique.
 
-#lafontaine #fable #commentaires #oser #creation
+#regarddesautres #oser #lafontaine #fable #confianceensoi #creation #bd #humour
 
 ## Commentaire à épingler
 Le pire commentaire qu'on t'ait fait sur un projet ? Je commence : « C'est pas un vrai métier. » 👇
+
+## Musique (à ajouter dans l'app, volume bas)
+Ambiance : course-poursuite comique qui s'emballe (l'escalade absurde jusqu'à porter l'âne).
+1. « Yakety Sax » — Boots Randolph (la musique des poursuites de Benny Hill), si elle est proposée sur ton compte.
+2. Sinon, cherche « comedy chase » ou « funny » dans la bibliothèque musicale.

@@ -74,6 +74,19 @@ Règles de lisibilité vidéo : légendes géantes au même endroit, mot par mot
 
 Voix : babil de dessin animé synthétisé (`anim/babil.js`). Version supérieure : les répliques enregistrées par Quentin (voix de Brutus = la sienne, montée dans les aigus).
 
+## Brutus sniper (22 novembre)
+
+Brutus ne crie pas, il **tire** : une réplique courte, taquine, qui vise juste et touche une excuse qu'on se raconte tous.
+Exemples validés : « Je protège les gens. De toi. » · « Tu procrastines pas. Tu laisses mûrir. » · « Une story ? Avec ta tête du matin ? » · « Bravo. Enfin unanimes : on est ridicules. » · « Un mail. Le prédateur n°1 de la savane. »
+
+## Les 5 leviers psychologiques de chaque carrousel
+
+1. **Le miroir hyper-précis** : un détail ultra concret (« Mercure est rétrograde », « désolé du dérangement ») fait dire « c'est moi ça » mieux qu'une généralité.
+2. **La boucle ouverte** : la couverture pose une question sans y répondre (« Qui est ce singe ? »), on swipe pour la fermer.
+3. **L'escalade en 3** : trois temps de plus en plus absurdes, puis la chute.
+4. **La violation bénigne** : Brutus dit tout haut l'excuse qu'on se cache ; c'est assez vrai pour piquer, assez absurde pour faire rire.
+5. **La fin qui reste** : on finit sur l'émotion la plus forte et un geste simple (un mot à commenter), pas sur une leçon.
+
 ## Catalogue des formats (7 planches chacun, style pop franco-belge)
 
 | Format | Planches | Statut |
