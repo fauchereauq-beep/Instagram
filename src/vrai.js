@@ -1,61 +1,54 @@
-// Série « Pièces à conviction » : le Chimpanzé ressort la vraie vie de Quentin comme preuve qu'il ne faut rien tenter.
-// Chaque épisode est une liste de planches typées : hook, doc, talk, low, turn, insight, morale, fin.
-const { C, useStyle, quentin, chimp, saleve, ground, guichet, bubble, caption, slide } = require('./kit.js');
+// Série « Pièces à conviction » en style gros nez : le Chimpanzé ressort la vraie vie de Quentin.
+// Planches typées : hook, doc, talk, low, turn, insight, morale, fin (mêmes données que la v1, voir archives/src/vrai-v1.js).
+const { C, G, S, guichet, big, tag, bulle, tq, tb, narr, hook, ep3 } = require('./v3.js');
+const fin3 = require('./fin3.js');
 
 const nb = '&nbsp;';
-const Q = { x: -50, y: 600, w: 600 }, K = { x: 590, y: 780, w: 440 };
 const fl = (t) => `<span style="color:${C.flamme}">${t}</span>`;
-const big = (t, size = 70, top = 250, w = 960) => `<div class="title" style="left:48px;top:${top}px;width:${w}px;font-size:${size}px">${t}</div>`;
-const tag = (t, bg = C.flamme, color = '#fff') => caption({ x: 48, y: 150, size: 34, bg, color, rot: -2, text: t });
-const GRIS = { sky: ['#CFCBE6', '#EADFD8'], sun: false, mist: 0.9, dim: 0.12 };
-const OR = { sky: ['#FFF6EA', '#FFD98A'], mist: 0.9 };
+const I = G.I;
+const Q = { x: 40, y: 500 }, B = { x: 670, y: 720 };
+const BM = { small: 'flat', default: 'smirk' };
+const BA = { rub: 'down', hips: 'hip', shrug: 'up', finger: 'point', calm: 'down', point: 'point', up: 'up', head: 'head' };
+const QA = { think: 'chin', fist: 'raise', shrug: 'hip', point: 'point', heart: 'chest' };
+const qm = (m) => (m === 'default' ? 'grin' : m);
 
-function scene(sky, sign, q, k, extra = '') {
-  return `${saleve(sky)}${extra}${quentin({ ...Q, ...q })}${ground()}${chimp({ ...K, ...k })}${sign ? guichet(sign, sign.length > 18 ? 29 : 34) : ''}`;
+function scene(bg, q, b, over, e, sign) {
+  const panneau = sign === '' ? '' : (sign || e.sign);
+  return `${bg}${S(G.quentin({ ...Q, ...q }) + G.brutus({ ...B, ...b }))}${panneau ? guichet(panneau, panneau.length > 18 ? 29 : 34) : G.avantPlan()}${over}`;
 }
-const cTop = (t) => bubble({ x: 420, y: 180, w: 610, size: 43, tail: { at: 0.74, dir: 1 }, text: t });
-const qLow = (t) => bubble({ x: 40, y: 470, w: 480, size: 43, tail: { at: 0.32, dir: -1 }, text: t });
-const qTop = (t) => bubble({ x: 40, y: 190, w: 560, size: 43, tail: { at: 0.3, dir: -1 }, text: t });
-const cLow = (t, y = 580) => bubble({ x: 540, y, w: 490, size: 42, tail: { at: 0.68, dir: 1 }, text: t });
+const bB = (t, yb = 640, x = 560, w = 470) => bulle({ x, yb, w, who: 'b', to: tb(B), text: t });
+const bQ = (t, yb = 470, x = 40, w = 470) => bulle({ x, yb, w, to: tq(Q), text: t });
 
 const make = {
-  hook: (s, e) => scene(s.sky || {}, e.sign, { eyes: { px: 8, py: 0 }, brows: [-10, 10], browY: -8, mouth: 'default', arms: s.arms || 'shrug' },
-    { eyes: { px: -8, py: 2, lid: 0.35 }, brows: [8, -8], mouth: 'smirk', arms: 'finger' }, big(s.text, s.size || 76, 150) + cLow(s.c, 610)),
-  // Un document posé sur fond sombre : la « pièce » de l'épisode.
-  doc: (s) => `
-    <div class="abs" style="left:-100px;top:200px;width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle, rgba(255,194,51,.2), transparent 62%)"></div>
-    <div class="abs" style="left:56px;top:150px;width:880px;background:${C.creme};border:6px solid ${C.nuit};box-shadow:14px 14px 0 rgba(0,0,0,.35);transform:rotate(-2deg);padding:30px 38px 34px;font-family:Poppins;font-weight:700;color:${C.nuit}">
-      <div style="font-size:52px;line-height:1.05;border-bottom:6px solid ${C.flamme};padding-bottom:12px;margin-bottom:16px">${s.title}</div>
-      ${s.lines.map((l) => `<div style="font-size:${s.lineSize || 46}px;line-height:1.3">${l}</div>`).join('')}
-    </div>
-    ${bubble({ x: 540, y: 800, w: 500, size: 40, tail: { at: 0.66, dir: 1 }, text: s.c })}
-    ${chimp({ x: 730, y: 950, w: 310, eyes: { px: -8, py: -4 }, brows: [8, -8], mouth: 'smirk', arms: 'finger' })}`,
-  talk: (s, e) => scene(s.sky || {}, e.sign, { eyes: { px: 8, py: 0, lid: 0.2 }, brows: [-10, 4], mouth: s.qm || 'flat', arms: s.arms || 'think' },
-    { eyes: { px: -8, py: 0 }, brows: [-6, 6], mouth: s.cm || 'smirk', arms: s.ca || 'shrug' }, s.first === 'q' ? qTop(s.q) + cLow(s.c) : cTop(s.c) + qLow(s.q)),
-  low: (s, e) => scene(GRIS, s.sign || e.sign, { eyes: { px: 0, py: 8, lid: 0.3 }, brows: [-18, 18], browY: -4, mouth: 'wobble' },
-    { eyes: { px: -4, py: 0, pr: 3 }, brows: [16, -16], browY: -2, mouth: 'scream', arms: 'up' }, cTop(s.c) + qLow(s.q)),
-  turn: (s, e) => scene(OR, s.sign || '…PAUSE', { eyes: { closed: true }, brows: [-4, 4], browY: -4, mouth: 'default', arms: 'heart' },
-    { eyes: { px: -8, py: 0 }, brows: [-8, 8], browY: -4, mouth: 'small', arms: 'calm' },
-    big(s.text, 64, 150, 720) + caption({ x: 48, y: s.capY || 330, w: 600, size: 31, bg: C.creme, rot: 0, text: s.cap })),
-  insight: (s, e) => scene({}, e.sign, { eyes: { px: 8, py: 0, laugh: true }, brows: [-6, 6], browY: -6, mouth: 'smile', arms: 'point' },
-    { eyes: { px: -8, py: 2 }, brows: [-12, 12], browY: -6, mouth: 'wobble', arms: 'rub' }, tag(s.tag || 'Ce que j’ai compris', C.soleil, C.nuit) + big(s.text, s.size || 62) + cLow(s.c, 610)),
-  morale: (s, e) => scene(OR, s.sign || 'AFFAIRE CLASSÉE', { eyes: { px: 5, py: 0, laugh: true }, brows: [-7, 7], browY: -6, mouth: 'smile', arms: 'fist' },
-    { eyes: { px: -8, py: 4 }, brows: [-10, 10], browY: -4, mouth: 'small', arms: 'rub' }, tag('Morale de l’histoire') + big(s.text, s.size || 68) + cLow(s.c, 600)),
-  fin: (s) => scene(OR, '', { y: 730, eyes: { px: 5, py: 0, laugh: true }, brows: [-7, 7], browY: -6, mouth: 'smile', arms: 'wave' },
-    { eyes: { px: -8, py: 2 }, brows: [-6, 6], mouth: 'smile', arms: 'hips' },
-    big('Viens prendre l’air avec moi.', 80, 150, 900) + `<div class="title" style="left:48px;top:334px;width:900px;font-size:52px;color:${C.flamme}">On crée ce qui t’anime.</div>` +
-    caption({ x: 48, y: 440, w: 540, size: 30, bg: C.soleil, rot: -1.5, text: s.question }) + caption({ x: 48, y: 600, w: 480, size: 27, bg: C.nuit, color: C.creme, rot: 1, text: s.teaser })),
+  hook: (s, e) => scene(G.bgRays(C.soleil, '#FFD45E', 700, 1000), { arms: { l: 'hip', r: QA[s.arms] || 'chin' }, brows: 'sad', mouth: 'smirk', eyes: { px: 10 } },
+    { arms: 'point', mouth: 'smirk', eyes: { px: -8, lid: 0.3 }, brows: 'sly' }, hook(s.text, { y: 130, size: s.size ? Math.min(s.size, 84) : 80 }) + bB(s.c, 660), e),
+  doc: (s, e) => `${G.bgDark(e.bg || C.nuit)}
+    <div class="abs" style="left:50px;top:140px;width:900px;background:${C.creme};border:7px solid ${I};box-shadow:14px 14px 0 rgba(0,0,0,.4);transform:rotate(-2deg);padding:30px 38px 34px;font-family:Poppins;font-weight:700;color:${I}">
+      <div style="font-size:54px;line-height:1.05;border-bottom:7px solid ${C.flamme};padding-bottom:12px;margin-bottom:16px">${s.title}</div>
+      ${s.lines.map((l) => `<div style="font-size:${s.lineSize || 46}px;line-height:1.28">${l}</div>`).join('')}</div>
+    ${S(G.brutus({ x: 760, y: 930, s: 0.5, arms: 'point', mouth: 'smirk', eyes: { px: -10, py: -12 }, brows: 'sly' }))}
+    ${bulle({ x: 360, yb: 1180, w: 420, who: 'b', size: 36, to: tb({ x: 760, y: 930, s: 0.5 }), text: s.c })}`,
+  talk: (s, e) => scene(G.saleve2(), { arms: QA[s.arms] || 'chin', mouth: qm(s.qm || 'flat'), eyes: { px: 8, lid: 0.2 }, brows: 'flat' },
+    { arms: BA[s.ca] || 'up', mouth: BM[s.cm] || s.cm || 'smirk', eyes: { px: -8 }, brows: 'sly' },
+    s.first === 'q' ? bQ(s.q, 440, 40, 600) + bB(s.c, 650, 560, 470) : bB(s.c, 330, 380, 650) + bQ(s.q, 470), e),
+  low: (s, e) => scene(G.saleve2({ mood: 'gris' }), { arms: 'down', mouth: 'wobble', eyes: { px: 0, py: 8, lid: 0.3 }, brows: 'sad', sweat: true },
+    { arms: 'up', mouth: 'scream', eyes: { mode: 'wide' }, brows: 'angry' }, bB(s.c, 330, 380, 650) + bQ(s.q, 470), e, s.sign),
+  turn: (s, e) => scene(G.saleve2({ mood: 'or' }), { arms: { l: 'down', r: 'chest' }, mouth: 'smile', eyes: { mode: 'closed' }, brows: 'normal' },
+    { arms: 'down', mouth: 'smile', eyes: { mode: 'closed' } }, big(s.text, 62, 140, { w: 760 }) + narr(s.cap, { y: s.capY ? s.capY + 20 : 360, w: 640, size: 30, bg: C.creme, rot: 0 }), e, s.sign || '…PAUSE'),
+  insight: (s, e) => scene(G.saleve2(), { arms: { l: 'hip', r: 'point' }, mouth: 'grin', eyes: { px: 8 } },
+    { arms: 'down', mouth: 'wobble', eyes: { px: -8, py: 4 }, brows: 'sad' }, tag(s.tag || 'Ce que j’ai compris', { bg: C.soleil, color: I }) + big(s.text, Math.min(s.size || 60, 64), 230) + bB(s.c, 660), e),
+  morale: (s, e) => scene(G.saleve2({ mood: 'or' }), { arms: { l: 'hip', r: 'raise' }, mouth: 'grin', eyes: { px: 6 } },
+    { arms: 'hip', mouth: 'smirk', eyes: { px: -8, lid: 0.25 }, brows: 'sly' }, tag('Morale de l’histoire') + big(s.text, Math.min(s.size || 66, 72), 230) + bB(s.c, 660), e, s.sign || 'AFFAIRE CLASSÉE'),
+  fin: (s, e) => `${G.saleve2({ mood: 'or' })}${S(G.quentin({ x: 30, y: 760, s: 0.5, arms: { l: 'down', r: 'wave' }, mouth: 'grin', eyes: { px: 6 } }) + G.brutus({ x: 820, y: 900, s: 0.5, arms: 'hip', mouth: 'smirk', eyes: { px: -8 } }))}${G.avantPlan()}
+    ${fin3({ question: s.question, teaser: s.teaser, envoie: e.envoie, enregistre: e.enregistre })}`,
 };
 
 function vrai(e) {
-  useStyle('roman');
   const total = e.slides.length;
+  const s = ep3(e.series, total);
   return {
     slug: e.slug,
-    slides: e.slides.map((s, i) => slide({
-      n: i + 1, total, series: e.series, cta: s.cta || (i === total - 1 ? 'Envoie-le à un ami ↗' : 'La suite →'),
-      bg: s.type === 'doc' ? (e.bg || C.nuit) : undefined, content: make[s.type](s, e),
-    })),
+    slides: e.slides.map((sl, i) => s(i + 1, sl.cta || (i === total - 1 ? 'Partage-le ↗' : 'La suite →'), make[sl.type](sl, e))),
   };
 }
 
