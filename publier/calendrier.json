@@ -99,6 +99,41 @@
       "carrousel": "15-dossier-moses",
       "valide": false,
       "statut": "à programmer dans l'app (musique)"
+    },
+    {
+      "date": "2026-12-21",
+      "heure": "18:45",
+      "carrousel": "51-noel-ton-projet",
+      "valide": false,
+      "statut": "à programmer dans l'app (musique)"
+    },
+    {
+      "date": "2026-12-28",
+      "heure": "18:45",
+      "carrousel": "52-bilan-annee",
+      "valide": false,
+      "statut": "à programmer dans l'app (musique)"
+    },
+    {
+      "date": "2026-12-31",
+      "heure": "18:45",
+      "carrousel": "53-resolutions",
+      "valide": false,
+      "statut": "à programmer dans l'app (musique)"
+    },
+    {
+      "date": "2027-01-04",
+      "heure": "18:45",
+      "carrousel": "54-le-lundi",
+      "valide": false,
+      "statut": "à programmer dans l'app (musique)"
+    },
+    {
+      "date": "2027-01-10",
+      "heure": "18:45",
+      "carrousel": "55-dimanche-soir",
+      "valide": false,
+      "statut": "à programmer dans l'app (musique)"
     }
   ]
 }

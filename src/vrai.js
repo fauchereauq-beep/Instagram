@@ -48,7 +48,7 @@ function vrai(e) {
   const s = ep3(e.series, total);
   return {
     slug: e.slug,
-    slides: e.slides.map((sl, i) => s(i + 1, sl.cta || (i === total - 1 ? 'Partage-le ↗' : 'La suite →'), make[sl.type](sl, e))),
+    slides: e.slides.map((sl, i) => s(i + 1, sl.cta || (i === total - 1 ? 'Partage-le ↗' : 'La suite →'), make[sl.type](sl, e), sl.source ? { source: sl.source } : {})),
   };
 }
 
