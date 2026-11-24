@@ -81,7 +81,7 @@ module.exports = {
       ])}
       ${narr('Résultat : six mois de report.', { x: 70, y: 400, w: 330, size: 30, rot: -2 })}
       ${bulle({ x: 70, yb: 640, w: 130, size: 50, to: [200, 680], text: '…' })}
-      ${bulle({ x: 360, yb: 790, w: 270, size: 38, who: 'b', to: [450, 860], text: 'On est bien, là.' })}
+      ${bulle({ x: 200, yb: 810, w: 430, size: 37, who: 'b', to: [450, 860], text: 'Tu procrastines pas. <b>Tu laisses mûrir.</b>' })}
       ${narr('Jour 183.', { x: 690, y: 560, w: 200, size: 34, bg: C.nuit, color: C.creme, rot: -3 })}`),
 
     // 6 — La bascule.
@@ -109,6 +109,6 @@ module.exports = {
       ${big(`On n’est jamais prêt. ${fl('On envoie quand même.')}`, 64, 222)}
       ${actions({ y: 430, mot: 'ENVOYÉ', pourquoi: 'quand tu as envoyé le message que tu repousses depuis des semaines', envoie: 'l’ami qui repousse tout « au printemps »', enregistre: 'pour ton prochain report' })}
       ${S(`${G.quentin({ x: 30, y: 930, s: 0.48, arms: { l: 'hip', r: 'point' }, mouth: 'grin', eyes: { px: 8, py: -8 } })}${G.brutus({ x: 820, y: 1000, s: 0.5, arms: 'down', brows: 'sad', mouth: 'wobble', eyes: { px: -8, py: -6 }, sweat: true })}`)}
-      ${bulle({ x: 330, yb: 1110, w: 440, who: 'b', size: 32, to: tb({ x: 820, y: 1000, s: 0.5 }), text: 'J’ai ajouté « désolé du dérangement ».' })}`),
+      ${bulle({ x: 330, yb: 1110, w: 440, who: 'b', size: 32, to: tb({ x: 820, y: 1000, s: 0.5 }), text: 'J’ai ajouté « désolé du dérangement ». <b>Deux fois.</b>' })}`),
   ],
 };

@@ -29,7 +29,7 @@ module.exports = {
       ${S(`${G.quentin({ ...Q, arms: { l: 'down', r: 'phone' }, mouth: 'grin', eyes: { px: 8, py: 10 } })}${ane()}${G.brutus({ ...B, arms: 'hip', mouth: 'wobble', brows: 'sad', eyes: { px: -8 } })}`)}
       ${G.avantPlan()}
       ${bulle({ x: 260, yb: 520, w: 440, size: 38, to: tq(Q, 40), text: 'On vend l’âne. <b>Et je poste une story.</b>' })}
-      ${bulle({ x: 740, yb: 650, w: 290, who: 'b', size: 38, to: tb(B), text: 'Je le sens mal.' })}`),
+      ${bulle({ x: 650, yb: 650, w: 390, who: 'b', size: 34, to: tb(B), text: 'Une story ? <b>Avec ta tête du matin ?</b>' })}`),
 
     // 3
     s(3, 'Brutus monte →', `${G.saleve2()}
@@ -68,7 +68,7 @@ module.exports = {
       ${com({ y: 390, w: 600, pseudo: '@coach_millionnaire', text: `Mon programme règle ça aussi.`, likes: '1', color: C.soleil, rot: -1, size: 28 })}
       ${S(porter())}
       ${G.avantPlan()}
-      ${bulle({ x: 690, yb: 660, w: 350, who: 'b', size: 34, to: tb({ x: 700, y: 680, s: 0.68 }), text: 'On aurait dû rester <b>sans réseau.</b>' })}`),
+      ${bulle({ x: 690, yb: 660, w: 350, who: 'b', size: 34, to: tb({ x: 700, y: 680, s: 0.68 }), text: 'Bravo. Enfin unanimes : <b>on est ridicules.</b>' })}`),
 
     // 8 — Action
     s(8, 'Partage-le ↗', `${G.saleve2({ mood: 'or' })}

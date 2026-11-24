@@ -1,17 +1,31 @@
 # Crash-test n°1 — « La balade fantôme »
 
-Ce singe m'a fait perdre six mois. Et je l'ai laissé faire.
+Ce singe m'a fait perdre 6 mois. Et le pire, c'est que je lui ai dit merci.
 
-J'ai créé une balade pour débloquer les gens. Puis je l'ai repoussée « au printemps », « après l'été », « quand ce sera plus clair ». Brutus, mon chimpanzé intérieur, avait toujours une excellente raison : la pluie, l'inconnu, un écureuil louche.
+Lui, c'est Brutus. Mon chimpanzé intérieur. Garde du corps. Parano. Expert en excuses.
 
-Il ne voulait pas me saboter. Il voulait que rien ne change.
+J'ai créé une balade pour aider les gens à se débloquer.
+Puis je l'ai repoussée.
+« Au printemps. »
+« Après l'été. »
+« Quand ce sera plus clair. »
 
-👉 Commente ENVOYÉ quand tu as envoyé le message que tu repousses depuis des semaines.
+Spoiler : ce n'est jamais plus clair. On appelle ça « laisser mûrir ». Brutus appelle ça « gagner ».
+
+Ce qu'il m'a fallu six mois pour comprendre : Brutus ne veut pas que j'échoue. Il veut que rien ne change. Pour lui, un mardi différent, c'est un tigre à dents de sabre.
+
+👉 Commente ENVOYÉ quand tu as envoyé LE message que tu repousses depuis des semaines. Sans « désolé du dérangement ».
 📩 Envoie ce carrousel à l'ami qui repousse tout « au printemps ».
+🔖 Enregistre-le pour ton prochain report.
 
-La balade déclic : 1 h 30 à la Maison du Salève. Envoie-moi DÉCLIC en message.
+Et toi, ton Brutus te fait repousser quoi en ce moment ?
 
-#oser #procrastination #creation #systemenerveux #saleve #geneve
+#procrastination #oser #passeralaction #confianceensoi #entrepreneur #creation #bd #saleve
 
 ## Commentaire à épingler
-Moi, c'était le lancement des balades. Et toi, c'est quoi le truc que ton Brutus te fait repousser ? 👇
+Moi, c'était le lancement de mes balades. 183 jours. Et toi, c'est quoi le truc que ton Brutus te fait repousser ? 👇
+
+## Musique (à ajouter dans l'app, volume bas)
+Ambiance : comique, sournoise, pizzicato (le pas feutré de quelqu'un qui évite quelque chose).
+1. « The Pink Panther Theme » — Henry Mancini (si elle est proposée sur ton compte).
+2. Sinon, cherche « sneaky » ou « pizzicato » dans la bibliothèque musicale.

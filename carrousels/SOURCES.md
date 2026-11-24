@@ -41,5 +41,8 @@ Chaque référence a été vérifiée avant publication (auteur, revue ou ouvrag
 - **44 Einstein** : les « citations » des posters (« Sois toi-même », « Bois de l'eau »…) sont des gags signés « (?) ». Quote Investigator, « Creativity Is Intelligence Having Fun » (2 mars 2017) ; la formule dérive de George Scialabba, « Mindplay », *Harvard Magazine*, 1984 (date 1983 selon d'autres sources). Einstein est mort en 1955. Les répliques d'Einstein dans la BD sont de la fiction humoristique, pas des citations.
 - **45 La Fontaine** : « Le Meunier, son Fils et l'Âne », *Fables*, livre III, fable 1 (1668). Les commentaires et leurs pseudos sont fictifs et paraphrasent la fable ; seule la morale finale est citée (vers à vérifier dans une édition des *Fables*).
 
+## 55 — Le dimanche soir
+- Lieberman, M. D. et al. (2007). Putting feelings into words. *Psychological Science*, 18(5), 421–428 (déjà vérifié pour l'épisode 07).
+
 ## Construction des carrousels
 - Eyal, N. (2014). *Hooked: How to Build Habit-Forming Products*. Modèle déclencheur → action → récompense variable → investissement, transposé ici au carrousel.

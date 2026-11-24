@@ -1,4 +1,4 @@
-# Appel à un ami n°1 — Einstein n'a jamais dit ça
+# 44-appel-einstein
 
 Einstein est sorti de mon frigo. Il était furieux.
 
@@ -6,12 +6,17 @@ Einstein est sorti de mon frigo. Il était furieux.
 
 L'idée reste bonne : la créativité n'est pas réservée aux génies. Elle se réveille quand tu joues.
 
-👉 Commente JEU quand tu as joué dix minutes sans but : dessin, chant, bricolage, jonglage de cornichons.
-📩 Envoie-le à l'ami qui dit « moi, je ne suis pas créatif ».
+Source : Quote Investigator (2017).
 
-Source : Quote Investigator, « Creativity Is Intelligence Having Fun » (2017).
+👉 Commente JEU quand tu as joué dix minutes sans but : dessin, chant, bricolage.
+📩 Envoie-le à l'ami qui dit « moi, je suis pas créatif ».
+🔖 Enregistre-le pour la prochaine fois que ton Brutus parle.
 
-#creativite #einstein #citations #jeu #oser
+#creativite #einstein #citations #jeu #oser #bd
 
 ## Commentaire à épingler
-Quelle est la fausse citation d'Einstein que tu as déjà partagée ? (Moi, au moins trois.) 👇
+Quelle fausse citation d'Einstein as-tu déjà partagée ? (Moi, au moins trois.) 👇
+
+## Musique (à ajouter dans l'app, volume bas)
+Ambiance : comique et légère, un peu savant fou.
+1. Cherche « quirky » ou « funny science » dans la bibliothèque.

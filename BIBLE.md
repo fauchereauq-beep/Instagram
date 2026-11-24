@@ -56,6 +56,37 @@ Code : `src/v3.js` (`bulle`, `hook`, `fleche`, `narr`, `actions`).
 - Une seule morale, puis un bloc d'action : **un mot à commenter** (en gros), puis à qui l'envoyer, puis pourquoi l'enregistrer.
 - La légende commence par la phrase de couverture ; le commentaire à épingler est noté dans `legende.md` (section « Commentaire à épingler », non publiée par l'agent).
 
+## Méthode Reel « Brutus » (25-30 s)
+
+Modèle : `anim/ep01-le-bouton.js`. Rendu : `node anim/<épisode>.js` → `videos/`.
+
+| Temps | Durée | Rôle | Règle |
+|---|---|---|---|
+| 1. Accroche | 0-2 s | Arrêter le pouce | Texte du haut qui commence par « Moi, … » + une action en cours interrompue (Brutus qui plonge). Pas d'introduction. |
+| 2. Conflit | 2-7 s | Installer la blague | Échange en 3 répliques ; la 3e est la **réplique culte** de Brutus, face caméra, zoom + « dun dun dun ». |
+| 3. Escalade | 7-11 s | Règle de trois | Trois excuses en cartons géants, une par seconde, de la plus banale à la plus absurde. |
+| 4. Ellipse | 11-14 s | Accélérer | Carton « 6 MOIS PLUS TARD » + la conséquence en une image. |
+| 5. Retournement | 14-18 s | Le « mais c'est moi ça » | La peur se réalise autrement que prévu (quelqu'un d'autre a osé). |
+| 6. Le fond | 18-23 s | La profondeur | **Musique coupée**, fond sombre, deux phrases simples. Image tendre (Brutus dans les mains). |
+| 7. Victoire + rechute | 23-28 s | Rire final et boucle | L'action réussit, puis Brutus rechute avec la phrase du début : la vidéo boucle. Texte du haut : mot à commenter, puis titre de l'épisode suivant. |
+
+Règles de lisibilité vidéo : légendes géantes au même endroit, mot par mot ; **aucun petit texte dans le décor** ; un plan ne dure pas plus de 3 s sans zoom, coupe ou geste ; Brutus a une couleur de légende à lui (lavande).
+
+Voix : babil de dessin animé synthétisé (`anim/babil.js`). Version supérieure : les répliques enregistrées par Quentin (voix de Brutus = la sienne, montée dans les aigus).
+
+## Brutus sniper (22 novembre)
+
+Brutus ne crie pas, il **tire** : une réplique courte, taquine, qui vise juste et touche une excuse qu'on se raconte tous.
+Exemples validés : « Je protège les gens. De toi. » · « Tu procrastines pas. Tu laisses mûrir. » · « Une story ? Avec ta tête du matin ? » · « Bravo. Enfin unanimes : on est ridicules. » · « Un mail. Le prédateur n°1 de la savane. »
+
+## Les 5 leviers psychologiques de chaque carrousel
+
+1. **Le miroir hyper-précis** : un détail ultra concret (« Mercure est rétrograde », « désolé du dérangement ») fait dire « c'est moi ça » mieux qu'une généralité.
+2. **La boucle ouverte** : la couverture pose une question sans y répondre (« Qui est ce singe ? »), on swipe pour la fermer.
+3. **L'escalade en 3** : trois temps de plus en plus absurdes, puis la chute.
+4. **La violation bénigne** : Brutus dit tout haut l'excuse qu'on se cache ; c'est assez vrai pour piquer, assez absurde pour faire rire.
+5. **La fin qui reste** : on finit sur l'émotion la plus forte et un geste simple (un mot à commenter), pas sur une leçon.
+
 ## Catalogue des formats (7 planches chacun, style pop franco-belge)
 
 | Format | Planches | Statut |
