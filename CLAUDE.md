@@ -6,10 +6,11 @@ Fil conducteur : oser créer ce qui t'anime. Tout est généré par code (SVG + 
 ## À lire avant de travailler
 - `BIBLE.md` : personnages (Brutus, chimpanzé intérieur parano), formats, codes visuels, **règles v3** (bulles, couverture, fin).
 - `QUENTIN.md` : sa vraie vie (métiers, projets lâchés, excuses, Panama, balade déclic). L'humour vient de là.
-- `PLAN.md` et `publier/calendrier.json` : calendrier. `carrousels/SOURCES.md` : sources vérifiées.
+- `SAISON.md` : plan éditorial sur 2 mois (arcs, rythme, banque d'idées). `PROMPT.md` : prompt maître (structure en 8 planches, leviers, règles).
+- `publier/calendrier.json` : calendrier des publications (programmées à la main dans l'app, à cause de la musique). Les ZIP sont aussi sur le Google Drive de Quentin, dossier « Instagram BD › Carrousels », numérotés dans l'ordre. `carrousels/SOURCES.md` : sources vérifiées.
 
 ## Fabriquer un carrousel
-1. Copier l'épisode le plus proche dans `episodes/` (modèles : `41` Crash-test, `42` Ils ont osé, `43` Radar du corps, `44` Appel à un ami, `45` Fables). Numéroter à la suite (46, 47…).
+1. Le plus rapide : le modèle de données `src/vrai.js` (exemples `episodes/51` à `55`, `21` à `25`) ou `src/dossier.js` (`11` à `15`). Sinon, copier l'épisode le plus proche dans `episodes/` (modèles : `41` Crash-test, `42` Ils ont osé, `43` Radar du corps, `44` Appel à un ami, `45` Fables). Numéroter à la suite (46, 47…).
 2. Outils : `src/v3.js` (bulle, hook, fleche, narr, actions, ep3), `src/gn.js` (quentin, brutus, einstein, ane, accessoires), `src/decors.js` (saleve2, salon, cuisine, cinema, choc, commentaire, fx).
 3. Écrire `carrousels/<slug>/legende.md` : 1re ligne = phrase de couverture ; mot à commenter ; section « ## Commentaire à épingler » (non publiée).
 4. `bash outils/livrer.sh <slug>` puis **regarder l'aperçu** `apercus/<slug>.png` et corriger les chevauchements.
