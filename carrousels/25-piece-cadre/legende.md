@@ -21,7 +21,7 @@ Fin de la série « Pièces à conviction ».
 #oser #creation #multipotentiel #confianceensoi #reconversion #bd #humour #saleve
 
 ## Commentaire à épingler
-La balade déclic : 1 h 30 à la Maison du Salève. Envoie-moi BALADE en message 👇
+La balade déclic : 1 h à la Maison du Salève. Envoie-moi BALADE en message 👇
 
 ## Musique (à ajouter dans l'app, volume bas)
 Ambiance : comédie de tribunal, un peu sournoise.

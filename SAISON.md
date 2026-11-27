@@ -2,7 +2,7 @@
 
 **Fil conducteur** : oser créer ce qui t'anime, malgré Brutus, le chimpanzé intérieur qui veut que rien ne change.
 **Promesse au lecteur** : « Je ris de moi, tu te reconnais, tu repars avec un geste de dix minutes. »
-**Objectif business** : faire connaître la balade déclic (1 h 30, Maison du Salève) sans jamais vendre en force.
+**Objectif business** : faire connaître la balade déclic (1 h, Maison du Salève ou Genève) sans jamais vendre en force.
 
 ## L'arc des deux mois
 

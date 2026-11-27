@@ -3,9 +3,12 @@
 Rien ne se perd, mais on ne fait qu'une chose à la fois.
 
 ## En cours
+- **Référence : le site quentinfauchereau.com** (vérifié le 27/11/2026). Design : crème, Poppins / Inter, surlignage soleil, cartes arrondies, ombre douce. Fond : balade 1 h à plat (40 min de soin + 20 min de jeu, déroulé 0′ → 60′), deux balises (« J'ai peur de me lancer », « Je suis à bout »), trois vitesses du système nerveux, carte défi, garantie premier pas, 90 € / 590 €. `BRIEF.md` du site (dépôt test-site) est en retard sur le site en ligne.
+- **Visuel unique n°3 « Ton système nerveux a trois vitesses »** (27/11/2026), style du site : `visuels/03-trois-vitesses/`. Attend la validation de Quentin.
+- **À refaire au style du site** : visuel 1 (ancien déroulé de la balade → refaire avec la frise 0′ → 60′ du site) et visuel 2 (« frein » positif, contraire au site où le frein = veille). Ne pas les publier en l'état.
 - **Visuel unique n°1 « La balade déclic en 6 étapes »** (27/11/2026) : `visuels/01-balade-6-etapes/` (post + story + légende). Remplace l'idée du carrousel épinglé : c'est ce post qu'on épingle. Attend la validation de Quentin.
 - **Visuel unique n°2 « L'accélérateur et le frein »** (27/11/2026) : nouveau style « schéma + vraie photo » (choix de Quentin : mélange A et B). `visuels/02-accelerateur-frein/`. Photo : `photos/moi.jpg` (Drive, 600 × 600 : il en faut de plus grandes). Attend la validation de Quentin.
-- **En suspens** : la balade dure-t-elle 1 h partout ? (`QUENTIN.md`, `SAISON.md`, légende du carrousel 25, `BRIEF.md` du site disent encore 1 h 30).
+- **Fait** : balade = 1 h (confirmé par Quentin et le site) dans `QUENTIN.md`, `SAISON.md`, légende du carrousel 25. Reste `BRIEF.md` du site.
 
 ## Inspirations envoyées par Quentin (27/11/2026)
 16 captures de posts. Ce qui marche le mieux (j'aime, à nuancer selon la taille des comptes) :
