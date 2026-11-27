@@ -5,6 +5,7 @@ Rien ne se perd, mais on ne fait qu'une chose à la fois.
 ## En cours
 - **Référence : le site quentinfauchereau.com** (vérifié le 27/11/2026). Design : crème, Poppins / Inter, surlignage soleil, cartes arrondies, ombre douce. Fond : balade 1 h à plat (40 min de soin + 20 min de jeu, déroulé 0′ → 60′), deux balises (« J'ai peur de me lancer », « Je suis à bout »), trois vitesses du système nerveux, carte défi, garantie premier pas, 90 € / 590 €. `BRIEF.md` du site (dépôt test-site) est en retard sur le site en ligne.
 - **Visuel unique n°3 « Ton système nerveux a trois vitesses »** (27/11/2026), style du site : `visuels/03-trois-vitesses/`. Attend la validation de Quentin.
+- **Visuels uniques n°4, 5, 6** (27/11/2026), style du site, 3 formats : frise « Une heure pour faire ton premier pas » (`04-balade-minute`, à épingler, remplace le visuel 1), comparaison « Lis les balises » (`05-balises`), citation « Dans une montre… » (`06-citation-mouvement`). Outils : `src/site.js`. Attendent la validation de Quentin.
 - **À refaire au style du site** : visuel 1 (ancien déroulé de la balade → refaire avec la frise 0′ → 60′ du site) et visuel 2 (« frein » positif, contraire au site où le frein = veille). Ne pas les publier en l'état.
 - **Visuel unique n°1 « La balade déclic en 6 étapes »** (27/11/2026) : `visuels/01-balade-6-etapes/` (post + story + légende). Remplace l'idée du carrousel épinglé : c'est ce post qu'on épingle. Attend la validation de Quentin.
 - **Visuel unique n°2 « L'accélérateur et le frein »** (27/11/2026) : nouveau style « schéma + vraie photo » (choix de Quentin : mélange A et B). `visuels/02-accelerateur-frein/`. Photo : `photos/moi.jpg` (Drive, 600 × 600 : il en faut de plus grandes). Attend la validation de Quentin.
@@ -20,6 +21,7 @@ Rien ne se perd, mais on ne fait qu'une chose à la fois.
 Règle retenue : **le style, c'est la charte** (flamme, soleil, nuit, crème, jungle ; Poppins + Inter). Seul le type d'image change.
 
 ## Plus tard
+- **Images réalistes et vidéos** (demandé le 27/11/2026) : soit Quentin génère l'image dans ChatGPT et la dépose sur son Drive (je la mets en page), soit vidIQ (95 crédits au 27/11, conditions commerciales à vérifier). ElevenLabs gratuit = non commercial. Vidéos : moteur `anim/` déjà prêt (Reel « Le bouton ») ou animation des visuels en motion design (gratuit).
 - **Autres visuels uniques** (demandé le 27/11/2026), un à la fois, même outil (`node outils/visuel.js <nom>`) :
   - une **explication** en une image : la « fenêtre de tolérance » (Siegel, 1999), à vérifier à la source ;
   - un **avis** tranché de Quentin (à tirer de ses vraies convictions, skill `interview-convictions`) ;
