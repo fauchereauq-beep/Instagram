@@ -7,6 +7,15 @@ Rien ne se perd, mais on ne fait qu'une chose à la fois.
 - **Visuel unique n°2 « L'accélérateur et le frein »** (27/11/2026) : nouveau style « schéma + vraie photo » (choix de Quentin : mélange A et B). `visuels/02-accelerateur-frein/`. Photo : `photos/moi.jpg` (Drive, 600 × 600 : il en faut de plus grandes). Attend la validation de Quentin.
 - **En suspens** : la balade dure-t-elle 1 h partout ? (`QUENTIN.md`, `SAISON.md`, légende du carrousel 25, `BRIEF.md` du site disent encore 1 h 30).
 
+## Inspirations envoyées par Quentin (27/11/2026)
+16 captures de posts. Ce qui marche le mieux (j'aime, à nuancer selon la taille des comptes) :
+- Une image forte + une phrase courte : tarte brûlée / tarte dorée (camilletomat, 11,8 K).
+- Métaphore photoréaliste + phrase : lion, diamant, parapluie (davfit, 34,3 K).
+- Citation sourcée + photo : Louis de Funès (les.infosinvisibles, 19,4 K). Attention : pas de photo de célébrité (droits).
+- Grille d'icônes simples : « Le burnout, c'est ça » (elie_holistic, 5 K).
+- Le moins bon : infographies surchargées (« 9 effets positifs », 98).
+Règle retenue : **le style, c'est la charte** (flamme, soleil, nuit, crème, jungle ; Poppins + Inter). Seul le type d'image change.
+
 ## Plus tard
 - **Autres visuels uniques** (demandé le 27/11/2026), un à la fois, même outil (`node outils/visuel.js <nom>`) :
   - une **explication** en une image : la « fenêtre de tolérance » (Siegel, 1999), à vérifier à la source ;
