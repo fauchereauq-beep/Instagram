@@ -46,3 +46,9 @@ Chaque référence a été vérifiée avant publication (auteur, revue ou ouvrag
 
 ## Construction des carrousels
 - Eyal, N. (2014). *Hooked: How to Build Habit-Forming Products*. Modèle déclencheur → action → récompense variable → investissement, transposé ici au carrousel.
+
+## Visuel 02 — L'accélérateur et le frein (système nerveux)
+- Manuels MSD (grand public), « Présentation du système nerveux autonome » : sympathique = prépare le corps aux situations d'urgence (combat ou fuite), augmente la tension artérielle ; parasympathique = fonctionnement au repos, économise l'énergie, ralentit le cœur, baisse la tension, favorise la digestion.
+- Recoupé avec des cours de physiologie universitaires (UPHF, Nantes) : sympathique « accélérateur », parasympathique « frein ».
+- Vérifié le 27/11/2026 par recherche web. La page MSD n'a pas pu être ouverte directement (réseau de la session) : à relire une fois avant publication.
+- Volontairement écartée : la théorie polyvagale (contestée par une partie des chercheurs).
