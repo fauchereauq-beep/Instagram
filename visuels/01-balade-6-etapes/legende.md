@@ -1,4 +1,4 @@
-1 h 30 sur le Salève. Pour remettre ton projet en marche.
+1 h sur le Salève. Pour remettre ton projet en marche.
 
 Tu as une idée en tête depuis des mois. Elle ne bouge pas. Brutus, mon chimpanzé intérieur, appelle ça « être prudent ».
 

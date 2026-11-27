@@ -55,7 +55,7 @@ function etapes({ top, h, gap, title = 38, sub = 26, ico = 84 }) {
 const etiquette = (y) => `<div class="abs" style="left:40px;top:${y}px;z-index:5;display:flex;align-items:center;gap:12px;background:${C.creme};border:6px solid ${I};border-radius:999px;padding:6px 26px 6px 10px;font-family:Poppins;font-weight:700;font-size:28px;box-shadow:5px 5px 0 ${I}">${logo(58)}<span>La balade déclic</span></div>`;
 const fond = (H) => `<div class="abs" style="inset:0;background:${C.creme}"></div><div class="abs" style="inset:0;background-image:radial-gradient(rgba(20,18,31,.1) 2.6px,transparent 3.2px);background-size:18px 18px"></div>`;
 const titre = (y, s1, s2, w = 640, w2 = 520) => `<div class="abs" style="left:48px;top:${y}px;width:${w}px;z-index:4">
-  <div style="font-family:Poppins;font-weight:700;font-size:${s1}px;line-height:.98;letter-spacing:-2px;color:${I}">1&nbsp;h&nbsp;30 sur le Salève.</div>
+  <div style="font-family:Poppins;font-weight:700;font-size:${s1}px;line-height:.98;letter-spacing:-2px;color:${I}">1&nbsp;h sur le Salève.</div>
   <div style="font-family:Poppins;font-weight:700;font-size:${s2}px;line-height:1.08;letter-spacing:-1px;color:${C.flamme};margin-top:14px;width:${w2}px">${typo('Pour remettre ton projet en marche.')}</div></div>`;
 const duo = (x, y, s) => G.svgPage(`${G.quentin({ x, y, s, arms: { l: 'down', r: 'wave' }, mouth: 'grin', eyes: { px: -4 } })}
   ${G.brutus({ x: x + 175 * s / 0.4, y: y + 128 * s / 0.4, s: s * 0.82, arms: 'hip', casque: true, mouth: 'flat', brows: 'angry', eyes: { lid: 0.35, px: -6 } })}`);
@@ -72,7 +72,7 @@ function post() {
 // Story : zones hautes (≈ 220 px) et basses (≈ 260 px) laissées libres pour l'interface d'Instagram.
 function story() {
   const H = 1920, e = etapes({ top: 650, h: 128, gap: 22, title: 40, sub: 28, ico: 92 });
-  return `<div class="page" style="height:${H}px">${fond(H)}${etiquette(230)}${titre(340, 80, 48, 640, 560)}
+  return `<div class="page" style="height:${H}px">${fond(H)}${etiquette(230)}${titre(340, 74, 48, 640, 560)}
     <div class="abs" style="left:0;top:0;z-index:3">${duo(690, 270, 0.46)}</div>
     ${sentier(e.pts, H)}${e.html}
     <div class="abs" style="left:48px;right:48px;top:1574px;z-index:4;background:${C.flamme};border:6px solid ${I};border-radius:26px;box-shadow:8px 8px 0 ${I};padding:18px 26px;text-align:center;font-family:Poppins;font-weight:700;font-size:40px;line-height:1.1;color:#fff;transform:rotate(-1deg)">Réponds BALADE à cette story ↓</div></div>`;
