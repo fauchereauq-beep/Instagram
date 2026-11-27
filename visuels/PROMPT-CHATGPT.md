@@ -6,11 +6,14 @@
 
 Pourquoi « aucun visage reconnaissable » : une personne inventée pourrait passer pour un client. Pour un visage, on prend tes vraies photos.
 
+## Ou : une vraie photo Pexels (gratuite, sans clé)
+Sur pexels.com, choisis une photo, copie son lien (« https://www.pexels.com/fr-fr/photo/...-123456/ ») et envoie-le à Claude avec la phrase. L'outil télécharge la photo tout seul. Licence Pexels : usage commercial libre, sans citer l'auteur.
+
 ## 2. Envoie l'image à Claude
 Dans la conversation, ou sur ton Drive (dossier « Instagram BD › Photos »), avec la phrase à écrire dessus.
 
 ## 3. Claude lance l'outil
-`node outils/photo.js <image> "<phrase>" --accent "<mots en jaune>" --slug <numéro-nom>`
+`node outils/photo.js <image ou lien Pexels> "<phrase>" --accent "<mots en jaune>" --slug <numéro-nom>`
 → `visuels/<slug>/post.png` (1080 × 1350) et `story.png` (1080 × 1920), dans la charte du site.
 
 ## Sujets prêts à l'emploi (phrases tirées du site)

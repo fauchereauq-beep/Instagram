@@ -14,6 +14,7 @@
 const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
+const { execFileSync } = require('child_process');
 const { K, CSS, typo, pill, signature } = require('../src/site.js');
 
 function lireOptions(argv) {
@@ -24,10 +25,25 @@ function lireOptions(argv) {
     if (k === '--haut') o.haut = true;
     else if (k.startsWith('--')) o[k.slice(2)] = reste[++i] || '';
   }
-  if (!o.image || !o.phrase) { console.error('Usage : node outils/photo.js <image> "<phrase>" [--accent "..."] [--tag "..."] [--slug nom] [--haut]'); process.exit(1); }
-  if (!fs.existsSync(o.image)) { console.error(`Image introuvable : ${o.image}`); process.exit(1); }
-  o.slug = o.slug || path.basename(o.image).replace(/\.[^.]+$/, '');
+  if (!o.image || !o.phrase) { console.error('Usage : node outils/photo.js <image | lien Pexels> "<phrase>" [--accent "..."] [--tag "..."] [--slug nom] [--haut]'); process.exit(1); }
   return o;
+}
+
+// Lien Pexels (https://www.pexels.com/fr-fr/photo/...-123456/) → photo téléchargée dans photos/pexels-123456.jpg.
+// Pas besoin de clé : seule l'adresse images.pexels.com est utilisée. Licence Pexels : usage commercial libre.
+async function telechargerPexels(o) {
+  const m = o.image.match(/pexels\.com\/.*?(\d{4,})\/?(?:\?.*)?$/);
+  if (!m) return;
+  const id = m[1], dest = path.join(__dirname, '..', 'photos', `pexels-${id}.jpg`);
+  if (!fs.existsSync(dest)) {
+    // curl respecte le proxy et les certificats de l'environnement (le fetch de Node, non).
+    try {
+      execFileSync('curl', ['-sfL', '-m', '60', '-o', dest, `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=2200`]);
+    } catch (e) { console.error(`Pexels : photo ${id} introuvable ou réseau bloqué`); process.exit(1); }
+    console.log(`photos/pexels-${id}.jpg (téléchargée depuis Pexels)`);
+  }
+  o.image = dest;
+  o.slug = o.slug || `pexels-${id}`;
 }
 
 function html(o, H) {
@@ -55,6 +71,9 @@ function html(o, H) {
 
 (async () => {
   const o = lireOptions(process.argv.slice(2));
+  await telechargerPexels(o);
+  if (!fs.existsSync(o.image)) { console.error(`Image introuvable : ${o.image}`); process.exit(1); }
+  o.slug = o.slug || path.basename(o.image).replace(/\.[^.]+$/, '');
   const out = path.join(__dirname, '..', 'visuels', o.slug);
   fs.mkdirSync(out, { recursive: true });
   const browser = await chromium.launch();
