@@ -21,7 +21,7 @@ Rien ne se perd, mais on ne fait qu'une chose à la fois.
 Règle retenue : **le style, c'est la charte** (flamme, soleil, nuit, crème, jungle ; Poppins + Inter). Seul le type d'image change.
 
 ## Plus tard
-- **Images réalistes et vidéos** (demandé le 27/11/2026) : soit Quentin génère l'image dans ChatGPT et la dépose sur son Drive (je la mets en page), soit vidIQ (95 crédits au 27/11, conditions commerciales à vérifier). ElevenLabs gratuit = non commercial. Vidéos : moteur `anim/` déjà prêt (Reel « Le bouton ») ou animation des visuels en motion design (gratuit).
+- **Images réalistes et vidéos** (27/11/2026) : recommandation = vraies photos gratuites **Pexels** (usage commercial libre, sans attribution) + mise en page par code dans la charte (`outils/photo.js`, à coder). Besoin : clé Pexels gratuite + ouvrir `api.pexels.com` et `images.pexels.com` dans le réseau de la session (testé : bloqués ; seul `generativelanguage.googleapis.com` passe). Pas rentable : modèle d'IA local (pas de carte graphique), vidéo IA (payante). Plus tard : animer les visuels en Reels (gratuit, par code). ChatGPT reste possible pour les images impossibles à photographier.
 - **Autres visuels uniques** (demandé le 27/11/2026), un à la fois, même outil (`node outils/visuel.js <nom>`) :
   - une **explication** en une image : la « fenêtre de tolérance » (Siegel, 1999), à vérifier à la source ;
   - un **avis** tranché de Quentin (à tirer de ses vraies convictions, skill `interview-convictions`) ;
