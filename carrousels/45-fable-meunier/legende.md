@@ -9,11 +9,11 @@ Vous montez à deux : « Signalé. »
 Vous portez l'âne : tout le monde rit.
 Et il y a toujours un coach pour te vendre un programme à 997 €.
 
-La Fontaine l'avait écrit en 1668 : « Les gens en parleront, n'en doutez nullement. »
+La Fontaine l'a publié en 1668 : « Les gens en parleront, n'en doutez nullement. »
 
 Donc la question n'est pas « qu'est-ce qu'ils vont dire ? ». Ils vont dire quelque chose, c'est garanti. La question, c'est : est-ce que toi, tu es fier de ce que tu fais ?
 
-👉 Commente MONTRÉ quand tu as montré une de tes créations sans demander l'avis de personne.
+👉 Commente MONTRÉ si tu montres un truc cette semaine, sans demander l'avis de personne.
 📩 Envoie-le à l'ami qui attend que tout le monde soit d'accord pour se lancer.
 🔖 Enregistre-le pour le prochain commentaire de tata Monique.
 
