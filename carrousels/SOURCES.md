@@ -48,3 +48,6 @@ Chaque référence a été vérifiée avant publication (auteur, revue ou ouvrag
 
 ## Construction des carrousels
 - Eyal, N. (2014). *Hooked: How to Build Habit-Forming Products*. Modèle déclencheur → action → récompense variable → investissement, transposé ici au carrousel.
+
+## 21 — Pièces à conviction 1/5 : le CV
+- Aucune source externe : métiers et reproche « tu t'éparpilles » tirés de QUENTIN.md (vécu de Quentin). Les dix métiers = les 9 du casier (dont le Panama) + les boîtes de café. Vérifié le 28/11/2026.

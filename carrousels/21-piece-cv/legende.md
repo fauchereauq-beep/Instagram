@@ -1,12 +1,12 @@
 # 21-piece-cv
 
-J'ai eu dix métiers. Mon chimpanzé appelle ça un casier.
+Dix métiers. Mon chimpanzé appelle ça un casier.
 
-Serveur. Majordome. Commercial. Horloger. Ramasseur de pommes. Menuisier. Couvreur. Et mettre des boîtes de café dans une autre boîte.
+Serveur. Majordome. Commercial. Horloger. Ramasseur de pommes. Menuisier. Couvreur. Opérateur d'outils dentaires. Patron d'une entreprise au Panama (faillite). Et mettre des boîtes de café dans une autre boîte.
 
 Brutus, mon chimpanzé intérieur, a rendu son verdict : « tu t'éparpilles ».
 
-Alors j'ai relu le casier. Serveur : j'écoute. Horloger : je patiente. Couvreur : je n'ai pas peur du vide. Les boîtes de café : je repère un travail absurde à dix mètres.
+Alors j'ai relu le casier. Serveur : j'écoute. Horloger : je patiente. Couvreur : pas peur du vide. Les boîtes de café : je repère un travail absurde à dix mètres.
 
 Je ne m'éparpille pas. Je rassemble.
 
