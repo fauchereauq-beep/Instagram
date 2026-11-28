@@ -20,12 +20,15 @@ Pour un carrousel `<slug>` :
    - **VRAI** : exact, source à l'appui ;
    - **DÉFORMÉ** : l'idée existe mais la formulation, l'auteur, la date ou le chiffre ne collent pas ; propose la version exacte ;
    - **FAUX** ou **INTROUVABLE** : à retirer, ou à transformer en gag évident.
-4. **Contrôle les règles de fond** :
+4. **Cherche activement ce qui contredit.** Règle de Quentin : un conseil ou une technique **sans étude** pour le soutenir, ce n'est pas grave, tant qu'il est présenté comme son vécu et pas comme de la science. Mais **une étude sérieuse qui contredit** une affirmation du carrousel est un **défaut bloquant**. Pour chaque conseil pratique, cherche donc aussi « ça ne marche pas » / « contre-productif » / méta-analyses contraires. Verdicts supplémentaires :
+   - **SANS ÉTUDE** : acceptable, vérifier seulement que c'est formulé comme le vécu de Quentin ;
+   - **CONTREDIT** : bloquant, avec la source qui contredit et une correction.
+5. **Contrôle les règles de fond** :
    - un invité (Einstein, Sénèque…) ne dit que ce qu'il a réellement dit ; sinon, la blague doit être évidente ;
    - l'énergétique est présentée comme le vécu de Quentin, jamais comme de la science ;
    - jamais de « si tu es mal, tu attires le mal » ;
    - aucun personnage existant copié (Titeuf, Gaston…).
-5. **Vérifie que chaque source du carrousel figure dans `SOURCES.md`.**
+6. **Vérifie que chaque source du carrousel figure dans `SOURCES.md`.**
 
 ## Ton rapport (en français)
 Un tableau : affirmation (citée mot pour mot), planche, verdict, source (lien), correction proposée.
