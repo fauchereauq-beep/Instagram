@@ -43,13 +43,13 @@ const ICO = {
   env: `<path d="M -30 4 L 34 -26 L 16 32 L 4 10 Z" fill="#fff" stroke="${I}" stroke-width="5" stroke-linejoin="round"/><path d="M 34 -26 L 4 10" stroke="${I}" stroke-width="4"/>`,
   enr: `<path d="M -20 -28 h 40 v 58 l -20 -15 l -20 15 Z" fill="#fff" stroke="${I}" stroke-width="5" stroke-linejoin="round"/>`,
 };
-function actions({ y = 470, mot, pourquoi, envoie, enregistre }) {
+function actions({ y = 470, mot, pourquoi, envoie, enregistre, pourquoiSize = 25 }) {
   const ico = (i, bg, s) => `<svg width="${s}" height="${s}" viewBox="-50 -50 100 100" style="flex:none"><circle r="45" fill="${bg}" stroke="${I}" stroke-width="6"/>${ICO[i]}</svg>`;
   const row = (i, bg, html) => `<div style="display:flex;align-items:center;gap:20px;padding:10px 18px">${ico(i, bg, 74)}<div style="font-family:Poppins;font-weight:700;font-size:31px;line-height:1.12;color:${I}">${typo(html)}</div></div>`;
   return `<div class="abs" style="left:40px;right:40px;top:${y}px;z-index:4;background:#fff;border:7px solid ${I};border-radius:30px;box-shadow:10px 10px 0 ${I};padding:16px;display:flex;flex-direction:column;gap:4px">
     <div style="display:flex;align-items:center;gap:22px;padding:18px 22px;background:${C.soleil};border:6px solid ${I};border-radius:22px">${ico('com', C.flamme, 96)}
       <div style="font-family:Poppins;font-weight:700;font-size:44px;line-height:1.05;color:${I}">Commente <span style="color:#fff;-webkit-text-stroke:7px ${I};paint-order:stroke fill">${mot}</span>
-      <div style="font-family:Inter;font-weight:600;font-size:25px;line-height:1.2;color:#3A3550;margin-top:6px">${typo(pourquoi)}</div></div></div>
+      <div style="font-family:Inter;font-weight:600;font-size:${pourquoiSize}px;line-height:1.2;color:#3A3550;margin-top:6px">${typo(pourquoi)}</div></div></div>
     ${row('env', '#7FD4FF', `Envoie-le à ${envoie}`)}
     ${row('enr', '#9BD1A8', `Enregistre-le ${enregistre}`)}
   </div>`;
